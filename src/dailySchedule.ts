@@ -1,0 +1,36 @@
+// src/dailySchedule.ts
+// AUTOGENERADO por scripts/generate-schedule.mjs
+// Día 1 = índice 0. Día 30 = índice 29.
+
+export const DAILY_SCHEDULE: string[] = [
+  "meruem",
+  "kaguya",
+  "orihime_inoue",
+  "muzan_kibutsuji",
+  "sakura_kinomoto",
+  "vicious",
+  "daiki_aomine",
+  "uryu_ishida",
+  "jessie",
+  "shanks",
+  "james",
+  "gohan",
+  "ochaco_uraraka",
+  "jason",
+  "brock",
+  "obito_uchiha",
+  "giyu_tomioka",
+  "kaido",
+  "majin_buu",
+  "hyoga",
+  "shikamaru_nara",
+  "yu_ishigami",
+  "joseph_joestar",
+  "rintaro_okabe",
+  "shippo",
+  "roronoa_zoro",
+  "subaru_natsuki",
+  "ichigo",
+  "sasuke_uchiha",
+  "kenma_kozume",
+]

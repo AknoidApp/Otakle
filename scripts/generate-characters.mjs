@@ -1,0 +1,68 @@
+import fs from 'fs'
+import Papa from 'papaparse'
+
+const csvPath = './data/otakle_characters.csv' // cambia el nombre si tu CSV se llama distinto
+const outPath = './src/characters.ts'
+
+const csvText = fs.readFileSync(csvPath, 'utf8')
+
+const parsed = Papa.parse(csvText, {
+  header: true,
+  skipEmptyLines: true
+})
+
+const rows = parsed.data
+
+const toTsString = (value) => {
+  if (value === null || value === undefined) return '""'
+  const s = String(value).replace(/\\/g, '\\\\').replace(/`/g, '\\`')
+  return '`' + s + '`'
+}
+
+let ts = `// Archivo generado automáticamente desde ${csvPath}\n`
+ts += `// No editar a mano, edita el Excel/CSV y vuelve a generar.\n\n`
+
+ts += `export type Genre = 'Shonen' | 'Deportes' | 'Romance' | 'Otros'\n`
+ts += `export type Role = 'Protagonista' | 'Antagonista' | 'Secundario' | 'Deuteragonista'\n`
+ts += `export type Gender = 'Masculino' | 'Femenino' | 'Otro'\n`
+ts += `export type Race = 'Humano' | 'Saiyajin' | 'Otro'\n\n`
+
+ts += `export type Character = {\n`
+ts += `  id: string\n`
+ts += `  name: string\n`
+ts += `  anime: string\n`
+ts += `  genre: Genre\n`
+ts += `  debutYear: number\n`
+ts += `  studio: string\n`
+ts += `  role: Role\n`
+ts += `  gender: Gender\n`
+ts += `  race: Race\n`
+ts += `  debutInfo: string\n`
+ts += `  imageUrl: string\n`
+ts += `}\n\n`
+
+ts += `export const CHARACTERS: Character[] = [\n`
+
+for (const row of rows) {
+  if (!row.id || row.active === 'FALSE' || row.active === 'false') continue
+
+  ts += `  {\n`
+  ts += `    id: ${toTsString(row.id)},\n`
+  ts += `    name: ${toTsString(row.name)},\n`
+  ts += `    anime: ${toTsString(row.anime)},\n`
+  ts += `    genre: ${toTsString(row.genre)},\n`
+  ts += `    debutYear: ${Number(row.debutYear) || 0},\n`
+  ts += `    studio: ${toTsString(row.studio)},\n`
+  ts += `    role: ${toTsString(row.role)},\n`
+  ts += `    gender: ${toTsString(row.gender)},\n`
+  ts += `    race: ${toTsString(row.race)},\n`
+  ts += `    debutInfo: ${toTsString(row.debutInfo)},\n`
+  ts += `    imageUrl: ${toTsString('/images/' + row.imageFileName)},\n`
+  ts += `  },\n`
+}
+
+ts += `]\n`
+
+fs.writeFileSync(outPath, ts, 'utf8')
+
+console.log('Generado:', outPath)
