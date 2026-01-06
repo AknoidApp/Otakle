@@ -333,7 +333,9 @@ function SchedulePreview() {
               Genera el archivo <code>src/dailySchedule.ts</code> con el script:
             </p>
             <pre className="preview-code">node scripts/generate-schedule.mjs</pre>
-            <p>Luego vuelve a abrir: <code>?preview=1</code></p>
+            <p>
+              Luego vuelve a abrir: <code>?preview=1</code>
+            </p>
           </div>
         ) : (
           <div className="preview-table-wrap">
@@ -486,16 +488,6 @@ function App() {
     }
   }
 
-  const handleReset = () => {
-    setGuessInput('')
-    setGuesses([])
-    setTries(0)
-    setMessage(null)
-    setIsFinished(false)
-    setShareMessage(null)
-    saveGame(dayIndex, [], 0, false)
-  }
-
   const handleShare = async () => {
     if (guesses.length === 0) return
     const text = buildShareText(dayIndex, secret, guesses)
@@ -590,12 +582,6 @@ function App() {
       <div className="status-row">
         {message && <p className="message">{message}</p>}
         <p className="tries">Intentos: {tries}</p>
-      </div>
-
-      <div className="actions-row">
-        <button type="button" onClick={handleReset}>
-          Reiniciar partida (mismo personaje)
-        </button>
       </div>
 
       <div className="stats-panel">
