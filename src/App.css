@@ -1128,3 +1128,66 @@ button[type='submit']:disabled {
   margin-top: 0.8rem;
   color: rgba(229, 231, 235, 0.75);
 }
+/* ---------- LEGAL PAGES + FOOTER LINKS ---------- */
+
+.legal-content {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 14px;
+  padding: 0.9rem 1rem;
+  color: rgba(229, 231, 235, 0.9);
+}
+
+.legal-content h2 {
+  margin: 0.9rem 0 0.45rem;
+  font-size: 1.05rem;
+  color: #ffffff;
+}
+
+.legal-content ul {
+  margin: 0.35rem 0 0.25rem;
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.legal-content a {
+  color: rgba(34, 211, 238, 0.95);
+  text-decoration: none;
+  font-weight: 800;
+}
+
+.legal-content a:hover {
+  text-decoration: underline;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 0.9rem;
+  justify-content: center;
+  margin-bottom: 0.45rem;
+}
+
+.footer-link {
+  color: rgba(229, 231, 235, 0.75);
+  text-decoration: none;
+  font-weight: 800;
+}
+
+.footer-link:hover {
+  color: rgba(229, 231, 235, 0.95);
+  text-decoration: underline;
+}
+
+.footer-note {
+  text-align: center;
+}
+
+/* Si usas Link con clase howto-button */
+a.howto-button {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
