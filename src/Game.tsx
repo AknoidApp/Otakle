@@ -30,7 +30,7 @@ type SavedGame = {
  *
  * Ejemplo: 2026-01-15 UTC => (2026, 0, 15)
  */
-const LAUNCH_DATE_UTC = { y: 2026, m: 1, d: 6 }
+const LAUNCH_DATE_UTC = { y: 2026, m: 0, d: 6 }
 
 // ---------- Helpers fechas UTC ----------
 const getLaunchBaseUTC = () => new Date(Date.UTC(LAUNCH_DATE_UTC.y, LAUNCH_DATE_UTC.m, LAUNCH_DATE_UTC.d))
