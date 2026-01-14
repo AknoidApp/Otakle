@@ -32,6 +32,9 @@ type SavedGame = {
  */
 const LAUNCH_DATE_UTC = { y: 2026, m: 0, d: 6 }
 
+// ✅ NUEVO: límite de intentos
+const MAX_TRIES = 8
+
 // ---------- Helpers fechas UTC ----------
 const getLaunchBaseUTC = () => new Date(Date.UTC(LAUNCH_DATE_UTC.y, LAUNCH_DATE_UTC.m, LAUNCH_DATE_UTC.d))
 const addDaysUTC = (base: Date, days: number) =>
@@ -167,7 +170,8 @@ const loadGame = (
       .filter((g): g is Guess => g !== null)
 
     const tries = data.tries ?? guesses.length
-    const isFinished = data.isFinished || guesses.some((g) => g.isCorrect)
+    // ✅ si llegó a MAX_TRIES, se considera terminado (aunque no haya acertado)
+    const isFinished = Boolean(data.isFinished || guesses.some((g) => g.isCorrect) || tries >= MAX_TRIES)
 
     return { guesses, tries, isFinished }
   } catch {
@@ -401,10 +405,18 @@ function SchedulePreview() {
 
       <footer className="footer">
         <div className="footer-links">
-          <Link to="/" className="footer-link">Inicio</Link>
-          <Link to="/privacy" className="footer-link">Privacy</Link>
-          <Link to="/terms" className="footer-link">Terms</Link>
-          <Link to="/contact" className="footer-link">Contact</Link>
+          <Link to="/" className="footer-link">
+            Inicio
+          </Link>
+          <Link to="/privacy" className="footer-link">
+            Privacy
+          </Link>
+          <Link to="/terms" className="footer-link">
+            Terms
+          </Link>
+          <Link to="/contact" className="footer-link">
+            Contact
+          </Link>
           <a className="footer-link" href="https://twitter.com/aknoid" target="_blank" rel="noreferrer noopener">
             X @aknoid
           </a>
@@ -443,6 +455,15 @@ export default function Game() {
   const [shareMessage, setShareMessage] = useState<string | null>(null)
   const [isHowToOpen, setIsHowToOpen] = useState(false)
 
+  // ✅ NUEVO: filtro por anime (dropdown)
+  const [animeFilter, setAnimeFilter] = useState<string>('Todos')
+
+  const animeOptions = useMemo(() => {
+    const set = new Set<string>()
+    for (const c of CHARACTERS) set.add(c.anime)
+    return ['Todos', ...Array.from(set).sort((a, b) => a.localeCompare(b))]
+  }, [])
+
   useEffect(() => {
     if (!isHowToOpen) return
     const onKeyDown = (e: KeyboardEvent) => {
@@ -453,14 +474,42 @@ export default function Game() {
   }, [isHowToOpen])
 
   const normalizedInput = guessInput.trim().toLowerCase()
-  const suggestions =
-    !normalizedInput || isFinished
-      ? []
-      : CHARACTERS.filter((c) => c.name.toLowerCase().includes(normalizedInput)).slice(0, 6)
+
+  const candidates = useMemo(() => {
+    const base = animeFilter === 'Todos' ? CHARACTERS : CHARACTERS.filter((c) => c.anime === animeFilter)
+    return base.map((c) => ({ c, nameLower: c.name.toLowerCase() }))
+  }, [animeFilter])
+
+  // ✅ NUEVO: 10 sugerencias + startsWith (prefix) + fallback a includes si falta
+  const suggestions = useMemo(() => {
+    if (!normalizedInput || isFinished) return []
+
+    const prefix = candidates
+      .filter((x) => x.nameLower.startsWith(normalizedInput))
+      .map((x) => x.c)
+
+    if (prefix.length >= 10) return prefix.slice(0, 10)
+
+    const prefixSet = new Set(prefix.map((p) => p.id))
+    const contains = candidates
+      .filter((x) => !prefixSet.has(x.c.id) && x.nameLower.includes(normalizedInput))
+      .map((x) => x.c)
+
+    return [...prefix, ...contains].slice(0, 10)
+  }, [normalizedInput, isFinished, candidates])
+
+  const isLocked = isFinished || tries >= MAX_TRIES
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (isFinished) return
+    if (isLocked) return
+
+    if (tries >= MAX_TRIES) {
+      setMessage(`Se acabaron los intentos (${MAX_TRIES}). Vuelve mañana.`)
+      setIsFinished(true)
+      saveGame(dayIndex, guesses, tries, true)
+      return
+    }
 
     const normalized = guessInput.trim().toLowerCase()
     if (!normalized) return
@@ -482,7 +531,7 @@ export default function Game() {
     setShareMessage(null)
 
     if (isCorrect) {
-      setMessage(`¡Correcto! Era ${secret.name}. Intentos: ${nextTries}`)
+      setMessage(`¡Correcto! Era ${secret.name}. Intentos: ${nextTries}/${MAX_TRIES}`)
       setIsFinished(true)
 
       const newStats = updateStatsOnWin(stats, dayIndex)
@@ -490,10 +539,19 @@ export default function Game() {
       saveStats(newStats)
 
       saveGame(dayIndex, newGuesses, nextTries, true)
-    } else {
-      setMessage('No es ese personaje, revisa las pistas 👀')
-      saveGame(dayIndex, newGuesses, nextTries, false)
+      return
     }
+
+    // ❌ fallo
+    if (nextTries >= MAX_TRIES) {
+      setMessage(`Se acabaron los intentos (${MAX_TRIES}). El personaje era ${secret.name}.`)
+      setIsFinished(true)
+      saveGame(dayIndex, newGuesses, nextTries, true)
+      return
+    }
+
+    setMessage('No es ese personaje, revisa las pistas 👀')
+    saveGame(dayIndex, newGuesses, nextTries, false)
   }
 
   const handleShare = async () => {
@@ -548,9 +606,51 @@ export default function Game() {
         </div>
       </header>
 
-      <p className="intro-text">Todos tienen el mismo personaje y cambia cada 24 horas. Usa las pistas para acercarte.</p>
+      <div className="home-howto">
+  <h2>Cómo se juega</h2>
+  <ul>
+    <li>Escribe un personaje y presiona <strong>Probar</strong>.</li>
+    <li>Tienes <strong>{MAX_TRIES} intentos</strong> máximos por día.</li>
+    <li>Los cuadros comparan tu intento con el personaje del día (Anime, Tipo, Año, Estudio, Rol, Género y Raza).</li>
+    <li>
+      El año incluye una flecha: <strong>↑</strong> significa que el personaje del día es más nuevo; <strong>↓</strong> que es más antiguo.
+    </li>
+    <li>
+      Todos reciben el mismo personaje y cambia a las <strong>00:00 UTC</strong> (aprox. <strong>21:00</strong> en Chile).
+    </li>
+  </ul>
+  <p className="home-howto-link">
+    ¿Quieres más detalles? <Link to="/about">Lee la guía completa aquí</Link>.
+  </p>
+</div>
+
 
       <div className="guess-form-wrapper">
+        {/* ✅ NUEVO: filtro por anime */}
+        <div className="filters-row">
+          <label className="sr-only" htmlFor="anime-filter">
+            Filtrar por anime
+          </label>
+          <select
+            id="anime-filter"
+            className="anime-select"
+            value={animeFilter}
+            onChange={(e) => setAnimeFilter(e.target.value)}
+            disabled={isLocked}
+            aria-label="Filtrar sugerencias por anime"
+          >
+            {animeOptions.map((a) => (
+              <option key={a} value={a}>
+                {a === 'Todos' ? 'Anime: Todos' : `Anime: ${a}`}
+              </option>
+            ))}
+          </select>
+
+          <div className="tries-chip" aria-label={`Intentos ${tries} de ${MAX_TRIES}`}>
+            {tries}/{MAX_TRIES}
+          </div>
+        </div>
+
         <form onSubmit={handleSubmit} className="guess-form">
           <label htmlFor="guess-input" className="sr-only">
             Nombre del personaje
@@ -563,17 +663,17 @@ export default function Game() {
             placeholder="Escribe el nombre del personaje (ej: Goku, Luffy...)"
             value={guessInput}
             onChange={(e) => setGuessInput(e.target.value)}
-            disabled={isFinished}
+            disabled={isLocked}
           />
-          <button type="submit" disabled={isFinished}>
+          <button type="submit" disabled={isLocked}>
             Probar
           </button>
         </form>
 
-        {!isFinished && suggestions.length > 0 && (
+        {!isLocked && suggestions.length > 0 && (
           <ul className="suggestions-list">
             {suggestions.map((c) => (
-              <li key={c.name} className="suggestion-item" onClick={() => handleSuggestionClick(c.name)}>
+              <li key={c.id} className="suggestion-item" onClick={() => handleSuggestionClick(c.name)}>
                 <img src={c.imageUrl} alt={c.name} className="suggestion-avatar" />
                 <div className="suggestion-text">
                   <span className="suggestion-name">{c.name}</span>
@@ -587,7 +687,9 @@ export default function Game() {
 
       <div className="status-row">
         {message && <p className="message">{message}</p>}
-        <p className="tries">Intentos: {tries}</p>
+        <p className="tries">
+          Intentos: {tries}/{MAX_TRIES}
+        </p>
       </div>
 
       <div className="stats-panel">
@@ -771,10 +873,22 @@ export default function Game() {
 
       <footer className="footer">
         <div className="footer-links">
-          <Link to="/" className="footer-link">Inicio</Link>
-          <Link to="/privacy" className="footer-link">Privacy</Link>
-          <Link to="/terms" className="footer-link">Terms</Link>
-          <Link to="/contact" className="footer-link">Contact</Link>
+          <Link to="/" className="footer-link">
+            Inicio
+          </Link>
+          <Link to="/privacy" className="footer-link">
+            Privacy
+          </Link>
+          <Link to="/terms" className="footer-link">
+            Terms
+          </Link>
+          <Link to="/contact" className="footer-link">
+            Contact
+          </Link>
+          <Link to="/about" className="footer-link">
+            About
+          </Link>
+
           <a className="footer-link" href="https://twitter.com/aknoid" target="_blank" rel="noreferrer noopener">
             X @aknoid
           </a>
@@ -811,6 +925,9 @@ export default function Game() {
                   Escribe un personaje y presiona <strong>Probar</strong>.
                 </li>
                 <li>
+                  Tienes <strong>{MAX_TRIES} intentos</strong> máximos por día.
+                </li>
+                <li>
                   Cada fila muestra pistas del personaje del día:{' '}
                   <strong>Anime, Tipo, Año, Estudio, Rol, Género y Raza</strong>.
                 </li>
@@ -831,7 +948,7 @@ export default function Game() {
                   </div>
                 </li>
                 <li>
-                  Cuando aciertas, puedes <strong>copiar tu resultado</strong> o <strong>compartirlo en X</strong>.
+                  Cuando terminas, puedes <strong>copiar tu resultado</strong> o <strong>compartirlo en X</strong>.
                 </li>
               </ul>
             </div>
