@@ -1,11 +1,11 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { CHARACTERS } from '../src/characters.ts'
+import { ACTIVE_CHARACTER_IDS } from './characters-lite.ts'
 
 // Mantener igual que en el cliente antiguo: 2026-01-06 UTC => Día #1
 const LAUNCH_DATE_UTC = { y: 2026, m: 0, d: 6 }
 
-// ⚠️ IMPORTANTE: configura este ENV en Vercel (Production)
-// Un string largo y secreto. Si no existe, igual funciona pero será más predecible.
+// ⚠️ En Vercel (Production) configura OTakle_DAILY_SALT / OTAKLE_DAILY_SALT (recomendado)
+// Si no existe, igual funciona pero será más “predecible” para alguien que reverse-engineeree.
 const DAILY_SALT = process.env.OTAKLE_DAILY_SALT || 'dev-salt-change-me'
 
 const getLaunchBaseUTC = () => new Date(Date.UTC(LAUNCH_DATE_UTC.y, LAUNCH_DATE_UTC.m, LAUNCH_DATE_UTC.d))
@@ -53,7 +53,7 @@ function seededShuffle<T>(arr: T[], seedStr: string) {
   return a
 }
 
-// Pool “Easy” (server-side). Si esta lista queda chica, completa con los primeros N activos.
+// Pool “Easy” (server-side). Puedes ajustar/expandir cuando quieras.
 const EASY_POOL_IDS = [
   'goku','vegeta','gohan',
   'naruto','sasuke_uchiha',
@@ -72,25 +72,25 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
   const dayIndex = getDayIndex()
   const dayNumber = dayIndex + 1
 
-  const active = CHARACTERS.filter((c) => c.active !== false)
-  let pool = active
+  let pool = ACTIVE_CHARACTER_IDS
 
   if (mode === 'easy') {
     const easySet = new Set(EASY_POOL_IDS)
-    const easy = active.filter((c) => easySet.has(c.id))
-    pool = easy.length >= 8 ? easy : active.slice(0, Math.min(80, active.length))
+    const easy = ACTIVE_CHARACTER_IDS.filter((id) => easySet.has(id))
+    // Si easy queda chico, fallback a los primeros N
+    pool = easy.length >= 8 ? easy : ACTIVE_CHARACTER_IDS.slice(0, Math.min(80, ACTIVE_CHARACTER_IDS.length))
   }
 
   const seedStr = `otakle|${mode}|${dayIndex}|${DAILY_SALT}`
   const shuffled = seededShuffle(pool, seedStr)
-  const pick = shuffled[0]
+  const pick = shuffled[0] || 'goku'
 
-  // Evita que el navegador cachee el “daily”
+  // Evita cache del daily
   res.setHeader('Cache-Control', 'no-store, max-age=0')
   res.status(200).json({
     dayIndex,
     dayNumber,
-    id: pick?.id ?? 'goku',
+    id: pick,
     maxTries: 8,
     changesAtUTC: '00:00 UTC',
   })
