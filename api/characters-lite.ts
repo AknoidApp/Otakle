@@ -1,7 +1,8 @@
 // api/characters-lite.ts
-// Este archivo lo genera scripts/generate-characters.mjs
-// NO lo edites a mano.
+// Este archivo es "lite": SOLO IDs activos.
+// (Idealmente lo genera tu script desde el CSV)
 
-export const ACTIVE_CHARACTER_IDS: string[] = [
-  // <-- aquí van los ids activos (los llena el script)
-];
+export const CHARACTER_IDS: string[] = [
+  // <-- pega aquí tus 200 ids en orden (ej: "goku", "vegeta", ...)
+  // Si ya lo generaste con tu script, déjalo tal cual.
+]
