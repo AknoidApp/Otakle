@@ -10,11 +10,13 @@ body {
 }
 
 #root {
-  max-width: 980px;
+  max-width: 1160px;
   margin: 0 auto;
   padding: 1.5rem 1rem 2rem;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  overflow-x: hidden;
+
+  /* ✅ IMPORTANTE: NO ocultar overflow-x o se recorta la grilla */
+  overflow-x: visible;
 }
 
 /* Visually hidden (for accessibility-only labels) */
@@ -42,6 +44,9 @@ body {
   padding: 1.25rem 1.25rem 1.5rem;
   box-shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
   backdrop-filter: blur(10px);
+
+  /* ✅ para que el scroll de pistas no “rompa” el card */
+  overflow: hidden;
 }
 
 .otakudle-container p {
@@ -57,7 +62,7 @@ body {
 
 .topbar {
   display: flex;
-  justify-content: center;
+  justify-content: stretch;
 }
 
 .brand {
@@ -139,6 +144,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  gap: 0.6rem;
+  flex-wrap: wrap;
 }
 
 .howto-button {
@@ -155,6 +162,11 @@ body {
 
 .howto-button:hover {
   background: rgba(255, 255, 255, 0.14);
+}
+
+.howto-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
 }
 
 @media (max-width: 720px) {
@@ -263,33 +275,12 @@ button[type='submit']:disabled {
   color: rgba(229, 231, 235, 0.68);
 }
 
-/* ✅ NUEVO: fila de filtros (dropdown de anime + chip intentos) */
+/* ✅ fila filtros */
 .filters-row {
   display: flex;
   align-items: center;
   gap: 0.6rem;
   margin-top: 0.35rem;
-}
-
-.anime-select {
-  flex: 1;
-  padding: 0.55rem 0.75rem;
-  border-radius: 10px;
-  border: 1px solid rgba(148, 163, 184, 0.22);
-  font-size: 1rem;
-
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
-  outline: none;
-}
-
-.anime-select:disabled {
-  background: rgba(255, 255, 255, 0.06);
-  opacity: 0.8;
-}
-
-.anime-select option {
-  color: #0b1220;
 }
 
 .tries-chip {
@@ -303,6 +294,37 @@ button[type='submit']:disabled {
   color: rgba(229, 231, 235, 0.92);
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+/* Toggle modo */
+.mode-toggle {
+  display: inline-flex;
+  gap: 0.35rem;
+  padding: 0.2rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.mode-btn {
+  padding: 0.5rem 0.75rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 900;
+  background: transparent;
+  color: rgba(229, 231, 235, 0.8);
+}
+
+.mode-btn.active {
+  background: rgba(99, 102, 241, 0.22);
+  color: #ffffff;
+  border: 1px solid rgba(99, 102, 241, 0.35);
+}
+
+.mode-btn:disabled {
+  opacity: 0.95;
+  cursor: default;
 }
 
 @media (max-width: 520px) {
@@ -390,8 +412,25 @@ button[type='submit']:disabled {
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(148, 163, 184, 0.18);
 
-  overflow-x: hidden;
+  /* ✅ clave: NO ocultar, permitir scroll horizontal */
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
   max-width: 100%;
+
+  /* un poquito de aire para que no “pegue” al borde */
+  padding-bottom: 0.95rem;
+}
+
+.hints-grid::-webkit-scrollbar {
+  height: 10px;
+}
+.hints-grid::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.25);
+  border-radius: 999px;
+}
+.hints-grid::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .hints-grid h2 {
@@ -399,21 +438,25 @@ button[type='submit']:disabled {
   margin-bottom: 0.5rem;
 }
 
-/* Desktop: grilla “tabla” */
+/* ✅ Desktop: grilla “tabla” 10 columnas */
 .grid-row {
   display: grid;
   grid-template-columns:
-    minmax(88px, 1.1fr)
-    minmax(110px, 1.5fr)
-    minmax(84px, 0.9fr)
-    minmax(84px, 0.9fr)
-    minmax(110px, 1.4fr)
-    minmax(92px, 1.1fr)
-    minmax(92px, 1.1fr)
-    minmax(84px, 0.9fr);
+    minmax(120px, 1.35fr)  /* Nombre */
+    minmax(160px, 1.75fr)  /* Anime */
+    minmax(92px, 0.95fr)   /* Tipo */
+    minmax(92px, 0.9fr)    /* Año debut */
+    minmax(140px, 1.5fr)   /* Estudio */
+    minmax(110px, 1.15fr)  /* Rol */
+    minmax(110px, 1.05fr)  /* Género */
+    minmax(96px, 0.95fr)   /* Raza */
+    minmax(88px, 0.85fr)   /* Edad debut */
+    minmax(88px, 0.85fr);  /* Edad main */
   gap: 0.6rem;
   margin-bottom: 0.55rem;
-  width: 100%;
+
+  /* ✅ para que la grilla pueda “ser más ancha” que el contenedor y scrollee */
+  min-width: 1080px;
 }
 
 .grid-header span {
@@ -441,7 +484,7 @@ button[type='submit']:disabled {
 
   min-height: 42px;
   border-radius: 10px;
-  padding: 0.2rem 0.35rem;
+  padding: 0.2rem 0.5rem;
   font-size: 0.9rem;
   text-align: center;
   box-sizing: border-box;
@@ -452,6 +495,20 @@ button[type='submit']:disabled {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* ✅ SOLO Nombre y Anime a la izquierda (para texto largo). Estudio vuelve al centro */
+.hint-box.left {
+  justify-content: flex-start;
+  text-align: left;
+  padding-left: 0.65rem;
+}
+
+/* ✅ Centro explícito para “Bones”, etc. */
+.hint-box.center {
+  justify-content: center;
+  text-align: center;
+  padding-left: 0.5rem;
 }
 
 .name-box {
@@ -472,7 +529,7 @@ button[type='submit']:disabled {
   color: white;
 }
 
-/* Año: ahora usamos year-inline para mantener "1984 ↑" juntitos */
+/* Año / números con flecha */
 .year-box {
   display: flex;
   align-items: center;
@@ -505,13 +562,20 @@ button[type='submit']:disabled {
   color: white;
 }
 
+/* Desconocido */
+.unknown {
+  background: rgba(148, 163, 184, 0.20);
+  border-color: rgba(148, 163, 184, 0.35);
+  color: rgba(229, 231, 235, 0.92);
+}
+
 .row-correct .name-box {
   background: #16a34a;
   border-color: #15803d;
   color: white;
 }
 
-/* ---------- ANIMACIONES DE ENTRADA + ZOOM ---------- */
+/* ---------- ANIMACIONES ---------- */
 
 .hints-grid .grid-row:not(.grid-header) .hint-box {
   --reveal-delay: 0s;
@@ -532,6 +596,8 @@ button[type='submit']:disabled {
 .hints-grid .grid-row:not(.grid-header) .hint-box:nth-child(6) { --reveal-delay: 3.0s; }
 .hints-grid .grid-row:not(.grid-header) .hint-box:nth-child(7) { --reveal-delay: 3.5s; }
 .hints-grid .grid-row:not(.grid-header) .hint-box:nth-child(8) { --reveal-delay: 4.0s; }
+.hints-grid .grid-row:not(.grid-header) .hint-box:nth-child(9) { --reveal-delay: 4.5s; }
+.hints-grid .grid-row:not(.grid-header) .hint-box:nth-child(10) { --reveal-delay: 5.0s; }
 
 @keyframes fadeInUpBox {
   0% { opacity: 0; transform: translateY(8px) scale(0.96); }
@@ -550,7 +616,7 @@ button[type='submit']:disabled {
   100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* ---------- ESTRELLITAS EN PISTAS CORRECTAS ---------- */
+/* ---------- ESTRELLITAS ---------- */
 
 .hints-grid .grid-row:not(.grid-header) .hint-box.correct::before,
 .hints-grid .grid-row:not(.grid-header) .hint-box.correct::after,
@@ -600,13 +666,13 @@ button[type='submit']:disabled {
   100% { opacity: 0; transform: translateY(-10px) scale(0.85) rotate(25deg); }
 }
 
-/* ---------- RESPONSIVE (MEJORADO): sin scroll y sin header apilado ---------- */
+/* ---------- RESPONSIVE ---------- */
 
-/* Tablet / pantallas medianas: mantenemos grid pero en 4 columnas */
 @media (max-width: 900px) {
   .grid-row {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 0.6rem;
+    min-width: 0;
   }
 
   .grid-header span {
@@ -623,22 +689,23 @@ button[type='submit']:disabled {
     min-height: 44px;
     border-radius: 12px;
   }
+
+  .hint-box.left {
+    justify-content: center;
+    text-align: center;
+    padding-left: 0.55rem;
+  }
 }
 
-/* Móvil: 2 columnas, sin header, Nombre+Anime full width, separador, labels */
-@media (max-width: 520px) 
-{
-  /* Oculta el header (era lo que confundía y ocupaba espacio) */
+@media (max-width: 520px) {
   .hints-grid .grid-row.grid-header {
     display: none;
   }
 
-  /* Cada intento en 2 columnas */
   .hints-grid .grid-row:not(.grid-header) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.6rem;
 
-    /* Separador entre intentos */
     padding-bottom: 0.85rem;
     margin-bottom: 0.85rem;
     border-bottom: 1px solid rgba(148, 163, 184, 0.18);
@@ -650,13 +717,11 @@ button[type='submit']:disabled {
     padding-bottom: 0;
   }
 
-  /* Nombre y Anime en ancho completo */
   .hints-grid .grid-row:not(.grid-header) .hint-box:nth-child(1),
   .hints-grid .grid-row:not(.grid-header) .hint-box:nth-child(2) {
     grid-column: 1 / -1;
   }
 
-  /* Hacemos que cada cuadro tenga etiqueta arriba + valor abajo */
   .hint-box {
     flex-direction: column;
     justify-content: center;
@@ -678,7 +743,6 @@ button[type='submit']:disabled {
     line-height: 1;
   }
 
-  /* Año: mantiene "1984 ↑" en una sola línea debajo del label */
   .year-inline {
     display: inline-flex;
     align-items: center;
@@ -692,52 +756,11 @@ button[type='submit']:disabled {
   }
 }
 
-/* ---------- INFO DEL PERSONAJE DEL DÍA ---------- */
-
-.secret-info {
-  margin-top: 1rem;
-  padding: 0.75rem 1rem;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(148, 163, 184, 0.18);
-}
-
-.secret-info h3 {
-  margin-top: 0;
-  margin-bottom: 0.5rem;
-}
-
-.secret-header {
-  display: flex;
-  gap: 0.9rem;
-  align-items: flex-start;
-}
-
-.secret-image {
-  width: 96px;
-  height: 96px;
-  flex: 0 0 96px;
-  object-fit: cover;
-  border-radius: 10px;
-  border: 1px solid rgba(148, 163, 184, 0.30);
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.secret-main {
-  min-width: 0;
-}
-
-.secret-debut {
-  margin-top: 0.75rem;
-  color: rgba(229, 231, 235, 0.85);
-}
-
 /* ---------- SUGERENCIAS ---------- */
 
-.suggestions-list {
+.suggestions {
   margin: 0.5rem 0 0;
   padding: 0.35rem;
-  list-style: none;
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
@@ -774,13 +797,6 @@ button[type='submit']:disabled {
   background: rgba(255, 255, 255, 0.06);
 }
 
-.suggestion-text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-}
-
 .suggestion-name {
   font-weight: 800;
   font-size: 0.95rem;
@@ -790,6 +806,7 @@ button[type='submit']:disabled {
 }
 
 .suggestion-anime {
+  margin-left: auto;
   font-size: 0.82rem;
   color: rgba(229, 231, 235, 0.65);
   white-space: nowrap;
@@ -797,54 +814,30 @@ button[type='submit']:disabled {
   text-overflow: ellipsis;
 }
 
-/* ---------- SHARE ---------- */
+/* ---------- FOOTER LINKS ---------- */
 
-.share-row {
+.page-footer {
   margin-top: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-
-.share-row button {
-  background: linear-gradient(135deg, #facc15, #22d3ee);
-  color: #06101a;
-  font-weight: 900;
-}
-
-.share-x {
-  background: rgba(255, 255, 255, 0.10) !important;
-  color: rgba(229, 231, 235, 0.95) !important;
-  border: 1px solid rgba(148, 163, 184, 0.18) !important;
-  font-weight: 900;
-}
-
-.share-x:hover {
-  background: rgba(255, 255, 255, 0.14) !important;
-}
-
-.share-message {
-  color: rgba(229, 231, 235, 0.8);
-  font-size: 0.95rem;
-}
-
-/* ---------- FOOTER ---------- */
-
-.footer {
-  margin-top: 1.25rem;
   padding-top: 0.9rem;
   border-top: 1px solid rgba(148, 163, 184, 0.18);
-  text-align: center;
-  color: rgba(229, 231, 235, 0.65);
-  font-size: 0.95rem;
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  color: rgba(229, 231, 235, 0.6);
 }
 
-.footer strong {
-  color: rgba(229, 231, 235, 0.92);
+.page-footer a {
+  color: rgba(34, 211, 238, 0.95);
+  text-decoration: none;
+  font-weight: 900;
 }
 
-/* ---------- MODAL “CÓMO SE JUEGA” ---------- */
+.page-footer a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- MODAL ---------- */
 
 .modal-overlay {
   position: fixed;
@@ -856,7 +849,7 @@ button[type='submit']:disabled {
   z-index: 50;
 }
 
-.modal-card {
+.modal {
   width: 100%;
   max-width: 620px;
   border-radius: 16px;
@@ -866,6 +859,10 @@ button[type='submit']:disabled {
   overflow: hidden;
 }
 
+.modal-wide {
+  max-width: 860px;
+}
+
 .modal-header {
   display: flex;
   align-items: center;
@@ -873,12 +870,6 @@ button[type='submit']:disabled {
   gap: 0.75rem;
   padding: 0.9rem 1rem;
   border-bottom: 1px solid rgba(148, 163, 184, 0.18);
-}
-
-.modal-header h2 {
-  margin: 0;
-  font-size: 1.15rem;
-  color: #fff;
 }
 
 .modal-close {
@@ -895,335 +886,163 @@ button[type='submit']:disabled {
   padding: 0.9rem 1rem 1rem;
 }
 
-.howto-list {
-  margin: 0;
-  padding-left: 1.2rem;
+/* ---------- RESULT MODAL ---------- */
+
+.result-top {
   display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  color: rgba(229, 231, 235, 0.86);
-}
-
-.howto-badges {
-  margin-top: 0.5rem;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 0.35rem 0.6rem;
-  align-items: center;
-}
-
-.howto-pill {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 26px;
-  padding: 0 0.6rem;
-  border-radius: 999px;
-  font-weight: 900;
-  font-size: 0.85rem;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-}
-
-.howto-text {
-  font-size: 0.92rem;
-  color: rgba(229, 231, 235, 0.78);
-}
-
-.modal-footer {
-  padding: 0.9rem 1rem 1rem;
-  border-top: 1px solid rgba(148, 163, 184, 0.18);
-  display: flex;
-  justify-content: flex-end;
-}
-
-.modal-primary {
-  background: linear-gradient(135deg, #6366f1, #22d3ee);
-  color: #06101a;
-  font-weight: 900;
-  border-radius: 12px;
-  padding: 0.55rem 0.9rem;
-}
-
-/* =========================================================
-   PREVIEW PAGE (Calendario 30 días) - solo ?preview=1
-   ========================================================= */
-
-.preview-page {
-  display: flex;
-  flex-direction: column;
   gap: 1rem;
-
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(148, 163, 184, 0.18);
-  border-radius: 18px;
-  padding: 1.25rem 1.25rem 1.5rem;
-  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(10px);
+  align-items: flex-start;
 }
 
-.preview-card {
-  padding: 0.9rem 1rem;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(148, 163, 184, 0.18);
-}
-
-.preview-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  margin-bottom: 0.75rem;
-}
-
-.preview-btn {
-  background: linear-gradient(135deg, #facc15, #22d3ee);
-  color: #06101a;
-  font-weight: 900;
-}
-
-.preview-copied {
-  color: rgba(229, 231, 235, 0.85);
-  font-weight: 800;
-}
-
-.preview-summary {
-  display: flex;
-  gap: 0.65rem;
-  flex-wrap: wrap;
-  margin-bottom: 0.85rem;
-}
-
-.preview-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  padding: 0.5rem 0.65rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(148, 163, 184, 0.18);
-}
-
-.preview-pill.ok {
-  border-color: rgba(34, 197, 94, 0.35);
-}
-
-.preview-pill.warn {
-  border-color: rgba(250, 204, 21, 0.35);
-}
-
-.preview-pill-label {
-  font-size: 0.74rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: rgba(229, 231, 235, 0.72);
-  font-weight: 900;
-}
-
-.preview-pill-value {
-  font-weight: 900;
-  color: #ffffff;
-}
-
-.preview-empty h2 {
-  margin: 0 0 0.5rem;
-}
-
-.preview-code {
-  margin: 0.6rem 0;
-  padding: 0.75rem 0.9rem;
-  border-radius: 12px;
-  background: rgba(15, 23, 42, 0.7);
-  border: 1px solid rgba(148, 163, 184, 0.18);
-  overflow: auto;
-}
-
-.preview-table-wrap {
-  overflow: auto;
-  border-radius: 12px;
-  border: 1px solid rgba(148, 163, 184, 0.18);
-}
-
-.preview-table {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 860px;
-  background: rgba(15, 23, 42, 0.55);
-}
-
-.preview-table th,
-.preview-table td {
-  padding: 0.6rem 0.65rem;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.14);
-  text-align: left;
-  vertical-align: middle;
-}
-
-.preview-table th {
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: rgba(229, 231, 235, 0.7);
-  font-weight: 900;
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.td-center {
-  text-align: center;
-}
-
-.td-mono {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-  font-size: 0.92rem;
-}
-
-.preview-avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
+.secret-image {
+  width: 96px;
+  height: 96px;
+  flex: 0 0 96px;
   object-fit: cover;
-  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 10px;
+  border: 1px solid rgba(148, 163, 184, 0.30);
   background: rgba(255, 255, 255, 0.06);
 }
 
-.preview-na {
-  color: rgba(229, 231, 235, 0.55);
-  font-weight: 800;
+.result-info {
+  flex: 1;
+  min-width: 0;
 }
 
-.preview-status {
+.result-title {
   display: flex;
-  gap: 0.4rem;
   flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: baseline;
+  margin-bottom: 0.35rem;
 }
 
-.badge {
+.result-name {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+.result-meta {
+  color: rgba(229, 231, 235, 0.75);
+  font-weight: 700;
+}
+
+.result-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.35rem 0 0.55rem;
+}
+
+.tag {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 999px;
   padding: 0.25rem 0.55rem;
-  font-size: 0.78rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
   font-weight: 900;
-  border: 1px solid rgba(148, 163, 184, 0.18);
   background: rgba(255, 255, 255, 0.08);
-  color: rgba(229, 231, 235, 0.9);
-}
-
-.badge-ok {
-  border-color: rgba(34, 197, 94, 0.35);
-}
-
-.badge-warn {
-  border-color: rgba(250, 204, 21, 0.35);
-}
-
-.row-warn td {
-  background: rgba(250, 204, 21, 0.05);
-}
-
-.preview-note {
-  margin-top: 0.8rem;
-  color: rgba(229, 231, 235, 0.75);
-}
-/* ---------- LEGAL PAGES + FOOTER LINKS ---------- */
-
-.legal-content {
-  background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(148, 163, 184, 0.18);
-  border-radius: 14px;
-  padding: 0.9rem 1rem;
-  color: rgba(229, 231, 235, 0.9);
+  color: rgba(229, 231, 235, 0.92);
 }
 
-.legal-content h2 {
-  margin: 0.9rem 0 0.45rem;
-  font-size: 1.05rem;
-  color: #ffffff;
-}
-
-.legal-content ul {
-  margin: 0.35rem 0 0.25rem;
-  padding-left: 1.25rem;
-  display: grid;
-  gap: 0.4rem;
-}
-
-.legal-content a {
-  color: rgba(34, 211, 238, 0.95);
-  text-decoration: none;
-  font-weight: 800;
-}
-
-.legal-content a:hover {
-  text-decoration: underline;
-}
-
-.footer-links {
+.modal-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem 0.9rem;
-  justify-content: center;
-  margin-bottom: 0.45rem;
+  gap: 0.6rem;
+  margin-top: 0.9rem;
 }
 
-.footer-link {
-  color: rgba(229, 231, 235, 0.75);
-  text-decoration: none;
-  font-weight: 800;
-}
-
-.footer-link:hover {
-  color: rgba(229, 231, 235, 0.95);
-  text-decoration: underline;
-}
-
-.footer-note {
-  text-align: center;
-}
-
-/* Si usas Link con clase howto-button */
-a.howto-button {
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-/* ---------- HOME "CÓMO SE JUEGA" (contenido editorial para AdSense) ---------- */
-.home-howto {
-  margin-top: 0.25rem;
-  padding: 0.95rem 1rem;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(148, 163, 184, 0.18);
-}
-
-.home-howto h2 {
-  margin: 0 0 0.6rem;
-  font-size: 1.08rem;
-  color: #ffffff;
-}
-
-.home-howto ul {
-  margin: 0;
-  padding-left: 1.2rem;
-  display: grid;
-  gap: 0.45rem;
-  color: rgba(229, 231, 235, 0.86);
-}
-
-.home-howto-link {
-  margin-top: 0.75rem !important;
-  color: rgba(229, 231, 235, 0.78);
-}
-
-.home-howto-link a {
-  color: rgba(34, 211, 238, 0.95);
+.btn-primary {
+  background: rgba(99, 102, 241, 0.95);
+  color: white;
+  border: none;
+  padding: 0.6rem 0.95rem;
+  border-radius: 12px;
   font-weight: 900;
-  text-decoration: none;
+  cursor: pointer;
 }
 
-.home-howto-link a:hover {
-  text-decoration: underline;
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(229, 231, 235, 0.92);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  padding: 0.6rem 0.95rem;
+  border-radius: 12px;
+  font-weight: 900;
+  cursor: pointer;
 }
+
+.btn-primary:disabled,
+.btn-secondary:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.share-box {
+  width: 100%;
+  margin-top: 0.7rem;
+  min-height: 86px;
+  resize: none;
+  border-radius: 12px;
+  padding: 0.65rem 0.75rem;
+  background: rgba(2, 6, 23, 0.35);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  color: rgba(229, 231, 235, 0.92);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+}
+
+@media (max-width: 520px) {
+  .result-top {
+    flex-direction: column;
+  }
+
+  .secret-image {
+    width: 110px;
+    height: 110px;
+    flex-basis: 110px;
+  }
+}
+/* --- Anime selector (filtro de sugerencias) --- */
+.anime-select {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+}
+
+.anime-label {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.65);
+  white-space: nowrap;
+}
+
+/* look oscuro como el sitio */
+.anime-dropdown {
+  height: 36px;
+  padding: 0 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(15, 23, 42, 0.55);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.95rem;
+  outline: none;
+  max-width: 240px;
+  backdrop-filter: blur(8px);
+}
+
+.anime-dropdown:focus {
+  border-color: rgba(99, 102, 241, 0.55);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18);
+}
+
+/* opciones del dropdown */
+.anime-dropdown option {
+  background: #0b1220;
+  color: rgba(255, 255, 255, 0.92);
+}
+

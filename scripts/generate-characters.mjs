@@ -1,68 +1,187 @@
-import fs from 'fs'
-import Papa from 'papaparse'
+import fs from "node:fs";
+import path from "node:path";
 
-const csvPath = './data/otakle_characters.csv' // cambia el nombre si tu CSV se llama distinto
-const outPath = './src/characters.ts'
+const projectRoot = process.cwd();
 
-const csvText = fs.readFileSync(csvPath, 'utf8')
+// ✅ AJUSTA SI TU CSV ESTÁ EN data/ o con otro nombre
+// Ejemplos:
+// const CSV_PATH = path.join(projectRoot, "data", "otakle_characters.csv");
+const CSV_PATH = path.join(projectRoot, "otakle_characters.csv");
 
-const parsed = Papa.parse(csvText, {
-  header: true,
-  skipEmptyLines: true
-})
+const OUT_PATH = path.join(projectRoot, "src", "characters.ts");
 
-const rows = parsed.data
-
-const toTsString = (value) => {
-  if (value === null || value === undefined) return '""'
-  const s = String(value).replace(/\\/g, '\\\\').replace(/`/g, '\\`')
-  return '`' + s + '`'
+function norm(s) {
+  return String(s ?? "").trim().toLowerCase();
 }
 
-let ts = `// Archivo generado automáticamente desde ${csvPath}\n`
-ts += `// No editar a mano, edita el Excel/CSV y vuelve a generar.\n\n`
-
-ts += `export type Genre = 'Shonen' | 'Deportes' | 'Romance' | 'Otros'\n`
-ts += `export type Role = 'Protagonista' | 'Antagonista' | 'Secundario' | 'Deuteragonista'\n`
-ts += `export type Gender = 'Masculino' | 'Femenino' | 'Otro'\n`
-ts += `export type Race = 'Humano' | 'Saiyajin' | 'Otro'\n\n`
-
-ts += `export type Character = {\n`
-ts += `  id: string\n`
-ts += `  name: string\n`
-ts += `  anime: string\n`
-ts += `  genre: Genre\n`
-ts += `  debutYear: number\n`
-ts += `  studio: string\n`
-ts += `  role: Role\n`
-ts += `  gender: Gender\n`
-ts += `  race: Race\n`
-ts += `  debutInfo: string\n`
-ts += `  imageUrl: string\n`
-ts += `}\n\n`
-
-ts += `export const CHARACTERS: Character[] = [\n`
-
-for (const row of rows) {
-  if (!row.id || row.active === 'FALSE' || row.active === 'false') continue
-
-  ts += `  {\n`
-  ts += `    id: ${toTsString(row.id)},\n`
-  ts += `    name: ${toTsString(row.name)},\n`
-  ts += `    anime: ${toTsString(row.anime)},\n`
-  ts += `    genre: ${toTsString(row.genre)},\n`
-  ts += `    debutYear: ${Number(row.debutYear) || 0},\n`
-  ts += `    studio: ${toTsString(row.studio)},\n`
-  ts += `    role: ${toTsString(row.role)},\n`
-  ts += `    gender: ${toTsString(row.gender)},\n`
-  ts += `    race: ${toTsString(row.race)},\n`
-  ts += `    debutInfo: ${toTsString(row.debutInfo)},\n`
-  ts += `    imageUrl: ${toTsString('/images/' + row.imageFileName)},\n`
-  ts += `  },\n`
+function cleanText(v) {
+  return String(v ?? "").trim();
 }
 
-ts += `]\n`
+function toBool(v, fallback = true) {
+  const s = norm(v);
+  if (s === "") return fallback;
+  if (["true", "1", "yes", "y", "si", "sí"].includes(s)) return true;
+  if (["false", "0", "no", "n"].includes(s)) return false;
+  return fallback;
+}
 
-fs.writeFileSync(outPath, ts, 'utf8')
+function toNumberOrNull(v) {
+  const s = cleanText(v);
+  if (!s || s === "?") return null;
+  const n = Number(s);
+  return Number.isFinite(n) ? n : null;
+}
 
-console.log('Generado:', outPath)
+// CSV simple (si tienes comillas con comas dentro, dime y te hago parser robusto)
+function parseCSV(text) {
+  const lines = text.split(/\r?\n/).filter((l) => l.trim().length > 0);
+  const header = lines[0].split(",").map((h) => h.trim());
+  return lines.slice(1).map((line) => {
+    const cols = line.split(",").map((c) => c.trim());
+    const obj = {};
+    header.forEach((h, i) => (obj[h] = cols[i] ?? ""));
+    return obj;
+  });
+}
+
+function canonicalAnime(input) {
+  const s = norm(input);
+
+  if (
+    s.includes("boku no hero") ||
+    s.includes("my hero academia") ||
+    s === "bnha" ||
+    s === "mha"
+  ) {
+    return "My Hero Academia";
+  }
+
+  return cleanText(input);
+}
+
+// ✅ Normaliza categorías de edad
+function canonicalAgeGroup(v) {
+  const raw = cleanText(v);
+  const s = norm(raw);
+
+  if (!s || s === "?" || s === "unknown" || s === "desconocido") return "Desconocido";
+  if (s === "nino" || s === "niño") return "Niño";
+  if (s === "adolescente") return "Adolescente";
+  if (s === "adulto") return "Adulto";
+
+  // si pusiste otras etiquetas en el CSV, las respetamos
+  return raw;
+}
+
+// Para template strings TS
+function escTemplate(s) {
+  return String(s ?? "")
+    .replace(/\\/g, "\\\\")
+    .replace(/`/g, "\\`")
+    .replace(/\$\{/g, "\\${");
+}
+
+if (!fs.existsSync(CSV_PATH)) {
+  console.error(`❌ No encontré el CSV en: ${CSV_PATH}`);
+  console.error(`👉 Solución: mueve el CSV ahí o cambia CSV_PATH en generate-characters.mjs`);
+  process.exit(1);
+}
+
+const csvText = fs.readFileSync(CSV_PATH, "utf8");
+const rows = parseCSV(csvText);
+
+// Genera characters
+const characters = rows
+  .map((r) => {
+    const id = cleanText(r.id);
+    if (!id) return null;
+
+    const imageFileName = cleanText(r.imageFileName);
+    const imageUrl = imageFileName ? `/images/${imageFileName}` : "/images/placeholder.png";
+
+    const yearDebut = toNumberOrNull(r.yearDebut ?? r.debutYear); // soporta ambos nombres
+    const debutYearCompat = yearDebut ?? 0; // compatibilidad
+
+    const ageDebutGroup = canonicalAgeGroup(r.ageDebutGroup ?? r.ageDebut);
+    const ageMainGroup = canonicalAgeGroup(r.ageMainGroup ?? r.ageMain);
+
+    return {
+      id,
+      name: cleanText(r.name),
+      anime: canonicalAnime(r.anime),
+      genre: cleanText(r.genre),
+      yearDebut,                 // ✅ lo que usa la UI nueva
+      debutYear: debutYearCompat, // ✅ compat, no molesta
+      studio: cleanText(r.studio),
+      role: cleanText(r.role),
+      gender: cleanText(r.gender),
+      race: cleanText(r.race),
+      debutInfo: cleanText(r.debutInfo),
+      active: toBool(r.active, true),
+
+      // ✅ lo que usa la UI para mostrar Niño/Adolescente/Adulto
+      ageDebutGroup,
+      ageMainGroup,
+
+      imageUrl,
+    };
+  })
+  .filter(Boolean);
+
+// Orden estable (opcional)
+characters.sort((a, b) => {
+  const aa = (a.anime || "").localeCompare(b.anime || "");
+  if (aa !== 0) return aa;
+  return (a.name || "").localeCompare(b.name || "");
+});
+
+const file = `/* eslint-disable */
+// AUTO-GENERATED FILE. DO NOT EDIT DIRECTLY.
+// Generated by scripts/generate-characters.mjs
+
+export type Character = {
+  id: string
+  name: string
+  anime: string
+  genre: string
+  yearDebut: number | null
+  debutYear: number
+  studio: string
+  role: string
+  gender: string
+  race: string
+  debutInfo: string
+  active?: boolean
+  ageDebutGroup?: string
+  ageMainGroup?: string
+  imageUrl: string
+}
+
+export const CHARACTERS: Character[] = [
+${characters
+  .map(
+    (c) => `  {
+    id: \`${escTemplate(c.id)}\`,
+    name: \`${escTemplate(c.name)}\`,
+    anime: \`${escTemplate(c.anime)}\`,
+    genre: \`${escTemplate(c.genre)}\`,
+    yearDebut: ${c.yearDebut == null ? "null" : c.yearDebut},
+    debutYear: ${Number.isFinite(c.debutYear) ? c.debutYear : 0},
+    studio: \`${escTemplate(c.studio)}\`,
+    role: \`${escTemplate(c.role)}\`,
+    gender: \`${escTemplate(c.gender)}\`,
+    race: \`${escTemplate(c.race)}\`,
+    debutInfo: \`${escTemplate(c.debutInfo)}\`,
+    active: ${c.active === false ? "false" : "true"},
+    ageDebutGroup: \`${escTemplate(c.ageDebutGroup ?? "Desconocido")}\`,
+    ageMainGroup: \`${escTemplate(c.ageMainGroup ?? "Desconocido")}\`,
+    imageUrl: \`${escTemplate(c.imageUrl)}\`,
+  },`
+  )
+  .join("\n")}
+]
+`;
+
+fs.writeFileSync(OUT_PATH, file, "utf8");
+console.log(`✅ characters.ts generado (${characters.length} personajes) -> ${OUT_PATH}`);

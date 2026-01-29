@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom'
 import './App.css'
 import { CHARACTERS } from './characters'
 import type { Character } from './characters'
-import { DAILY_SCHEDULE } from './dailySchedule'
 
-type Guess = {
+type Mode = 'normal' | 'easy'
+
+type GuessRow = {
   character: Character
-  isCorrect: boolean
 }
 
 type Stats = {
@@ -21,942 +21,664 @@ type SavedGame = {
   guesses: string[]
   tries: number
   isFinished: boolean
+  isWin: boolean
 }
 
-/**
- * ✅ IMPORTANTE:
- * - Cuando estés listo para publicar y partir en “Día 1”, cambia esta fecha.
- * - Debe ser en UTC (año, mes 0-11, día).
- *
- * Ejemplo: 2026-01-15 UTC => (2026, 0, 15)
- */
-const LAUNCH_DATE_UTC = { y: 2026, m: 0, d: 6 }
-
-// ✅ NUEVO: límite de intentos
-const MAX_TRIES = 8
-
-// ---------- Helpers fechas UTC ----------
-const getLaunchBaseUTC = () => new Date(Date.UTC(LAUNCH_DATE_UTC.y, LAUNCH_DATE_UTC.m, LAUNCH_DATE_UTC.d))
-const addDaysUTC = (base: Date, days: number) =>
-  new Date(Date.UTC(base.getUTCFullYear(), base.getUTCMonth(), base.getUTCDate() + days))
-const formatUTCDate = (d: Date) => d.toISOString().slice(0, 10)
-
-// ---------- Día (UTC) ----------
-const getDayIndex = (date = new Date()): number => {
-  const utcToday = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()))
-  const base = getLaunchBaseUTC()
-  const diffMs = utcToday.getTime() - base.getTime()
-  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
-  return Math.max(0, diffDays)
-}
-
-// ---------- Pick diario “random pero fijo” (determinístico) ----------
-const xmur3 = (str: string) => {
-  let h = 1779033703 ^ str.length
-  for (let i = 0; i < str.length; i++) {
-    h = Math.imul(h ^ str.charCodeAt(i), 3432918353)
-    h = (h << 13) | (h >>> 19)
-  }
-  return () => {
-    h = Math.imul(h ^ (h >>> 16), 2246822507)
-    h = Math.imul(h ^ (h >>> 13), 3266489909)
-    h ^= h >>> 16
-    return h >>> 0
-  }
-}
-
-const mulberry32 = (a: number) => {
-  return () => {
-    let t = (a += 0x6d2b79f5)
-    t = Math.imul(t ^ (t >>> 15), t | 1)
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
-  }
-}
-
-const seededPickDaily = (dayIndex: number): Character => {
-  const seedFn = xmur3(`otakle-${dayIndex}`)
-  const rand = mulberry32(seedFn())
-
-  const ids = CHARACTERS.map((c) => c.id)
-
-  for (let i = ids.length - 1; i > 0; i--) {
-    const j = Math.floor(rand() * (i + 1))
-    ;[ids[i], ids[j]] = [ids[j], ids[i]]
-  }
-
-  const pickedId = ids[0]
-  return CHARACTERS.find((c) => c.id === pickedId) ?? CHARACTERS[0]
-}
-
-/**
- * ✅ Calendario fijo para los próximos 30 días
- * - Si DAILY_SCHEDULE tiene id para este día -> usamos ese personaje
- * - Si no -> fallback al random determinístico
- */
-const getSecretForDay = (dayIndex: number): Character => {
-  const scheduledId = DAILY_SCHEDULE[dayIndex]
-  if (scheduledId) {
-    return CHARACTERS.find((c) => c.id === scheduledId) ?? CHARACTERS[0]
-  }
-  return seededPickDaily(dayIndex)
-}
-
-// ---------- Stats (racha) ----------
-const defaultStats: Stats = {
-  currentStreak: 0,
-  maxStreak: 0,
-  lastWinDayIndex: null
-}
-
-const loadStats = (): Stats => {
-  if (typeof window === 'undefined') return defaultStats
-  try {
-    const raw = window.localStorage.getItem('otakle_stats')
-    if (!raw) return defaultStats
-    const parsed = JSON.parse(raw) as Stats
-    return {
-      currentStreak: parsed.currentStreak ?? 0,
-      maxStreak: parsed.maxStreak ?? 0,
-      lastWinDayIndex: parsed.lastWinDayIndex ?? null
-    }
-  } catch {
-    return defaultStats
-  }
-}
-
-const saveStats = (stats: Stats) => {
-  if (typeof window === 'undefined') return
-  window.localStorage.setItem('otakle_stats', JSON.stringify(stats))
-}
-
-const updateStatsOnWin = (stats: Stats, dayIndex: number): Stats => {
-  if (stats.lastWinDayIndex === dayIndex) return stats
-
-  const isConsecutive = stats.lastWinDayIndex !== null && dayIndex === stats.lastWinDayIndex + 1
-  const currentStreak = isConsecutive ? stats.currentStreak + 1 : 1
-  const maxStreak = Math.max(stats.maxStreak, currentStreak)
-
-  return { currentStreak, maxStreak, lastWinDayIndex: dayIndex }
-}
-
-// ---------- Partida diaria ----------
-const defaultGameState = {
-  guesses: [] as Guess[],
-  tries: 0,
-  isFinished: false
-}
-
-const loadGame = (
-  dayIndex: number,
-  secret: Character
-): { guesses: Guess[]; tries: number; isFinished: boolean } => {
-  if (typeof window === 'undefined') return defaultGameState
-
-  try {
-    const raw = window.localStorage.getItem('otakle_game')
-    if (!raw) return defaultGameState
-    const data = JSON.parse(raw) as SavedGame
-
-    if (data.dayIndex !== dayIndex) return defaultGameState
-
-    const guesses: Guess[] = (data.guesses || [])
-      .map((name) => {
-        const char = CHARACTERS.find((c) => c.name === name)
-        if (!char) return null
-        const isCorrect = char.name === secret.name
-        return { character: char, isCorrect }
-      })
-      .filter((g): g is Guess => g !== null)
-
-    const tries = data.tries ?? guesses.length
-    // ✅ si llegó a MAX_TRIES, se considera terminado (aunque no haya acertado)
-    const isFinished = Boolean(data.isFinished || guesses.some((g) => g.isCorrect) || tries >= MAX_TRIES)
-
-    return { guesses, tries, isFinished }
-  } catch {
-    return defaultGameState
-  }
-}
-
-const saveGame = (dayIndex: number, guesses: Guess[], tries: number, isFinished: boolean) => {
-  if (typeof window === 'undefined') return
-
-  const data: SavedGame = {
-    dayIndex,
-    guesses: guesses.map((g) => g.character.name),
-    tries,
-    isFinished
-  }
-
-  window.localStorage.setItem('otakle_game', JSON.stringify(data))
-}
-
-// ---------- Texto para compartir ----------
-const buildShareText = (dayIndex: number, secret: Character, guesses: Guess[]): string => {
-  const header = `Otakle #${dayIndex + 1} - ${
-    guesses[guesses.length - 1]?.isCorrect ? `${guesses.length} intentos` : 'sin resolver'
-  }`
-
-  const rows = guesses.map((guess) => {
-    const c = guess.character
-    const animeCorrect = c.anime === secret.anime
-    const genreCorrect = c.genre === secret.genre
-    const yearCorrect = c.debutYear === secret.debutYear
-    const yearRelation = yearCorrect ? 'equal' : c.debutYear < secret.debutYear ? 'less' : 'greater'
-    const studioCorrect = c.studio === secret.studio
-    const roleCorrect = c.role === secret.role
-    const genderCorrect = c.gender === secret.gender
-    const raceCorrect = c.race === secret.race
-
-    const nameEmoji = guess.isCorrect ? '🟩' : '⬜'
-    const animeEmoji = animeCorrect ? '🟩' : '🟥'
-    const genreEmoji = genreCorrect ? '🟩' : '🟥'
-    const yearEmoji = yearRelation === 'equal' ? '🟩' : yearRelation === 'less' ? '🟧' : '🟦'
-    const studioEmoji = studioCorrect ? '🟩' : '🟥'
-    const roleEmoji = roleCorrect ? '🟩' : '🟥'
-    const genderEmoji = genderCorrect ? '🟩' : '🟥'
-    const raceEmoji = raceCorrect ? '🟩' : '🟥'
-
-    return `${nameEmoji}${animeEmoji}${genreEmoji}${yearEmoji}${studioEmoji}${roleEmoji}${genderEmoji}${raceEmoji}`
-  })
-
-  return [header, ...rows].join('\n')
-}
-
-// ---------- Preview (30 días) ----------
-type PreviewRow = {
+type DailyResponse = {
+  dayIndex: number
   dayNumber: number
-  dateUTC: string
   id: string
-  character: Character | null
+  maxTries: number
+  changesAtUTC: string
 }
 
-function SchedulePreview() {
-  const base = getLaunchBaseUTC()
+const MAX_TRIES = 8
+const DEFAULT_MODE: Mode = 'normal'
 
-  const rows: PreviewRow[] = useMemo(() => {
-    const ids = DAILY_SCHEDULE.slice(0, 30)
+// Pool “Easy” (client-side) solo para limitar sugerencias.
+// El “daily real” lo decide el server, así que esto NO revela el futuro.
+const EASY_GUESS_IDS = new Set<string>([
+  'goku',
+  'vegeta',
+  'gohan',
+  'naruto',
+  'sasuke_uchiha',
+  'luffy',
+  'roronoa_zoro',
+  'shanks',
+  'tanjiro',
+  'deku',
+  'ichigo',
+  'edward_elric',
+  'light_yagami',
+  'lelouch',
+  'kageyama',
+  'kaguya',
+  'zero_two',
+  'saitama',
+  'spike_spiegel',
+])
 
-    return ids.map((id, idx) => {
-      const dateUTC = formatUTCDate(addDaysUTC(base, idx))
-      const character = CHARACTERS.find((c) => c.id === id) ?? null
-      return {
-        dayNumber: idx + 1,
-        dateUTC,
-        id,
-        character
-      }
-    })
-  }, [base])
+function clamp(n: number, min: number, max: number) {
+  return Math.max(min, Math.min(max, n))
+}
 
-  const [imgStatus, setImgStatus] = useState<Record<string, 'ok' | 'broken'>>({})
-  const [copied, setCopied] = useState<string | null>(null)
+function norm(s: string) {
+  return (s ?? '').trim().toLowerCase()
+}
 
-  const missingChars = rows.filter((r) => !r.character).length
-  const duplicatesCount = (() => {
-    const seen = new Set<string>()
-    let dup = 0
-    for (const r of rows) {
-      if (seen.has(r.id)) dup++
-      seen.add(r.id)
-    }
-    return dup
-  })()
+function loadJSON<T>(key: string, fallback: T): T {
+  try {
+    const raw = localStorage.getItem(key)
+    if (!raw) return fallback
+    return JSON.parse(raw) as T
+  } catch {
+    return fallback
+  }
+}
 
-  const copyIds = async () => {
-    const text = rows.map((r) => r.id).join('\n')
-    try {
-      await navigator.clipboard.writeText(text)
-      setCopied('IDs copiados ✅')
-    } catch {
-      setCopied('No pude copiar automáticamente (cópialo manualmente).')
-    }
-    setTimeout(() => setCopied(null), 2500)
+function saveJSON(key: string, value: unknown) {
+  localStorage.setItem(key, JSON.stringify(value))
+}
+
+function getModeKey(mode: Mode, suffix: string) {
+  return `otakle_v2_${suffix}_${mode}`
+}
+
+function buildShareText(args: { dayNumber: number; mode: Mode; tries: number; isWin: boolean }) {
+  const header = `Otakle #${args.dayNumber} • ${args.mode === 'easy' ? 'Easy' : 'Normal'}`
+  const result = args.isWin ? `✅ ${args.tries}/${MAX_TRIES}` : `❌ X/${MAX_TRIES}`
+  const line = `${header}\n${result}\n${location.origin}`
+  return line
+}
+
+function yearClass(secret: number, guess: number) {
+  if (secret === guess) return 'correct'
+  return secret > guess ? 'higher' : 'lower'
+}
+
+
+/**
+ * ✅ Normaliza anime para evitar “Boku no Hero” vs “My Hero Academia”
+ */
+function canonicalAnime(input: string) {
+  const s = norm(input)
+
+  if (s.includes('boku no hero') || s.includes('my hero academia') || s === 'bnha' || s === 'mha') {
+    return 'My Hero Academia'
   }
 
-  const exitPreview = () => {
-    const url = new URL(window.location.href)
-    url.searchParams.delete('preview')
-    window.location.href = url.toString()
-  }
+  return (input ?? '').trim()
+}
 
-  return (
-    <div className="preview-page">
-      <header className="topbar">
-        <div className="brand">
-          <div className="brand-left">
-            <img className="brand-logo" src="/otakle-logo.png" alt="Otakle" />
-            <div className="brand-text">
-              <div className="title-row">
-                <h1 className="brand-title">Otakle</h1>
-                <span className="daily-badge">Preview</span>
-              </div>
-              <p className="brand-subtitle">Calendario de los próximos 30 días (solo para revisar)</p>
-            </div>
-          </div>
-
-          <div className="topbar-actions">
-            <button type="button" className="howto-button" onClick={exitPreview}>
-              Volver al juego
-            </button>
-          </div>
-        </div>
-      </header>
-
-      <div className="preview-card">
-        <div className="preview-actions">
-          <button type="button" className="preview-btn" onClick={copyIds}>
-            Copiar IDs (30)
-          </button>
-          {copied && <span className="preview-copied">{copied}</span>}
-        </div>
-
-        <div className="preview-summary">
-          <div className="preview-pill">
-            <span className="preview-pill-label">Base UTC</span>
-            <span className="preview-pill-value">{formatUTCDate(base)}</span>
-          </div>
-          <div className={`preview-pill ${duplicatesCount > 0 ? 'warn' : 'ok'}`}>
-            <span className="preview-pill-label">Repetidos</span>
-            <span className="preview-pill-value">{duplicatesCount}</span>
-          </div>
-          <div className={`preview-pill ${missingChars > 0 ? 'warn' : 'ok'}`}>
-            <span className="preview-pill-label">IDs sin personaje</span>
-            <span className="preview-pill-value">{missingChars}</span>
-          </div>
-        </div>
-
-        {DAILY_SCHEDULE.length === 0 ? (
-          <div className="preview-empty">
-            <h2>No hay calendario aún</h2>
-            <p>
-              Genera el archivo <code>src/dailySchedule.ts</code> con el script:
-            </p>
-            <pre className="preview-code">node scripts/generate-schedule.mjs</pre>
-            <p>
-              Luego vuelve a abrir: <code>?preview=1</code>
-            </p>
-          </div>
-        ) : (
-          <div className="preview-table-wrap">
-            <table className="preview-table">
-              <thead>
-                <tr>
-                  <th>Día</th>
-                  <th>Fecha (UTC)</th>
-                  <th>ID</th>
-                  <th>Avatar</th>
-                  <th>Nombre</th>
-                  <th>Anime</th>
-                  <th>Estado</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((r) => {
-                  const c = r.character
-                  const status = c ? 'OK' : 'Falta en CHARACTERS'
-                  const imgKey = c?.imageUrl ?? ''
-                  const imgOk = imgKey ? imgStatus[imgKey] !== 'broken' : false
-
-                  return (
-                    <tr key={`${r.dayNumber}-${r.id}`} className={!c ? 'row-warn' : ''}>
-                      <td className="td-center">#{r.dayNumber}</td>
-                      <td className="td-mono">{r.dateUTC}</td>
-                      <td className="td-mono">{r.id}</td>
-                      <td className="td-center">
-                        {c ? (
-                          <img
-                            className="preview-avatar"
-                            src={c.imageUrl}
-                            alt={c.name}
-                            onError={() => setImgStatus((prev) => ({ ...prev, [c.imageUrl]: 'broken' }))}
-                            onLoad={() => setImgStatus((prev) => ({ ...prev, [c.imageUrl]: 'ok' }))}
-                          />
-                        ) : (
-                          <span className="preview-na">—</span>
-                        )}
-                      </td>
-                      <td>{c ? c.name : <span className="preview-na">No encontrado</span>}</td>
-                      <td>{c ? c.anime : <span className="preview-na">—</span>}</td>
-                      <td>
-                        <div className="preview-status">
-                          <span className={`badge ${c ? 'badge-ok' : 'badge-warn'}`}>{status}</span>
-                          {c && (
-                            <span className={`badge ${imgOk ? 'badge-ok' : 'badge-warn'}`}>
-                              {imgOk ? 'Imagen OK' : 'Imagen NO carga'}
-                            </span>
-                          )}
-                        </div>
-                      </td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
-
-            <p className="preview-note">
-              Tip: Si quieres que el Día #1 sea una fecha exacta al publicar, cambia <code>LAUNCH_DATE_UTC</code> en{' '}
-              <code>Game.tsx</code>.
-            </p>
-          </div>
-        )}
-      </div>
-
-      <footer className="footer">
-        <div className="footer-links">
-          <Link to="/" className="footer-link">
-            Inicio
-          </Link>
-          <Link to="/privacy" className="footer-link">
-            Privacy
-          </Link>
-          <Link to="/terms" className="footer-link">
-            Terms
-          </Link>
-          <Link to="/contact" className="footer-link">
-            Contact
-          </Link>
-          <a className="footer-link" href="https://twitter.com/aknoid" target="_blank" rel="noreferrer noopener">
-            X @aknoid
-          </a>
-          <a className="footer-link" href="mailto:oscarfernandezcepeda@gmail.com">
-            oscarfernandezcepeda@gmail.com
-          </a>
-        </div>
-        <div className="footer-note">
-          Otakle by <strong>Aknoid</strong>
-        </div>
-      </footer>
-    </div>
-  )
+function displayText(s: string) {
+  return (s ?? '').trim()
 }
 
 export default function Game() {
-  const isPreviewMode = useMemo(() => {
-    if (typeof window === 'undefined') return false
-    const sp = new URLSearchParams(window.location.search)
-    return sp.get('preview') === '1'
-  }, [])
+  const [mode, setMode] = useState<Mode>(() => loadJSON<Mode>('otakle_mode', DEFAULT_MODE))
 
-  if (isPreviewMode) return <SchedulePreview />
+  // ✅ selector anime (SOLO FILTRA SUGERENCIAS)
+  const [animeFilter, setAnimeFilter] = useState<string>(() => loadJSON<string>('otakle_anime_filter', 'ALL'))
 
-  const [dayIndex] = useState<number>(() => getDayIndex())
-  const [secret] = useState<Character>(() => getSecretForDay(dayIndex))
-
-  const initialGame = loadGame(dayIndex, secret)
+  const [daily, setDaily] = useState<DailyResponse | null>(null)
+  const [dailyError, setDailyError] = useState<string | null>(null)
+  const [secret, setSecret] = useState<Character | null>(null)
 
   const [guessInput, setGuessInput] = useState('')
-  const [guesses, setGuesses] = useState<Guess[]>(() => initialGame.guesses)
-  const [tries, setTries] = useState<number>(() => initialGame.tries)
-  const [isFinished, setIsFinished] = useState<boolean>(() => initialGame.isFinished)
+  const [guesses, setGuesses] = useState<GuessRow[]>([])
+  const [tries, setTries] = useState(0)
+  const [isFinished, setIsFinished] = useState(false)
+  const [isWin, setIsWin] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
-  const [stats, setStats] = useState<Stats>(() => loadStats())
+
+  const [stats, setStats] = useState<Stats>(() =>
+    loadJSON<Stats>(getModeKey(mode, 'stats'), {
+      currentStreak: 0,
+      maxStreak: 0,
+      lastWinDayIndex: null,
+    }),
+  )
+
   const [shareMessage, setShareMessage] = useState<string | null>(null)
   const [isHowToOpen, setIsHowToOpen] = useState(false)
+  const [isResultOpen, setIsResultOpen] = useState(false)
 
-  // ✅ NUEVO: filtro por anime (dropdown)
-  const [animeFilter, setAnimeFilter] = useState<string>('Todos')
+  const activeCharacters = useMemo(() => CHARACTERS.filter((c) => c.active !== false), [])
 
+  // ✅ opciones de anime (únicas)
   const animeOptions = useMemo(() => {
     const set = new Set<string>()
-    for (const c of CHARACTERS) set.add(c.anime)
-    return ['Todos', ...Array.from(set).sort((a, b) => a.localeCompare(b))]
-  }, [])
-
-  useEffect(() => {
-    if (!isHowToOpen) return
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setIsHowToOpen(false)
+    for (const c of activeCharacters) {
+      const a = canonicalAnime((c as any).anime)
+      if (a) set.add(a)
     }
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
-  }, [isHowToOpen])
+    return Array.from(set).sort((a, b) => a.localeCompare(b))
+  }, [activeCharacters])
 
-  const normalizedInput = guessInput.trim().toLowerCase()
-
-  const candidates = useMemo(() => {
-    const base = animeFilter === 'Todos' ? CHARACTERS : CHARACTERS.filter((c) => c.anime === animeFilter)
-    return base.map((c) => ({ c, nameLower: c.name.toLowerCase() }))
+  // persist filtro
+  useEffect(() => {
+    saveJSON('otakle_anime_filter', animeFilter)
   }, [animeFilter])
 
-  // ✅ NUEVO: 10 sugerencias + startsWith (prefix) + fallback a includes si falta
-  const suggestions = useMemo(() => {
-    if (!normalizedInput || isFinished) return []
+  const guessPool = useMemo(() => {
+    let base = activeCharacters
 
-    const prefix = candidates
-      .filter((x) => x.nameLower.startsWith(normalizedInput))
-      .map((x) => x.c)
-
-    if (prefix.length >= 10) return prefix.slice(0, 10)
-
-    const prefixSet = new Set(prefix.map((p) => p.id))
-    const contains = candidates
-      .filter((x) => !prefixSet.has(x.c.id) && x.nameLower.includes(normalizedInput))
-      .map((x) => x.c)
-
-    return [...prefix, ...contains].slice(0, 10)
-  }, [normalizedInput, isFinished, candidates])
-
-  const isLocked = isFinished || tries >= MAX_TRIES
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    if (isLocked) return
-
-    if (tries >= MAX_TRIES) {
-      setMessage(`Se acabaron los intentos (${MAX_TRIES}). Vuelve mañana.`)
-      setIsFinished(true)
-      saveGame(dayIndex, guesses, tries, true)
-      return
+    if (mode === 'easy') {
+      const filtered = activeCharacters.filter((c) => EASY_GUESS_IDS.has(c.id))
+      base = filtered.length ? filtered : activeCharacters
     }
 
-    const normalized = guessInput.trim().toLowerCase()
-    if (!normalized) return
-
-    const found = CHARACTERS.find((c) => c.name.toLowerCase() === normalized)
-
-    if (!found) {
-      setMessage('Ese personaje no está en la base de datos (por ahora). Prueba con otro.')
-      return
+    // ✅ aplica filtro anime a sugerencias
+    if (animeFilter && animeFilter !== 'ALL') {
+      base = base.filter((c) => canonicalAnime((c as any).anime) === animeFilter)
     }
 
-    const isCorrect = found.name === secret.name
-    const nextTries = tries + 1
-    const newGuesses: Guess[] = [...guesses, { character: found, isCorrect }]
+    return base
+  }, [activeCharacters, mode, animeFilter])
 
-    setGuesses(newGuesses)
-    setTries(nextTries)
-    setGuessInput('')
+  // --- Fetch daily from server ---
+  useEffect(() => {
+    saveJSON('otakle_mode', mode)
+    setDaily(null)
+    setDailyError(null)
+    setSecret(null)
+    setMessage(null)
     setShareMessage(null)
+    setIsHowToOpen(false)
+    setIsResultOpen(false)
 
-    if (isCorrect) {
-      setMessage(`¡Correcto! Era ${secret.name}. Intentos: ${nextTries}/${MAX_TRIES}`)
-      setIsFinished(true)
+    const ctrl = new AbortController()
 
-      const newStats = updateStatsOnWin(stats, dayIndex)
-      setStats(newStats)
-      saveStats(newStats)
+    ;(async () => {
+      try {
+        const res = await fetch(`/api/daily?mode=${mode}`, { signal: ctrl.signal, cache: 'no-store' })
+        if (!res.ok) throw new Error(`HTTP ${res.status}`)
+        const data = (await res.json()) as DailyResponse
+        setDaily(data)
 
-      saveGame(dayIndex, newGuesses, nextTries, true)
-      return
-    }
-
-    // ❌ fallo
-    if (nextTries >= MAX_TRIES) {
-      setMessage(`Se acabaron los intentos (${MAX_TRIES}). El personaje era ${secret.name}.`)
-      setIsFinished(true)
-      saveGame(dayIndex, newGuesses, nextTries, true)
-      return
-    }
-
-    setMessage('No es ese personaje, revisa las pistas 👀')
-    saveGame(dayIndex, newGuesses, nextTries, false)
-  }
-
-  const handleShare = async () => {
-    if (guesses.length === 0) return
-    const text = buildShareText(dayIndex, secret, guesses)
-    try {
-      if (navigator.clipboard && 'writeText' in navigator.clipboard) {
-        await navigator.clipboard.writeText(text)
-        setShareMessage('Resultado copiado al portapapeles ✨')
-      } else {
-        window.prompt('Copia tu resultado:', text)
-        setShareMessage('Resultado listo para compartir ✨')
+        const found = activeCharacters.find((c) => c.id === data.id) ?? null
+        setSecret(found)
+        if (!found) setDailyError('No encuentro el personaje del día en CHARACTERS (revisa ids / CSV).')
+      } catch (e: any) {
+        if (e?.name === 'AbortError') return
+        setDailyError('No pude cargar el personaje del día. Revisa que Vercel tenga /api/daily funcionando.')
       }
-    } catch {
-      setShareMessage('No se pudo copiar automáticamente. Intenta copiarlo manualmente.')
+    })()
+
+    return () => ctrl.abort()
+  }, [mode, activeCharacters])
+
+  // --- Load saved game for this day+mode ---
+  useEffect(() => {
+    if (!daily || !secret) return
+
+    const gameKey = getModeKey(mode, 'game')
+    const saved = loadJSON<SavedGame | null>(gameKey, null)
+
+    if (saved && saved.dayIndex === daily.dayIndex) {
+      const loadedGuesses = saved.guesses
+        .map((id) => activeCharacters.find((c) => c.id === id))
+        .filter(Boolean)
+        .map((character) => ({ character: character! }))
+
+      setGuesses(loadedGuesses)
+      setTries(saved.tries)
+      setIsFinished(saved.isFinished)
+      setIsWin(saved.isWin)
+
+      // ✅ FIX: si el juego estaba terminado (por ejemplo tras recargar),
+      // reconstruimos shareMessage para que los botones NO queden deshabilitados.
+      if (saved.isFinished) {
+        setIsResultOpen(true)
+        setShareMessage(
+          buildShareText({
+            dayNumber: daily.dayNumber,
+            mode,
+            tries: saved.isWin ? saved.tries : MAX_TRIES,
+            isWin: saved.isWin,
+          }),
+        )
+      }
+    } else {
+      setGuesses([])
+      setTries(0)
+      setIsFinished(false)
+      setIsWin(false)
+      saveJSON(gameKey, {
+        dayIndex: daily.dayIndex,
+        guesses: [],
+        tries: 0,
+        isFinished: false,
+        isWin: false,
+      } satisfies SavedGame)
+    }
+
+    setStats(
+      loadJSON<Stats>(getModeKey(mode, 'stats'), {
+        currentStreak: 0,
+        maxStreak: 0,
+        lastWinDayIndex: null,
+      }),
+    )
+  }, [daily, secret, mode, activeCharacters])
+
+  // --- Suggestions (startsWith, max 10) ---
+  const suggestions = useMemo(() => {
+    const q = norm(guessInput)
+    if (q.length < 1) return []
+    return guessPool.filter((c) => norm(c.name).startsWith(q)).slice(0, 10)
+  }, [guessInput, guessPool])
+
+  function persistGame(next: Partial<SavedGame>) {
+    if (!daily) return
+    const key = getModeKey(mode, 'game')
+    const current = loadJSON<SavedGame>(key, {
+      dayIndex: daily.dayIndex,
+      guesses: [],
+      tries: 0,
+      isFinished: false,
+      isWin: false,
+    })
+    saveJSON(key, { ...current, ...next })
+  }
+
+  function updateStatsOnFinish(win: boolean) {
+    if (!daily) return
+    const key = getModeKey(mode, 'stats')
+    const prev = loadJSON<Stats>(key, { currentStreak: 0, maxStreak: 0, lastWinDayIndex: null })
+
+    const next = { ...prev }
+
+    if (win) {
+      const yesterday = daily.dayIndex - 1
+      const isChain = prev.lastWinDayIndex === yesterday
+      next.currentStreak = isChain ? prev.currentStreak + 1 : 1
+      next.maxStreak = Math.max(next.maxStreak, next.currentStreak)
+      next.lastWinDayIndex = daily.dayIndex
+    } else {
+      next.currentStreak = 0
+    }
+
+    saveJSON(key, next)
+    setStats(next)
+  }
+
+  function onSubmit(e: FormEvent) {
+    e.preventDefault()
+    if (!secret || !daily) return
+    if (isFinished) return
+    if (tries >= MAX_TRIES) return
+
+    const q = norm(guessInput)
+    const picked = guessPool.find((c) => norm(c.name) === q) ?? suggestions[0] ?? null
+
+    if (!picked) {
+      setMessage('Elige un personaje válido de la lista.')
+      return
+    }
+
+    const nextTry = tries + 1
+    const nextGuesses = [...guesses, { character: picked }]
+
+    setGuesses(nextGuesses)
+    setTries(nextTry)
+    setGuessInput('')
+    setMessage(null)
+
+    persistGame({
+      guesses: nextGuesses.map((g) => g.character.id),
+      tries: nextTry,
+    })
+
+    const win = picked.id === (secret as any).id
+    const outOfTries = nextTry >= MAX_TRIES
+
+    if (win || outOfTries) {
+      setIsFinished(true)
+      setIsWin(win)
+      persistGame({ isFinished: true, isWin: win })
+      updateStatsOnFinish(win)
+
+      setIsResultOpen(true)
+      setShareMessage(
+        buildShareText({
+          dayNumber: daily.dayNumber,
+          mode,
+          tries: win ? nextTry : MAX_TRIES,
+          isWin: win,
+        }),
+      )
     }
   }
 
-  const handleShareX = () => {
-    if (guesses.length === 0) return
-    const text = buildShareText(dayIndex, secret, guesses) + '\n\n' + window.location.href
-    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`
+  async function copyShare() {
+    if (!shareMessage) return
+    try {
+      await navigator.clipboard.writeText(shareMessage)
+      setMessage('Copiado al portapapeles ✅')
+      setTimeout(() => setMessage(null), 1200)
+    } catch {
+      setMessage('No pude copiar. Selecciona y copia manualmente.')
+    }
+  }
+
+  function shareX() {
+    if (!shareMessage) return
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareMessage)}`
     window.open(url, '_blank', 'noopener,noreferrer')
   }
 
-  const handleSuggestionClick = (name: string) => {
-    setGuessInput(name)
+  function shareWhatsApp() {
+    if (!shareMessage) return
+    const url = `https://wa.me/?text=${encodeURIComponent(shareMessage)}`
+    window.open(url, '_blank', 'noopener,noreferrer')
   }
+
+  const headerSubtitle = useMemo(() => {
+    if (!daily) return 'Cargando personaje del día...'
+    return `Día #${daily.dayNumber} • Cambia a las ${daily.changesAtUTC}`
+  }, [daily])
+
+  const remaining = clamp(MAX_TRIES - tries, 0, MAX_TRIES)
 
   return (
     <div className="otakudle-container">
-      <header className="topbar">
-        <div className="brand">
-          <div className="brand-left">
-            <img className="brand-logo" src="/otakle-logo.png" alt="Otakle" />
-            <div className="brand-text">
-              <div className="title-row">
-                <h1 className="brand-title">Otakle</h1>
-                <span className="daily-badge" aria-label="Juego diario">
-                  Daily
-                </span>
-              </div>
-              <p className="brand-subtitle">Adivina el personaje de anime del día</p>
+      <div className="brand">
+        <div className="brand-left">
+          <img className="brand-logo" src="/otakle-logo.png" alt="Otakle logo" />
+          <div className="brand-text">
+            <div className="title-row">
+              <h1 className="brand-title">Otakle</h1>
+              <span className="daily-badge">DAILY</span>
             </div>
-          </div>
-
-          <div className="topbar-actions">
-            <button type="button" className="howto-button" onClick={() => setIsHowToOpen(true)}>
-              ¿Cómo se juega?
-            </button>
+            <p className="brand-subtitle">{headerSubtitle}</p>
           </div>
         </div>
-      </header>
 
-      <div className="home-howto">
-  <h2>Cómo se juega</h2>
-  <ul>
-    <li>Escribe un personaje y presiona <strong>Probar</strong>.</li>
-    <li>Tienes <strong>{MAX_TRIES} intentos</strong> máximos por día.</li>
-    <li>Los cuadros comparan tu intento con el personaje del día (Anime, Tipo, Año, Estudio, Rol, Género y Raza).</li>
-    <li>
-      El año incluye una flecha: <strong>↑</strong> significa que el personaje del día es más nuevo; <strong>↓</strong> que es más antiguo.
-    </li>
-    <li>
-      Todos reciben el mismo personaje y cambia a las <strong>00:00 UTC</strong> (aprox. <strong>21:00</strong> en Chile).
-    </li>
-  </ul>
-  <p className="home-howto-link">
-    ¿Quieres más detalles? <Link to="/about">Lee la guía completa aquí</Link>.
-  </p>
-</div>
+        <div className="topbar-actions">
+          <button className="howto-button" type="button" onClick={() => setIsHowToOpen(true)}>
+            ¿Cómo se juega?
+          </button>
+        </div>
+      </div>
 
+      <div className="filters-row">
+        <div className="mode-toggle" role="group" aria-label="Modo">
+          <button
+            type="button"
+            className={mode === 'normal' ? 'mode-btn active' : 'mode-btn'}
+            onClick={() => setMode('normal')}
+            disabled={mode === 'normal'}
+          >
+            Normal
+          </button>
+          <button
+            type="button"
+            className={mode === 'easy' ? 'mode-btn active' : 'mode-btn'}
+            onClick={() => setMode('easy')}
+            disabled={mode === 'easy'}
+          >
+            Easy
+          </button>
+        </div>
 
-      <div className="guess-form-wrapper">
-        {/* ✅ NUEVO: filtro por anime */}
-        <div className="filters-row">
-          <label className="sr-only" htmlFor="anime-filter">
-            Filtrar por anime
+        {/* ✅ Selector anime (solo para sugerencias) */}
+        <div className="anime-select">
+          <label className="anime-label" htmlFor="animeFilter">
+            Anime
           </label>
           <select
-            id="anime-filter"
-            className="anime-select"
+            id="animeFilter"
+            className="anime-dropdown"
             value={animeFilter}
             onChange={(e) => setAnimeFilter(e.target.value)}
-            disabled={isLocked}
-            aria-label="Filtrar sugerencias por anime"
           >
+            <option value="ALL">Todos</option>
             {animeOptions.map((a) => (
               <option key={a} value={a}>
-                {a === 'Todos' ? 'Anime: Todos' : `Anime: ${a}`}
+                {a}
               </option>
             ))}
           </select>
-
-          <div className="tries-chip" aria-label={`Intentos ${tries} de ${MAX_TRIES}`}>
-            {tries}/{MAX_TRIES}
-          </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="guess-form">
-          <label htmlFor="guess-input" className="sr-only">
-            Nombre del personaje
-          </label>
-          <input
-            id="guess-input"
-            name="guess"
-            aria-label="Nombre del personaje"
-            type="text"
-            placeholder="Escribe el nombre del personaje (ej: Goku, Luffy...)"
-            value={guessInput}
-            onChange={(e) => setGuessInput(e.target.value)}
-            disabled={isLocked}
-          />
-          <button type="submit" disabled={isLocked}>
-            Probar
-          </button>
-        </form>
-
-        {!isLocked && suggestions.length > 0 && (
-          <ul className="suggestions-list">
-            {suggestions.map((c) => (
-              <li key={c.id} className="suggestion-item" onClick={() => handleSuggestionClick(c.name)}>
-                <img src={c.imageUrl} alt={c.name} className="suggestion-avatar" />
-                <div className="suggestion-text">
-                  <span className="suggestion-name">{c.name}</span>
-                  <span className="suggestion-anime">{c.anime}</span>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
+        <div className="tries-chip" aria-label="Intentos restantes">
+          {remaining}/{MAX_TRIES}
+        </div>
       </div>
 
-      <div className="status-row">
-        {message && <p className="message">{message}</p>}
-        <p className="tries">
-          Intentos: {tries}/{MAX_TRIES}
-        </p>
-      </div>
-
-      <div className="stats-panel">
+      <div className="stats-panel" aria-label="Rachas">
         <div className="stat-card">
           <div className="stat-label">Racha actual</div>
           <div className="stat-value">{stats.currentStreak}</div>
         </div>
-
         <div className="stat-card">
           <div className="stat-label">Mejor racha</div>
           <div className="stat-value">{stats.maxStreak}</div>
         </div>
-
         <div className="stat-card">
-          <div className="stat-label">Día</div>
-          <div className="stat-value">#{dayIndex + 1}</div>
+          <div className="stat-label">Modo</div>
+          <div className="stat-value">{mode === 'easy' ? 'Easy' : 'Normal'}</div>
         </div>
+      </div>
+
+      {dailyError && <p className="message">{dailyError}</p>}
+
+      <form className="guess-form" onSubmit={onSubmit}>
+        <label className="sr-only" htmlFor="guess">
+          Adivina un personaje
+        </label>
+        <input
+          id="guess"
+          type="text"
+          value={guessInput}
+          onChange={(e) => setGuessInput(e.target.value)}
+          placeholder={isFinished ? 'Juego terminado' : 'Escribe un personaje...'}
+          disabled={isFinished || !secret}
+          autoComplete="off"
+        />
+        <button type="submit" disabled={isFinished || !secret || tries >= MAX_TRIES}>
+          Probar
+        </button>
+      </form>
+
+      {suggestions.length > 0 && !isFinished && (
+        <div className="suggestions" role="listbox" aria-label="Sugerencias">
+          {suggestions.map((c) => (
+            <button key={c.id} type="button" className="suggestion-item" onClick={() => setGuessInput(c.name)}>
+              <img className="suggestion-avatar" src={(c as any).imageUrl} alt="" />
+              <span className="suggestion-name">{c.name}</span>
+              <span className="suggestion-anime">{canonicalAnime((c as any).anime)}</span>
+            </button>
+          ))}
+        </div>
+      )}
+
+      <div className="status-row">
+        <p className="message">{message ?? (isFinished ? (isWin ? '¡Correcto!' : 'Sin intentos 😅') : '')}</p>
+        <p className="tries">
+          Intentos usados: {tries}/{MAX_TRIES}
+        </p>
       </div>
 
       <div className="hints-grid">
-        <h2>Pistas por intento</h2>
-        {guesses.length === 0 ? (
-          <p>Aún no hay intentos. Escribe un nombre para ver los cuadros de pistas.</p>
-        ) : (
-          <>
-            <div className="grid-row grid-header">
-              <span>Nombre</span>
-              <span>Anime</span>
-              <span>Tipo</span>
-              <span>Año debut</span>
-              <span>Estudio</span>
-              <span>Rol</span>
-              <span>Género</span>
-              <span>Raza</span>
-            </div>
+        <h2>Pistas</h2>
 
-            {guesses.map((guess, index) => {
-              const c = guess.character
-              const animeCorrect = c.anime === secret.anime
-              const genreCorrect = c.genre === secret.genre
-              const yearCorrect = c.debutYear === secret.debutYear
-              const yearRelation = yearCorrect ? 'equal' : c.debutYear < secret.debutYear ? 'less' : 'greater'
-              const studioCorrect = c.studio === secret.studio
-              const roleCorrect = c.role === secret.role
-              const genderCorrect = c.gender === secret.gender
-              const raceCorrect = c.race === secret.race
+        <div className="grid-row grid-header">
+          <span>Nombre</span>
+          <span>Anime</span>
+          <span>Tipo</span>
+          <span>Año debut</span>
+          <span>Estudio</span>
+          <span>Rol</span>
+          <span>Género</span>
+          <span>Raza</span>
+          <span>Edad debut</span>
+          <span>Edad main</span>
+        </div>
 
-              const yearArrow = yearRelation === 'equal' ? '✓' : yearRelation === 'less' ? '↑' : '↓'
-              const yearHintText =
-                yearRelation === 'equal'
-                  ? 'Mismo año'
-                  : yearRelation === 'less'
-                    ? 'El personaje del día es más nuevo'
-                    : 'El personaje del día es más antiguo'
+        {guesses.map((g, idx) => {
+          const c: any = g.character
+          const rowCorrect = !!secret && c.id === (secret as any).id
 
-              return (
-                <div key={index} className={`grid-row ${guess.isCorrect ? 'row-correct' : ''}`}>
-                  <span className="hint-box name-box" data-label="Nombre">
-                    {c.name}
-                  </span>
+          const secretAny: any = secret
 
-                  <span
-                    className={`hint-box ${animeCorrect ? 'correct' : 'incorrect'}`}
-                    title={animeCorrect ? 'Mismo anime' : 'Anime distinto'}
-                    data-label="Anime"
-                  >
-                    {c.anime}
-                  </span>
+          const animeOk = !!secret && canonicalAnime(c.anime) === canonicalAnime(secretAny.anime)
+          const typeOk = !!secret && c.genre === secretAny.genre
+          const yearCls = secret ? yearClass(secretAny.yearDebut ?? secretAny.debutYear, c.yearDebut ?? c.debutYear) : 'incorrect'
+          const studioOk = !!secret && c.studio === secretAny.studio
+          const roleOk = !!secret && c.role === secretAny.role
+          const genderOk = !!secret && c.gender === secretAny.gender
+          const raceOk = !!secret && c.race === secretAny.race
 
-                  <span
-                    className={`hint-box ${genreCorrect ? 'correct' : 'incorrect'}`}
-                    title={genreCorrect ? 'Mismo tipo de anime' : 'Tipo distinto'}
-                    data-label="Tipo"
-                  >
-                    {c.genre}
-                  </span>
+          // ✅ edades por categoría (texto)
+          const cAgeDebut = (c.ageDebutGroup ?? 'Desconocido') as string
+          const cAgeMain = (c.ageMainGroup ?? 'Desconocido') as string
+          const sAgeDebut = (secretAny.ageDebutGroup ?? 'Desconocido') as string
+          const sAgeMain = (secretAny.ageMainGroup ?? 'Desconocido') as string
 
-                  <span
-                    className={`hint-box year-box ${
-                      yearRelation === 'equal' ? 'correct' : yearRelation === 'less' ? 'higher' : 'lower'
-                    }`}
-                    title={yearHintText}
-                    data-label="Año debut"
-                  >
-                    <span className="year-inline">
-                      <span className="year-value">{c.debutYear}</span>
-                      <span className="year-arrow">{yearArrow}</span>
-                    </span>
-                  </span>
+          const ageDebutOk = !!secret && cAgeDebut === sAgeDebut
+          const ageMainOk = !!secret && cAgeMain === sAgeMain
 
-                  <span
-                    className={`hint-box ${studioCorrect ? 'correct' : 'incorrect'}`}
-                    title={studioCorrect ? 'Mismo estudio' : 'Estudio distinto'}
-                    data-label="Estudio"
-                  >
-                    {c.studio}
-                  </span>
+          const cYear = c.yearDebut ?? c.debutYear
+          const sYear = secretAny.yearDebut ?? secretAny.debutYear
 
-                  <span
-                    className={`hint-box ${roleCorrect ? 'correct' : 'incorrect'}`}
-                    title={roleCorrect ? 'Mismo rol en la historia' : 'Rol distinto'}
-                    data-label="Rol"
-                  >
-                    {c.role}
-                  </span>
+          return (
+            <div key={idx} className={rowCorrect ? 'grid-row row-correct' : 'grid-row'}>
+              <div className={'hint-box name-box left' + (rowCorrect ? ' correct' : '')} data-label="Nombre" title={displayText(c.name)}>
+                {displayText(c.name)}
+              </div>
 
-                  <span
-                    className={`hint-box ${genderCorrect ? 'correct' : 'incorrect'}`}
-                    title={genderCorrect ? 'Mismo género' : 'Género distinto'}
-                    data-label="Género"
-                  >
-                    {c.gender}
-                  </span>
+              <div className={'hint-box left ' + (animeOk ? 'correct' : 'incorrect')} data-label="Anime" title={canonicalAnime(c.anime)}>
+                {canonicalAnime(c.anime)}
+              </div>
 
-                  <span
-                    className={`hint-box ${raceCorrect ? 'correct' : 'incorrect'}`}
-                    title={raceCorrect ? 'Misma raza/especie' : 'Raza distinta'}
-                    data-label="Raza"
-                  >
-                    {c.race}
-                  </span>
-                </div>
-              )
-            })}
-          </>
-        )}
-      </div>
+              <div className={'hint-box ' + (typeOk ? 'correct' : 'incorrect')} data-label="Tipo" title={displayText(c.genre)}>
+                {displayText(c.genre)}
+              </div>
 
-      {isFinished && (
-        <>
-          <div className="share-row">
-            <button type="button" onClick={handleShare}>
-              Copiar resultado
-            </button>
+              <div className={'hint-box year-box ' + yearCls} data-label="Año debut" title={String(cYear)}>
+                <span className="year-inline">
+                  <span>{cYear ?? '?'}</span>
+                  {secret && sYear !== cYear && <span className="year-arrow">{sYear > cYear ? '↑' : '↓'}</span>}
+                </span>
+              </div>
 
-            <button type="button" className="share-x" onClick={handleShareX}>
-              Compartir en X
-            </button>
+              <div className={'hint-box center ' + (studioOk ? 'correct' : 'incorrect')} data-label="Estudio" title={displayText(c.studio)}>
+                {displayText(c.studio)}
+              </div>
 
-            {shareMessage && <span className="share-message">{shareMessage}</span>}
-          </div>
+              <div className={'hint-box ' + (roleOk ? 'correct' : 'incorrect')} data-label="Rol" title={displayText(c.role)}>
+                {displayText(c.role)}
+              </div>
 
-          <div className="secret-info">
-            <div className="secret-header">
-              <img src={secret.imageUrl} alt={secret.name} className="secret-image" />
-              <div className="secret-main">
-                <h3>Detalles del personaje del día</h3>
-                <p>
-                  <strong>Nombre:</strong> {secret.name}
-                </p>
-                <p>
-                  <strong>Anime:</strong> {secret.anime}
-                </p>
-                <p>
-                  <strong>Tipo:</strong> {secret.genre}
-                </p>
-                <p>
-                  <strong>Año debut:</strong> {secret.debutYear}
-                </p>
-                <p>
-                  <strong>Estudio:</strong> {secret.studio}
-                </p>
-                <p>
-                  <strong>Rol:</strong> {secret.role}
-                </p>
-                <p>
-                  <strong>Género:</strong> {secret.gender}
-                </p>
-                <p>
-                  <strong>Raza:</strong> {secret.race}
-                </p>
+              <div className={'hint-box ' + (genderOk ? 'correct' : 'incorrect')} data-label="Género" title={displayText(c.gender)}>
+                {displayText(c.gender)}
+              </div>
+
+              <div className={'hint-box ' + (raceOk ? 'correct' : 'incorrect')} data-label="Raza" title={displayText(c.race)}>
+                {displayText(c.race)}
+              </div>
+
+              <div className={'hint-box ' + (ageDebutOk ? 'correct' : 'incorrect')} data-label="Edad debut" title={cAgeDebut}>
+                {cAgeDebut}
+              </div>
+
+              <div className={'hint-box ' + (ageMainOk ? 'correct' : 'incorrect')} data-label="Edad main" title={cAgeMain}>
+                {cAgeMain}
               </div>
             </div>
+          )
+        })}
+      </div>
 
-            <p className="secret-debut">
-              <strong>Debut:</strong> {secret.debutInfo}
-            </p>
-          </div>
-        </>
-      )}
-
-      <footer className="footer">
-        <div className="footer-links">
-          <Link to="/" className="footer-link">
-            Inicio
-          </Link>
-          <Link to="/privacy" className="footer-link">
-            Privacy
-          </Link>
-          <Link to="/terms" className="footer-link">
-            Terms
-          </Link>
-          <Link to="/contact" className="footer-link">
-            Contact
-          </Link>
-          <Link to="/about" className="footer-link">
-            About
-          </Link>
-
-          <a className="footer-link" href="https://twitter.com/aknoid" target="_blank" rel="noreferrer noopener">
-            X @aknoid
-          </a>
-          <a className="footer-link" href="mailto:oscarfernandezcepeda@gmail.com">
-            oscarfernandezcepeda@gmail.com
-          </a>
-        </div>
-        <div className="footer-note">
-          Otakle by <strong>Aknoid</strong>
-        </div>
-      </footer>
+      <div className="page-footer">
+        <Link to="/about">About</Link>
+        <Link to="/how-to-play">How to play</Link>
+        <Link to="/strategy">Strategy</Link>
+        <Link to="/stats">Stats</Link>
+        <Link to="/archive">Archive</Link>
+        <Link to="/privacy">Privacy</Link>
+        <Link to="/terms">Terms</Link>
+        <Link to="/contact">Contact</Link>
+      </div>
 
       {isHowToOpen && (
-        <div
-          className="modal-overlay"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Cómo se juega"
-          onMouseDown={(e) => {
-            if (e.target === e.currentTarget) setIsHowToOpen(false)
-          }}
-        >
-          <div className="modal-card">
+        <div className="modal-overlay" role="dialog" aria-modal="true" onClick={() => setIsHowToOpen(false)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2>¿Cómo se juega?</h2>
-              <button type="button" className="modal-close" onClick={() => setIsHowToOpen(false)} aria-label="Cerrar">
+              <h3>Cómo se juega</h3>
+              <button className="modal-close" onClick={() => setIsHowToOpen(false)}>
+                ✕
+              </button>
+            </div>
+            <div className="modal-body">
+              <p>Intenta adivinar el personaje del día. Cada intento te da pistas por categoría.</p>
+              <ul>
+                <li>
+                  <b>Verde</b>: coincide.
+                </li>
+                <li>
+                  <b>Rojo</b>: no coincide.
+                </li>
+                <li>
+                  <b>Naranja/Azul</b>: el personaje del día es mayor/menor (año).
+                </li>
+              </ul>
+              <p>
+                El día cambia a las <b>00:00 UTC</b>.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isResultOpen && secret && daily && (
+        <div className="modal-overlay" role="dialog" aria-modal="true" onClick={() => setIsResultOpen(false)}>
+          <div className="modal modal-wide" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>{isWin ? '¡Lo lograste!' : 'Se acabaron los intentos'}</h3>
+              <button className="modal-close" onClick={() => setIsResultOpen(false)}>
                 ✕
               </button>
             </div>
 
             <div className="modal-body">
-              <ul className="howto-list">
-                <li>
-                  Escribe un personaje y presiona <strong>Probar</strong>.
-                </li>
-                <li>
-                  Tienes <strong>{MAX_TRIES} intentos</strong> máximos por día.
-                </li>
-                <li>
-                  Cada fila muestra pistas del personaje del día:{' '}
-                  <strong>Anime, Tipo, Año, Estudio, Rol, Género y Raza</strong>.
-                </li>
-                <li>
-                  Colores:
-                  <div className="howto-badges">
-                    <span className="howto-pill correct">Verde</span>
-                    <span className="howto-text">= coincide</span>
-
-                    <span className="howto-pill incorrect">Rojo</span>
-                    <span className="howto-text">= no coincide</span>
-
-                    <span className="howto-pill higher">🟧</span>
-                    <span className="howto-text">= el personaje del día es más nuevo</span>
-
-                    <span className="howto-pill lower">🟦</span>
-                    <span className="howto-text">= el personaje del día es más antiguo</span>
+              <div className="result-top">
+                <img className="secret-image" src={(secret as any).imageUrl} alt={secret.name} />
+                <div className="result-info">
+                  <div className="result-title">
+                    <span className="result-name">{secret.name}</span>
+                    <span className="result-meta">• {canonicalAnime((secret as any).anime)}</span>
                   </div>
-                </li>
-                <li>
-                  Cuando terminas, puedes <strong>copiar tu resultado</strong> o <strong>compartirlo en X</strong>.
-                </li>
-              </ul>
-            </div>
 
-            <div className="modal-footer">
-              <button type="button" className="modal-primary" onClick={() => setIsHowToOpen(false)}>
-                Entendido
-              </button>
+                  <div className="result-tags">
+                    <span className="tag">{(secret as any).genre}</span>
+                    <span className="tag">{(secret as any).studio}</span>
+                    <span className="tag">{(secret as any).race}</span>
+                    <span className="tag">{(secret as any).yearDebut ?? (secret as any).debutYear}</span>
+                    <span className="tag">Debut: {(secret as any).ageDebutGroup ?? 'Desconocido'}</span>
+                    <span className="tag">Main: {(secret as any).ageMainGroup ?? 'Desconocido'}</span>
+                  </div>
+
+                  <p className="result-desc">{(secret as any).debutInfo}</p>
+                </div>
+              </div>
+
+              <div className="modal-actions">
+                <button type="button" className="btn-secondary" onClick={copyShare} disabled={!shareMessage}>
+                  Copiar resultado
+                </button>
+                <button type="button" className="btn-secondary" onClick={shareWhatsApp} disabled={!shareMessage}>
+                  Compartir WhatsApp
+                </button>
+                <button type="button" className="btn-primary" onClick={shareX} disabled={!shareMessage}>
+                  Compartir en X
+                </button>
+              </div>
+
+              {shareMessage && <textarea className="share-box" readOnly value={shareMessage} />}
             </div>
           </div>
         </div>
