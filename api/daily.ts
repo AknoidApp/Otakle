@@ -1,11 +1,10 @@
-// api/daily.ts
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { CHARACTER_IDS } from './characters-lite.js'
 
-// Mantener igual que en el cliente antiguo: 2026-01-06 UTC => Día #1
+// Mantener igual que tu versión: 2026-01-06 UTC => Día #1
 const LAUNCH_DATE_UTC = { y: 2026, m: 0, d: 6 }
 
-// Configura este ENV en Vercel: OTAKLE_DAILY_SALT
+// ENV en Vercel (Production): OTakle_DAILY_SALT (recomendado)
 const DAILY_SALT = process.env.OTAKLE_DAILY_SALT || 'dev-salt-change-me'
 
 const getLaunchBaseUTC = () => new Date(Date.UTC(LAUNCH_DATE_UTC.y, LAUNCH_DATE_UTC.m, LAUNCH_DATE_UTC.d))
@@ -53,7 +52,7 @@ function seededShuffle<T>(arr: T[], seedStr: string) {
   return a
 }
 
-// Pool “Easy” (server-side)
+// Pool “Easy” server-side
 const EASY_POOL_IDS = [
   'goku','vegeta','gohan',
   'naruto','sasuke_uchiha',
@@ -72,25 +71,31 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
   const dayIndex = getDayIndex()
   const dayNumber = dayIndex + 1
 
-  // Pool normal: todo lo disponible
+  // ✅ Si el lite está vacío, devuelve error claro (no fallback a goku)
+  if (!Array.isArray(CHARACTER_IDS) || CHARACTER_IDS.length === 0) {
+    res.setHeader('Cache-Control', 'no-store, max-age=0')
+    return res.status(500).json({
+      error: 'CHARACTER_IDS está vacío. Ejecuta `npm run generate:characters` para regenerar api/characters-lite.ts desde el CSV.',
+    })
+  }
+
   let pool = CHARACTER_IDS
 
-  // Pool easy: sólo los IDs definidos arriba (si hay pocos, cae a normal)
   if (mode === 'easy') {
     const easySet = new Set(EASY_POOL_IDS)
     const easy = CHARACTER_IDS.filter((id) => easySet.has(id))
-    pool = easy.length >= 8 ? easy : CHARACTER_IDS
+    pool = easy.length >= 8 ? easy : CHARACTER_IDS.slice(0, Math.min(80, CHARACTER_IDS.length))
   }
 
   const seedStr = `otakle|${mode}|${dayIndex}|${DAILY_SALT}`
   const shuffled = seededShuffle(pool, seedStr)
-  const pick = shuffled[0] || 'goku'
+  const pickId = shuffled[0]
 
   res.setHeader('Cache-Control', 'no-store, max-age=0')
   res.status(200).json({
     dayIndex,
     dayNumber,
-    id: pick,
+    id: pickId,
     maxTries: 8,
     changesAtUTC: '00:00 UTC',
   })

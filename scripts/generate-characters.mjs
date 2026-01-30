@@ -1,187 +1,157 @@
-import fs from "node:fs";
-import path from "node:path";
+import fs from 'node:fs'
+import path from 'node:path'
 
-const projectRoot = process.cwd();
+const PROJECT_ROOT = process.cwd()
 
-// ✅ AJUSTA SI TU CSV ESTÁ EN data/ o con otro nombre
-// Ejemplos:
-// const CSV_PATH = path.join(projectRoot, "data", "otakle_characters.csv");
-const CSV_PATH = path.join(projectRoot, "otakle_characters.csv");
+// ✅ Ajusta si tu CSV está en otro lado
+const INPUT_CSV = path.join(PROJECT_ROOT, 'data', 'otakle_characters.csv')
 
-const OUT_PATH = path.join(projectRoot, "src", "characters.ts");
+// Salidas
+const OUT_CHARACTERS_TS = path.join(PROJECT_ROOT, 'src', 'characters.ts')
+const OUT_LITE_TS = path.join(PROJECT_ROOT, 'api', 'characters-lite.ts')
 
-function norm(s) {
-  return String(s ?? "").trim().toLowerCase();
+function ensureDir(p) {
+  fs.mkdirSync(path.dirname(p), { recursive: true })
 }
 
-function cleanText(v) {
-  return String(v ?? "").trim();
+function parseCSV(text) {
+  const lines = text.split(/\r?\n/).filter(Boolean)
+  const headers = lines[0].split(',').map((h) => h.trim())
+
+  return lines.slice(1).map((line) => {
+    const cols = line.split(',')
+    const row = {}
+    headers.forEach((h, i) => (row[h] = (cols[i] ?? '').trim()))
+    return row
+  })
 }
 
 function toBool(v, fallback = true) {
-  const s = norm(v);
-  if (s === "") return fallback;
-  if (["true", "1", "yes", "y", "si", "sí"].includes(s)) return true;
-  if (["false", "0", "no", "n"].includes(s)) return false;
-  return fallback;
+  const s = String(v ?? '').trim().toLowerCase()
+  if (s === 'false' || s === '0' || s === 'no') return false
+  if (s === 'true' || s === '1' || s === 'yes') return true
+  return fallback
 }
 
-function toNumberOrNull(v) {
-  const s = cleanText(v);
-  if (!s || s === "?") return null;
-  const n = Number(s);
-  return Number.isFinite(n) ? n : null;
+function toNum(v) {
+  const n = Number(v)
+  return Number.isFinite(n) ? n : null
 }
 
-// CSV simple (si tienes comillas con comas dentro, dime y te hago parser robusto)
-function parseCSV(text) {
-  const lines = text.split(/\r?\n/).filter((l) => l.trim().length > 0);
-  const header = lines[0].split(",").map((h) => h.trim());
-  return lines.slice(1).map((line) => {
-    const cols = line.split(",").map((c) => c.trim());
-    const obj = {};
-    header.forEach((h, i) => (obj[h] = cols[i] ?? ""));
-    return obj;
-  });
+function esc(str) {
+  return String(str ?? '').replace(/\\/g, '\\\\').replace(/`/g, '\\`')
 }
 
-function canonicalAnime(input) {
-  const s = norm(input);
+// ✅ aquí te aseguras de usar los mismos nombres de columna que tienes en tu CSV
+function mapRow(row) {
+  // Campos base
+  const id = row.id
+  const name = row.name
+  const anime = row.anime
+  const genre = row.genre || row.type || ''              // por si tu CSV usa "type"
+  const debutYear = toNum(row.debutYear ?? row.yearDebut ?? row.debut_year ?? row.year_debut)
+  const studio = row.studio || ''
+  const role = row.role || ''
+  const gender = row.gender || ''
+  const race = row.race || ''
+  const debutInfo = row.debutInfo || row.debut_info || ''
+  const imageFileName = row.imageFileName || row.image_file_name || `${id}.png`
 
-  if (
-    s.includes("boku no hero") ||
-    s.includes("my hero academia") ||
-    s === "bnha" ||
-    s === "mha"
-  ) {
-    return "My Hero Academia";
+  // ✅ edades por GRUPO (texto) (lo que tú querías: Niño/Adolescente/Adulto)
+  const ageDebutGroup = row.ageDebutGroup || row.edadDebutGroup || row.age_debut_group || row.edad_debut_group || ''
+  const ageMainGroup = row.ageMainGroup || row.edadMainGroup || row.age_main_group || row.edad_main_group || ''
+
+  const active = toBool(row.active, true)
+
+  return {
+    id,
+    name,
+    anime,
+    genre,
+    debutYear: debutYear ?? 0,
+    studio,
+    role,
+    gender,
+    race,
+    debutInfo,
+    imageUrl: `/images/${imageFileName}`,
+    ageDebutGroup: ageDebutGroup || 'Desconocido',
+    ageMainGroup: ageMainGroup || 'Desconocido',
+    active,
+  }
+}
+
+function main() {
+  if (!fs.existsSync(INPUT_CSV)) {
+    console.error(`❌ No encuentro el CSV en: ${INPUT_CSV}`)
+    process.exit(1)
   }
 
-  return cleanText(input);
-}
+  const csvText = fs.readFileSync(INPUT_CSV, 'utf8')
+  const rows = parseCSV(csvText)
 
-// ✅ Normaliza categorías de edad
-function canonicalAgeGroup(v) {
-  const raw = cleanText(v);
-  const s = norm(raw);
+  const characters = rows
+    .map(mapRow)
+    .filter((c) => c.id && c.name && c.anime)
 
-  if (!s || s === "?" || s === "unknown" || s === "desconocido") return "Desconocido";
-  if (s === "nino" || s === "niño") return "Niño";
-  if (s === "adolescente") return "Adolescente";
-  if (s === "adulto") return "Adulto";
-
-  // si pusiste otras etiquetas en el CSV, las respetamos
-  return raw;
-}
-
-// Para template strings TS
-function escTemplate(s) {
-  return String(s ?? "")
-    .replace(/\\/g, "\\\\")
-    .replace(/`/g, "\\`")
-    .replace(/\$\{/g, "\\${");
-}
-
-if (!fs.existsSync(CSV_PATH)) {
-  console.error(`❌ No encontré el CSV en: ${CSV_PATH}`);
-  console.error(`👉 Solución: mueve el CSV ahí o cambia CSV_PATH en generate-characters.mjs`);
-  process.exit(1);
-}
-
-const csvText = fs.readFileSync(CSV_PATH, "utf8");
-const rows = parseCSV(csvText);
-
-// Genera characters
-const characters = rows
-  .map((r) => {
-    const id = cleanText(r.id);
-    if (!id) return null;
-
-    const imageFileName = cleanText(r.imageFileName);
-    const imageUrl = imageFileName ? `/images/${imageFileName}` : "/images/placeholder.png";
-
-    const yearDebut = toNumberOrNull(r.yearDebut ?? r.debutYear); // soporta ambos nombres
-    const debutYearCompat = yearDebut ?? 0; // compatibilidad
-
-    const ageDebutGroup = canonicalAgeGroup(r.ageDebutGroup ?? r.ageDebut);
-    const ageMainGroup = canonicalAgeGroup(r.ageMainGroup ?? r.ageMain);
-
-    return {
-      id,
-      name: cleanText(r.name),
-      anime: canonicalAnime(r.anime),
-      genre: cleanText(r.genre),
-      yearDebut,                 // ✅ lo que usa la UI nueva
-      debutYear: debutYearCompat, // ✅ compat, no molesta
-      studio: cleanText(r.studio),
-      role: cleanText(r.role),
-      gender: cleanText(r.gender),
-      race: cleanText(r.race),
-      debutInfo: cleanText(r.debutInfo),
-      active: toBool(r.active, true),
-
-      // ✅ lo que usa la UI para mostrar Niño/Adolescente/Adulto
-      ageDebutGroup,
-      ageMainGroup,
-
-      imageUrl,
-    };
-  })
-  .filter(Boolean);
-
-// Orden estable (opcional)
-characters.sort((a, b) => {
-  const aa = (a.anime || "").localeCompare(b.anime || "");
-  if (aa !== 0) return aa;
-  return (a.name || "").localeCompare(b.name || "");
-});
-
-const file = `/* eslint-disable */
-// AUTO-GENERATED FILE. DO NOT EDIT DIRECTLY.
-// Generated by scripts/generate-characters.mjs
-
-export type Character = {
+  // src/characters.ts
+  ensureDir(OUT_CHARACTERS_TS)
+  const charactersTs =
+`export type Character = {
   id: string
   name: string
   anime: string
   genre: string
-  yearDebut: number | null
   debutYear: number
   studio: string
   role: string
   gender: string
   race: string
   debutInfo: string
-  active?: boolean
-  ageDebutGroup?: string
-  ageMainGroup?: string
   imageUrl: string
+  ageDebutGroup: string
+  ageMainGroup: string
+  active?: boolean
 }
 
 export const CHARACTERS: Character[] = [
-${characters
-  .map(
-    (c) => `  {
-    id: \`${escTemplate(c.id)}\`,
-    name: \`${escTemplate(c.name)}\`,
-    anime: \`${escTemplate(c.anime)}\`,
-    genre: \`${escTemplate(c.genre)}\`,
-    yearDebut: ${c.yearDebut == null ? "null" : c.yearDebut},
+${characters.map((c) => `  {
+    id: \`${esc(c.id)}\`,
+    name: \`${esc(c.name)}\`,
+    anime: \`${esc(c.anime)}\`,
+    genre: \`${esc(c.genre)}\`,
     debutYear: ${Number.isFinite(c.debutYear) ? c.debutYear : 0},
-    studio: \`${escTemplate(c.studio)}\`,
-    role: \`${escTemplate(c.role)}\`,
-    gender: \`${escTemplate(c.gender)}\`,
-    race: \`${escTemplate(c.race)}\`,
-    debutInfo: \`${escTemplate(c.debutInfo)}\`,
-    active: ${c.active === false ? "false" : "true"},
-    ageDebutGroup: \`${escTemplate(c.ageDebutGroup ?? "Desconocido")}\`,
-    ageMainGroup: \`${escTemplate(c.ageMainGroup ?? "Desconocido")}\`,
-    imageUrl: \`${escTemplate(c.imageUrl)}\`,
-  },`
-  )
-  .join("\n")}
+    studio: \`${esc(c.studio)}\`,
+    role: \`${esc(c.role)}\`,
+    gender: \`${esc(c.gender)}\`,
+    race: \`${esc(c.race)}\`,
+    debutInfo: \`${esc(c.debutInfo)}\`,
+    imageUrl: \`${esc(c.imageUrl)}\`,
+    ageDebutGroup: \`${esc(c.ageDebutGroup)}\`,
+    ageMainGroup: \`${esc(c.ageMainGroup)}\`,
+    active: ${c.active ? 'true' : 'false'},
+  },`).join('\n')}
 ]
-`;
+`
+  fs.writeFileSync(OUT_CHARACTERS_TS, charactersTs, 'utf8')
 
-fs.writeFileSync(OUT_PATH, file, "utf8");
-console.log(`✅ characters.ts generado (${characters.length} personajes) -> ${OUT_PATH}`);
+  // api/characters-lite.ts (solo ids activos, en el orden del CSV)
+  ensureDir(OUT_LITE_TS)
+  const activeIds = characters.filter((c) => c.active !== false).map((c) => c.id)
+
+  const liteTs =
+`// api/characters-lite.ts
+// AUTO-GENERADO por scripts/generate-characters.mjs
+// NO editar a mano: tus IDs vienen del CSV (solo active=true)
+
+export const CHARACTER_IDS: string[] = [
+${activeIds.map((id) => `  '${esc(id)}',`).join('\n')}
+]
+`
+  fs.writeFileSync(OUT_LITE_TS, liteTs, 'utf8')
+
+  console.log(`✅ Generado: ${path.relative(PROJECT_ROOT, OUT_CHARACTERS_TS)} (${characters.length} personajes)`)
+  console.log(`✅ Generado: ${path.relative(PROJECT_ROOT, OUT_LITE_TS)} (${activeIds.length} ids activos)`)
+}
+
+main()
