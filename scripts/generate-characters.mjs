@@ -1,9 +1,12 @@
+console.log("✅ RUNNING scripts/generate-characters.mjs (csv-parse)")
+
 import fs from 'node:fs'
 import path from 'node:path'
+import { parse } from 'csv-parse/sync'
 
 const PROJECT_ROOT = process.cwd()
 
-// ✅ Ajusta si tu CSV está en otro lado
+// Ajusta si tu CSV está en otro lado
 const INPUT_CSV = path.join(PROJECT_ROOT, 'data', 'otakle_characters.csv')
 
 // Salidas
@@ -14,15 +17,54 @@ function ensureDir(p) {
   fs.mkdirSync(path.dirname(p), { recursive: true })
 }
 
-function parseCSV(text) {
-  const lines = text.split(/\r?\n/).filter(Boolean)
-  const headers = lines[0].split(',').map((h) => h.trim())
+function detectDelimiter(text) {
+  const firstLine =
+    text
+      .split(/\r?\n/)
+      .map((l) => l.trim())
+      .find((l) => l.length > 0) || ''
+  const commas = (firstLine.match(/,/g) || []).length
+  const semicolons = (firstLine.match(/;/g) || []).length
+  const tabs = (firstLine.match(/\t/g) || []).length
+  if (tabs > commas && tabs > semicolons) return '\t'
+  if (semicolons > commas) return ';'
+  return ','
+}
 
-  return lines.slice(1).map((line) => {
-    const cols = line.split(',')
-    const row = {}
-    headers.forEach((h, i) => (row[h] = (cols[i] ?? '').trim()))
-    return row
+const norm = (s) => String(s ?? '').replace(/^\uFEFF/, '').trim().toLowerCase()
+
+function getField(row, ...candidates) {
+  // 1) match directo
+  for (const k of candidates) {
+    const v = row?.[k]
+    if (v !== undefined && v !== null && String(v).trim() !== '') return String(v).trim()
+  }
+
+  // 2) match por normalización (maneja BOM/espacios/case)
+  const keys = Object.keys(row || {})
+  for (const cand of candidates) {
+    const target = norm(cand)
+    const realKey = keys.find((kk) => norm(kk) === target)
+    if (realKey) {
+      const v = row?.[realKey]
+      if (v !== undefined && v !== null && String(v).trim() !== '') return String(v).trim()
+    }
+  }
+
+  return ''
+}
+
+function parseCSV(text) {
+  const delimiter = detectDelimiter(text)
+
+  return parse(text, {
+    columns: (headers) => headers.map((h) => String(h).replace(/^\uFEFF/, '').trim()),
+    skip_empty_lines: true,
+    bom: true,
+    trim: true,
+    delimiter,
+    relax_quotes: true,
+    relax_column_count: true,
   })
 }
 
@@ -42,26 +84,47 @@ function esc(str) {
   return String(str ?? '').replace(/\\/g, '\\\\').replace(/`/g, '\\`')
 }
 
-// ✅ aquí te aseguras de usar los mismos nombres de columna que tienes en tu CSV
 function mapRow(row) {
-  // Campos base
-  const id = row.id
-  const name = row.name
-  const anime = row.anime
-  const genre = row.genre || row.type || ''              // por si tu CSV usa "type"
-  const debutYear = toNum(row.debutYear ?? row.yearDebut ?? row.debut_year ?? row.year_debut)
-  const studio = row.studio || ''
-  const role = row.role || ''
-  const gender = row.gender || ''
-  const race = row.race || ''
-  const debutInfo = row.debutInfo || row.debut_info || ''
-  const imageFileName = row.imageFileName || row.image_file_name || `${id}.png`
+  const id = getField(row, 'id')
+  const name = getField(row, 'name')
+  const anime = getField(row, 'anime')
 
-  // ✅ edades por GRUPO (texto) (lo que tú querías: Niño/Adolescente/Adulto)
-  const ageDebutGroup = row.ageDebutGroup || row.edadDebutGroup || row.age_debut_group || row.edad_debut_group || ''
-  const ageMainGroup = row.ageMainGroup || row.edadMainGroup || row.age_main_group || row.edad_main_group || ''
+  const genre = getField(row, 'genre', 'type')
+  const debutYear = toNum(
+    getField(row, 'debutYear', 'yearDebut', 'debut_year', 'year_debut')
+  )
 
-  const active = toBool(row.active, true)
+  const studio = getField(row, 'studio')
+  const role = getField(row, 'role')
+  const gender = getField(row, 'gender')
+  const race = getField(row, 'race')
+  const debutInfo = getField(row, 'debutInfo', 'debut_info')
+  const imageFileName = getField(row, 'imageFileName', 'image_file_name') || `${id}.png`
+
+  // Edades (acepta variantes por si tu CSV no usa "...Group")
+  const ageDebutGroup =
+    getField(
+      row,
+      'ageDebutGroup',
+      'ageDebut',
+      'edadDebutGroup',
+      'edadDebut',
+      'age_debut_group',
+      'edad_debut_group'
+    ) || 'Desconocido'
+
+  const ageMainGroup =
+    getField(
+      row,
+      'ageMainGroup',
+      'ageMain',
+      'edadMainGroup',
+      'edadMain',
+      'age_main_group',
+      'edad_main_group'
+    ) || 'Desconocido'
+
+  const active = toBool(getField(row, 'active'), true)
 
   return {
     id,
@@ -75,29 +138,16 @@ function mapRow(row) {
     race,
     debutInfo,
     imageUrl: `/images/${imageFileName}`,
-    ageDebutGroup: ageDebutGroup || 'Desconocido',
-    ageMainGroup: ageMainGroup || 'Desconocido',
+    ageDebutGroup,
+    ageMainGroup,
     active,
   }
 }
 
-function main() {
-  if (!fs.existsSync(INPUT_CSV)) {
-    console.error(`❌ No encuentro el CSV en: ${INPUT_CSV}`)
-    process.exit(1)
-  }
-
-  const csvText = fs.readFileSync(INPUT_CSV, 'utf8')
-  const rows = parseCSV(csvText)
-
-  const characters = rows
-    .map(mapRow)
-    .filter((c) => c.id && c.name && c.anime)
-
-  // src/characters.ts
+function writeCharactersTS(characters) {
   ensureDir(OUT_CHARACTERS_TS)
-  const charactersTs =
-`export type Character = {
+
+  const header = `export type Character = {
   id: string
   name: string
   anime: string
@@ -115,12 +165,16 @@ function main() {
 }
 
 export const CHARACTERS: Character[] = [
-${characters.map((c) => `  {
+`
+
+  const body = characters
+    .map((c) => {
+      return `  {
     id: \`${esc(c.id)}\`,
     name: \`${esc(c.name)}\`,
     anime: \`${esc(c.anime)}\`,
     genre: \`${esc(c.genre)}\`,
-    debutYear: ${Number.isFinite(c.debutYear) ? c.debutYear : 0},
+    debutYear: ${c.debutYear ?? 0},
     studio: \`${esc(c.studio)}\`,
     role: \`${esc(c.role)}\`,
     gender: \`${esc(c.gender)}\`,
@@ -130,28 +184,65 @@ ${characters.map((c) => `  {
     ageDebutGroup: \`${esc(c.ageDebutGroup)}\`,
     ageMainGroup: \`${esc(c.ageMainGroup)}\`,
     active: ${c.active ? 'true' : 'false'},
-  },`).join('\n')}
-]
-`
-  fs.writeFileSync(OUT_CHARACTERS_TS, charactersTs, 'utf8')
+  },`
+    })
+    .join('\n')
 
-  // api/characters-lite.ts (solo ids activos, en el orden del CSV)
+  const footer = `\n]\n`
+
+  fs.writeFileSync(OUT_CHARACTERS_TS, header + body + footer, 'utf8')
+}
+
+function writeLiteTS(characters) {
   ensureDir(OUT_LITE_TS)
-  const activeIds = characters.filter((c) => c.active !== false).map((c) => c.id)
 
-  const liteTs =
-`// api/characters-lite.ts
-// AUTO-GENERADO por scripts/generate-characters.mjs
-// NO editar a mano: tus IDs vienen del CSV (solo active=true)
+  const lite = characters.map(({ id, name, anime, imageUrl, active }) => ({
+    id,
+    name,
+    anime,
+    imageUrl,
+    active,
+  }))
 
-export const CHARACTER_IDS: string[] = [
-${activeIds.map((id) => `  '${esc(id)}',`).join('\n')}
-]
-`
-  fs.writeFileSync(OUT_LITE_TS, liteTs, 'utf8')
+  const content = `export const CHARACTERS_LITE = ${JSON.stringify(lite, null, 2)} as const\n`
+  fs.writeFileSync(OUT_LITE_TS, content, 'utf8')
+}
 
-  console.log(`✅ Generado: ${path.relative(PROJECT_ROOT, OUT_CHARACTERS_TS)} (${characters.length} personajes)`)
-  console.log(`✅ Generado: ${path.relative(PROJECT_ROOT, OUT_LITE_TS)} (${activeIds.length} ids activos)`)
+function main() {
+  console.log('✅ generate-characters: usando csv-parse (robusto)')
+
+  if (!fs.existsSync(INPUT_CSV)) {
+    console.error(`❌ No encuentro el CSV en: ${INPUT_CSV}`)
+    process.exit(1)
+  }
+
+  const csvText = fs.readFileSync(INPUT_CSV, 'utf8')
+  const rows = parseCSV(csvText)
+
+  console.log('🔎 Headers detectados:', Object.keys(rows[0] || {}))
+  console.log(
+    '🔎 Ejemplo ages:',
+    rows[0]?.ageDebutGroup,
+    rows[0]?.ageMainGroup,
+    rows[0]?.ageDebut,
+    rows[0]?.ageMain
+  )
+
+  const characters = rows
+    .map(mapRow)
+    .filter((c) => c.id && c.name && c.anime)
+
+  // sanity check: cuántos quedaron en Desconocido
+  const unknownDebut = characters.filter((c) => c.ageDebutGroup === 'Desconocido').length
+  const unknownMain = characters.filter((c) => c.ageMainGroup === 'Desconocido').length
+  console.log(`📊 ageDebutGroup Desconocido: ${unknownDebut}/${characters.length}`)
+  console.log(`📊 ageMainGroup  Desconocido: ${unknownMain}/${characters.length}`)
+
+  writeCharactersTS(characters)
+  writeLiteTS(characters)
+
+  console.log(`✅ Generado: ${OUT_CHARACTERS_TS}`)
+  console.log(`✅ Generado: ${OUT_LITE_TS}`)
 }
 
 main()

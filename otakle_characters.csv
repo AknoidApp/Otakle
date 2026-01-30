@@ -1,201 +1,201 @@
-id,name,anime,genre,debutYear,ageDebut,ageMain,studio,role,gender,race,debutInfo,imageFileName,active
-goku,Goku,Dragon Ball,Shonen,1984,Niño,Adulto,Toei Animation,Protagonista,Masculino,Saiyajin,Aparece por primera vez en el capítulo 1 del manga de Dragon Ball.,goku.png,True
-vegeta,Vegeta,Dragon Ball,Shonen,1988,Adulto,Adulto,Toei Animation,Deuteragonista,Masculino,Saiyajin,"Príncipe de los saiyajin, aparece como rival y enemigo de Goku antes de unirse a los Guerreros Z.",vegeta.png,True
-naruto,Naruto,Naruto,Shonen,1999,Adolescente,Joven,Studio Pierrot,Protagonista,Masculino,Humano,"Debuta en el capítulo 1 del manga, como el ninja problemático de la aldea.",naruto.png,True
-luffy,Luffy,One Piece,Shonen,1997,Adolescente,Joven,Toei Animation,Protagonista,Masculino,Humano,"Lo vemos por primera vez en el capítulo 1 del manga, dentro de un barril.",luffy.png,True
-ichigo,Ichigo,Bleach,Shonen,2001,Adolescente,Adolescente,Studio Pierrot,Protagonista,Masculino,Humano,Ichigo Kurosaki debuta como un estudiante que puede ver espíritus y obtiene poderes de shinigami.,ichigo.png,True
-edward_elric,Edward Elric,Fullmetal Alchemist,Shonen,2001,Adolescente,Adolescente,Bones,Protagonista,Masculino,Humano,El joven alquimista estatal que busca recuperar el cuerpo de su hermano tras un fallo en una transmutación prohibida.,edward_elric.png,True
-tanjiro,Tanjiro,Kimetsu no Yaiba,Shonen,2016,Adolescente,Adolescente,Ufotable,Protagonista,Masculino,Humano,Tanjiro Kamado debuta como un chico que pierde a su familia y decide convertirse en cazador de demonios.,tanjiro.png,True
-deku,Deku,My Hero Academia,Shonen,2014,Adolescente,Adolescente,Bones,Protagonista,Masculino,Humano,"Izuku Midoriya, un chico sin poderes en un mundo de héroes, hereda el One For All.",deku.png,True
-light_yagami,Light Yagami,Death Note,Otros,2003,Adolescente,Joven,Madhouse,Protagonista,Masculino,Humano,Estudiante ejemplar que encuentra un cuaderno con el poder de matar a quien tenga su nombre escrito.,light_yagami.png,True
-lelouch,Lelouch,Code Geass,Otros,2006,Adolescente,Adolescente,Sunrise,Protagonista,Masculino,Humano,Príncipe exiliado que obtiene el poder del Geass y lidera una rebelión usando el alias Zero.,lelouch.png,True
-spike,Spike Spiegel,Cowboy Bebop,Otros,1998,Adulto,Adulto,Sunrise,Protagonista,Masculino,Humano,"Cazarrecompensas relajado y letal, con un pasado oscuro ligado al sindicato criminal.",spike.png,True
-sakuragi,Sakuragi,Slam Dunk,Deportes,1990,Adolescente,Adolescente,Toei Animation,Protagonista,Masculino,Humano,"Hanamichi Sakuragi aparece en el capítulo 1, rechazado por una chica y metido en peleas.",sakuragi.png,True
-rukawa,Rukawa,Slam Dunk,Deportes,1990,Adolescente,Adolescente,Toei Animation,Deuteragonista,Masculino,Humano,"Kaede Rukawa es el talentoso rival de Sakuragi en el Shohoku, frío y centrado en el básquetbol.",rukawa.png,True
-hinata,Hinata,Haikyuu!!,Deportes,2012,Adolescente,Joven,Production I.G,Protagonista,Masculino,Humano,Shoyo Hinata debuta como el pequeño atacante apasionado por el vóleibol.,hinata.png,True
-kageyama,Kageyama,Haikyuu!!,Deportes,2012,Adolescente,Adolescente,Production I.G,Deuteragonista,Masculino,Humano,Tobio Kageyama es el talentoso colocador apodado el “Rey de la cancha”.,kageyama.png,True
-taiga,Taiga,Toradora!,Romance,2006,Adolescente,Adolescente,J.C.Staff,Protagonista,Femenino,Humano,"Taiga Aisaka aparece como la “Tigre de Bolsillo”, conocida por su mal carácter.",taiga.png,True
-kaguya,Kaguya,Kaguya-sama: Love is War,Romance,2015,Adolescente,Adolescente,A-1 Pictures,Protagonista,Femenino,Humano,Kaguya Shinomiya es la vicepresidenta del consejo estudiantil que compite en juegos mentales de amor con Shirogane.,kaguya.png,True
-usagi,Usagi,Sailor Moon,Otros,1991,Adolescente,Adolescente,Toei Animation,Protagonista,Femenino,Humano,Usagi Tsukino debuta como una estudiante torpe que descubre que es Sailor Moon.,usagi.png,True
-zero_two,Zero Two,Darling in the Franxx,Otros,2018,Adolescente,Adolescente,Trigger / A-1 Pictures,Deuteragonista,Femenino,Otro,"Piloto misteriosa con cuernos rojos, conocida como el “monstruo” que nadie quiere como pareja… hasta Hiro.",zero_two.png,True
-gohan,Gohan,Dragon Ball,Shonen,1988,Niño,Adolescente,Toei Animation,Deuteragonista,Masculino,Saiyajin,Personaje de Dragon Ball.,gohan.png,True
-piccolo,Piccolo,Dragon Ball,Shonen,1984,Adulto,Adulto,Toei Animation,Secundario,Masculino,Otro,Personaje de Dragon Ball.,piccolo.png,True
-freezer,Freezer,Dragon Ball,Shonen,1984,Adulto,Adulto,Toei Animation,Antagonista,Otro,Alien,Personaje de Dragon Ball.,freezer.png,True
-cell,Cell,Dragon Ball,Shonen,1984,Adulto,Adulto,Toei Animation,Antagonista,Masculino,Androide,Personaje de Dragon Ball.,cell.png,True
-trunks,Trunks,Dragon Ball,Shonen,1984,Joven,Joven,Toei Animation,Secundario,Masculino,Saiyajin,Personaje de Dragon Ball.,trunks.png,True
-bulma,Bulma,Dragon Ball,Shonen,1984,Joven,Adulto,Toei Animation,Secundario,Femenino,Humano,Personaje de Dragon Ball.,bulma.png,True
-krillin,Krillin,Dragon Ball,Shonen,1984,Adolescente,Adulto,Toei Animation,Secundario,Masculino,Humano,Personaje de Dragon Ball.,krillin.png,True
-majin_buu,Majin Buu,Dragon Ball,Shonen,1984,Adulto,Adulto,Toei Animation,Antagonista,Masculino,Demonio,Personaje de Dragon Ball.,majin_buu.png,True
-beerus,Beerus,Dragon Ball,Shonen,1984,Mayor,Mayor,Toei Animation,Secundario,Masculino,Dios,Personaje de Dragon Ball.,beerus.png,True
-whis,Whis,Dragon Ball,Shonen,1984,Mayor,Mayor,Toei Animation,Secundario,Masculino,Angel,Personaje de Dragon Ball.,whis.png,True
-roronoa_zoro,Roronoa Zoro,One Piece,Shonen,1997,Joven,Joven,Toei Animation,Deuteragonista,Masculino,Humano,Personaje de One Piece.,roronoa_zoro.png,True
-nami,Nami,One Piece,Shonen,1997,Joven,Joven,Toei Animation,Secundario,Femenino,Humano,Personaje de One Piece.,nami.png,True
-sanji,Sanji,One Piece,Shonen,1997,Joven,Joven,Toei Animation,Secundario,Masculino,Humano,Personaje de One Piece.,sanji.png,True
-usopp,Usopp,One Piece,Shonen,1997,Adolescente,Joven,Toei Animation,Secundario,Masculino,Humano,Personaje de One Piece.,usopp.png,True
-tony_tony_chopper,Tony Tony Chopper,One Piece,Shonen,1997,Adolescente,Adolescente,Toei Animation,Secundario,Masculino,Otro,Personaje de One Piece.,tony_tony_chopper.png,True
-nico_robin,Nico Robin,One Piece,Shonen,1997,Adulto,Adulto,Toei Animation,Secundario,Femenino,Humano,Personaje de One Piece.,nico_robin.png,True
-franky,Franky,One Piece,Shonen,1997,Adulto,Adulto,Toei Animation,Secundario,Masculino,Cyborg,Personaje de One Piece.,franky.png,True
-brook,Brook,One Piece,Shonen,1997,Adulto,Adulto,Toei Animation,Secundario,Masculino,Otro,Personaje de One Piece.,brook.png,True
-jinbe,Jinbe,One Piece,Shonen,1997,Adulto,Adulto,Toei Animation,Secundario,Masculino,Otro,Personaje de One Piece.,jinbe.png,True
-portgas_d_ace,Portgas D. Ace,One Piece,Shonen,1997,Joven,Joven,Toei Animation,Secundario,Masculino,Humano,Personaje de One Piece.,portgas_d_ace.png,True
-trafalgar_law,Trafalgar Law,One Piece,Shonen,1997,Adulto,Adulto,Toei Animation,Secundario,Masculino,Humano,Personaje de One Piece.,trafalgar_law.png,True
-shanks,Shanks,One Piece,Shonen,1997,Adulto,Adulto,Toei Animation,Secundario,Masculino,Humano,Personaje de One Piece.,shanks.png,True
-marshall_d_teach,Marshall D. Teach,One Piece,Shonen,1997,Adulto,Adulto,Toei Animation,Antagonista,Masculino,Humano,Personaje de One Piece.,marshall_d_teach.png,True
-boa_hancock,Boa Hancock,One Piece,Shonen,1997,Adulto,Adulto,Toei Animation,Secundario,Femenino,Humano,Personaje de One Piece.,boa_hancock.png,True
-sabo,Sabo,One Piece,Shonen,1997,Joven,Joven,Toei Animation,Secundario,Masculino,Humano,Personaje de One Piece.,sabo.png,True
-donquixote_doflamingo,Donquixote Doflamingo,One Piece,Shonen,1997,Adulto,Adulto,Toei Animation,Antagonista,Masculino,Humano,Personaje de One Piece.,donquixote_doflamingo.png,True
-kaido,Kaido,One Piece,Shonen,1997,Mayor,Mayor,Toei Animation,Antagonista,Masculino,Otro,Personaje de One Piece.,kaido.png,True
-big_mom,Big Mom,One Piece,Shonen,1997,Mayor,Mayor,Toei Animation,Antagonista,Femenino,Humano,Personaje de One Piece.,big_mom.png,True
-sasuke_uchiha,Sasuke Uchiha,Naruto,Shonen,1999,Adolescente,Joven,Studio Pierrot,Deuteragonista,Masculino,Humano,Personaje de Naruto.,sasuke_uchiha.png,True
-sakura_haruno,Sakura Haruno,Naruto,Shonen,1999,Adolescente,Joven,Studio Pierrot,Secundario,Femenino,Humano,Personaje de Naruto.,sakura_haruno.png,True
-kakashi_hatake,Kakashi Hatake,Naruto,Shonen,1999,Adulto,Adulto,Studio Pierrot,Secundario,Masculino,Humano,Personaje de Naruto.,kakashi_hatake.png,True
-itachi_uchiha,Itachi Uchiha,Naruto,Shonen,1999,Adulto,Adulto,Studio Pierrot,Secundario,Masculino,Humano,Personaje de Naruto.,itachi_uchiha.png,True
-gaara,Gaara,Naruto,Shonen,1999,Adolescente,Adulto,Studio Pierrot,Secundario,Masculino,Humano,Personaje de Naruto.,gaara.png,True
-jiraiya,Jiraiya,Naruto,Shonen,1999,Adulto,Mayor,Studio Pierrot,Secundario,Masculino,Humano,Personaje de Naruto.,jiraiya.png,True
-orochimaru,Orochimaru,Naruto,Shonen,1999,Adulto,Mayor,Studio Pierrot,Antagonista,Masculino,Humano,Personaje de Naruto.,orochimaru.png,True
-pain,Pain,Naruto,Shonen,1999,Adulto,Adulto,Studio Pierrot,Antagonista,Masculino,Humano,Personaje de Naruto.,pain.png,True
-madara_uchiha,Madara Uchiha,Naruto,Shonen,1999,Mayor,Mayor,Studio Pierrot,Antagonista,Masculino,Humano,Personaje de Naruto.,madara_uchiha.png,True
-obito_uchiha,Obito Uchiha,Naruto,Shonen,1999,Adulto,Adulto,Studio Pierrot,Antagonista,Masculino,Humano,Personaje de Naruto.,obito_uchiha.png,True
-tsunade,Tsunade,Naruto,Shonen,1999,Adulto,Mayor,Studio Pierrot,Secundario,Femenino,Humano,Personaje de Naruto.,tsunade.png,True
-shikamaru_nara,Shikamaru Nara,Naruto,Shonen,1999,Adolescente,Adulto,Studio Pierrot,Secundario,Masculino,Humano,Personaje de Naruto.,shikamaru_nara.png,True
-rukia_kuchiki,Rukia Kuchiki,Bleach,Shonen,2001,Adolescente,Joven,Studio Pierrot,Deuteragonista,Femenino,Shinigami,Personaje de Bleach.,rukia_kuchiki.png,True
-sosuke_aizen,Sosuke Aizen,Bleach,Shonen,2001,Adulto,Adulto,Studio Pierrot,Antagonista,Masculino,Shinigami,Personaje de Bleach.,sosuke_aizen.png,True
-renji_abarai,Renji Abarai,Bleach,Shonen,2001,Joven,Joven,Studio Pierrot,Secundario,Masculino,Shinigami,Personaje de Bleach.,renji_abarai.png,True
-byakuya_kuchiki,Byakuya Kuchiki,Bleach,Shonen,2001,Adulto,Adulto,Studio Pierrot,Secundario,Masculino,Shinigami,Personaje de Bleach.,byakuya_kuchiki.png,True
-orihime_inoue,Orihime Inoue,Bleach,Shonen,2001,Adolescente,Adolescente,Studio Pierrot,Secundario,Femenino,Humano,Personaje de Bleach.,orihime_inoue.png,True
-uryu_ishida,Uryu Ishida,Bleach,Shonen,2001,Adolescente,Adolescente,Studio Pierrot,Secundario,Masculino,Humano,Personaje de Bleach.,uryu_ishida.png,True
-kenpachi_zaraki,Kenpachi Zaraki,Bleach,Shonen,2001,Adulto,Adulto,Studio Pierrot,Secundario,Masculino,Shinigami,Personaje de Bleach.,kenpachi_zaraki.png,True
-toshiro_hitsugaya,Toshiro Hitsugaya,Bleach,Shonen,2001,Adolescente,Adolescente,Studio Pierrot,Secundario,Masculino,Shinigami,Personaje de Bleach.,toshiro_hitsugaya.png,True
-yoruichi_shihoin,Yoruichi Shihoin,Bleach,Shonen,2001,Adulto,Adulto,Studio Pierrot,Secundario,Femenino,Shinigami,Personaje de Bleach.,yoruichi_shihoin.png,True
-nezuko_kamado,Nezuko Kamado,Kimetsu no Yaiba,Shonen,2016,Adolescente,Adolescente,Ufotable,Deuteragonista,Femenino,Demonio,Personaje de Kimetsu no Yaiba.,nezuko_kamado.png,True
-zenitsu_agatsuma,Zenitsu Agatsuma,Kimetsu no Yaiba,Shonen,2016,Adolescente,Adolescente,Ufotable,Secundario,Masculino,Humano,Personaje de Kimetsu no Yaiba.,zenitsu_agatsuma.png,True
-inosuke_hashibira,Inosuke Hashibira,Kimetsu no Yaiba,Shonen,2016,Adolescente,Adolescente,Ufotable,Secundario,Masculino,Humano,Personaje de Kimetsu no Yaiba.,inosuke_hashibira.png,True
-giyu_tomioka,Giyu Tomioka,Kimetsu no Yaiba,Shonen,2016,Adulto,Adulto,Ufotable,Secundario,Masculino,Humano,Personaje de Kimetsu no Yaiba.,giyu_tomioka.png,True
-shinobu_kocho,Shinobu Kocho,Kimetsu no Yaiba,Shonen,2016,Adulto,Adulto,Ufotable,Secundario,Femenino,Humano,Personaje de Kimetsu no Yaiba.,shinobu_kocho.png,True
-muzan_kibutsuji,Muzan Kibutsuji,Kimetsu no Yaiba,Shonen,2016,Adulto,Mayor,Ufotable,Antagonista,Masculino,Demonio,Personaje de Kimetsu no Yaiba.,muzan_kibutsuji.png,True
-izuku_midoriya,Izuku Midoriya,My Hero Academia,Shonen,2014,Adolescente,Adolescente,Bones,Protagonista,Masculino,Humano,Personaje de My Hero Academia.,izuku_midoriya.png,True
-katsuki_bakugo,Katsuki Bakugo,My Hero Academia,Shonen,2014,Adolescente,Adolescente,Bones,Deuteragonista,Masculino,Humano,Personaje de My Hero Academia.,katsuki_bakugo.png,True
-shoto_todoroki,Shoto Todoroki,My Hero Academia,Shonen,2014,Adolescente,Adolescente,Bones,Secundario,Masculino,Humano,Personaje de My Hero Academia.,shoto_todoroki.png,True
-all_might,All Might,My Hero Academia,Shonen,2014,Adulto,Mayor,Bones,Secundario,Masculino,Humano,Personaje de My Hero Academia.,all_might.png,True
-ochaco_uraraka,Ochaco Uraraka,My Hero Academia,Shonen,2014,Adolescente,Adolescente,Bones,Secundario,Femenino,Humano,Personaje de My Hero Academia.,ochaco_uraraka.png,True
-shota_aizawa,Shota Aizawa,My Hero Academia,Shonen,2014,Adulto,Adulto,Bones,Secundario,Masculino,Humano,Personaje de My Hero Academia.,shota_aizawa.png,True
-tomura_shigaraki,Tomura Shigaraki,My Hero Academia,Shonen,2014,Adulto,Adulto,Bones,Antagonista,Masculino,Humano,Personaje de My Hero Academia.,tomura_shigaraki.png,True
-dabi,Dabi,My Hero Academia,Shonen,2014,Adulto,Adulto,Bones,Antagonista,Masculino,Humano,Personaje de My Hero Academia.,dabi.png,True
-l,L,Death Note,Shonen,2003,Adulto,Adulto,Madhouse,Deuteragonista,Masculino,Humano,Personaje de Death Note.,l.png,True
-ryuk,Ryuk,Death Note,Shonen,2003,Mayor,Mayor,Madhouse,Secundario,Masculino,Shinigami,Personaje de Death Note.,ryuk.png,True
-misa_amane,Misa Amane,Death Note,Shonen,2003,Joven,Joven,Madhouse,Secundario,Femenino,Humano,Personaje de Death Note.,misa_amane.png,True
-near,Near,Death Note,Shonen,2003,Niño,Adolescente,Madhouse,Secundario,Masculino,Humano,Personaje de Death Note.,near.png,True
-suzaku_kururugi,Suzaku Kururugi,Code Geass,Otros,2006,Adolescente,Adolescente,Sunrise,Deuteragonista,Masculino,Humano,Personaje de Code Geass.,suzaku_kururugi.png,True
-c_c,C.C.,Code Geass,Otros,2006,Mayor,Mayor,Sunrise,Secundario,Femenino,Humano,Personaje de Code Geass.,c_c.png,True
-ed,Ed,Cowboy Bebop,Otros,1998,Niño,Niño,Sunrise,Secundario,Otro,Humano,Personaje de Cowboy Bebop.,ed.png,True
-vicious,Vicious,Cowboy Bebop,Otros,1998,Adulto,Adulto,Sunrise,Antagonista,Masculino,Humano,Personaje de Cowboy Bebop.,vicious.png,True
-yuji_itadori,Yuji Itadori,Jujutsu Kaisen,Shonen,2018,Adolescente,Adolescente,MAPPA,Protagonista,Masculino,Humano,Personaje de Jujutsu Kaisen.,yuji_itadori.png,True
-megumi_fushiguro,Megumi Fushiguro,Jujutsu Kaisen,Shonen,2018,Adolescente,Adolescente,MAPPA,Deuteragonista,Masculino,Humano,Personaje de Jujutsu Kaisen.,megumi_fushiguro.png,True
-nobara_kugisaki,Nobara Kugisaki,Jujutsu Kaisen,Shonen,2018,Adolescente,Adolescente,MAPPA,Secundario,Femenino,Humano,Personaje de Jujutsu Kaisen.,nobara_kugisaki.png,True
-satoru_gojo,Satoru Gojo,Jujutsu Kaisen,Shonen,2018,Adulto,Adulto,MAPPA,Secundario,Masculino,Humano,Personaje de Jujutsu Kaisen.,satoru_gojo.png,True
-ryomen_sukuna,Ryomen Sukuna,Jujutsu Kaisen,Shonen,2018,Mayor,Mayor,MAPPA,Antagonista,Masculino,Demonio,Personaje de Jujutsu Kaisen.,ryomen_sukuna.png,True
-suguru_geto,Suguru Geto,Jujutsu Kaisen,Shonen,2018,Adulto,Adulto,MAPPA,Antagonista,Masculino,Humano,Personaje de Jujutsu Kaisen.,suguru_geto.png,True
-eren_yeager,Eren Yeager,Attack on Titan,Otros,2009,Adolescente,Joven,Wit Studio / MAPPA,Protagonista,Masculino,Humano,Personaje de Attack on Titan.,eren_yeager.png,True
-mikasa_ackerman,Mikasa Ackerman,Attack on Titan,Otros,2009,Adolescente,Joven,Wit Studio / MAPPA,Deuteragonista,Femenino,Humano,Personaje de Attack on Titan.,mikasa_ackerman.png,True
-erwin_smith,Erwin Smith,Attack on Titan,Otros,2009,Adulto,Adulto,Wit Studio / MAPPA,Secundario,Masculino,Humano,Personaje de Attack on Titan.,erwin_smith.png,True
-hange_zoe,Hange Zoe,Attack on Titan,Otros,2009,Adulto,Adulto,Wit Studio / MAPPA,Secundario,Otro,Humano,Personaje de Attack on Titan.,hange_zoe.png,True
-reiner_braun,Reiner Braun,Attack on Titan,Otros,2009,Adolescente,Joven,Wit Studio / MAPPA,Antagonista,Masculino,Humano,Personaje de Attack on Titan.,reiner_braun.png,True
-zeke_yeager,Zeke Yeager,Attack on Titan,Otros,2009,Adulto,Adulto,Wit Studio / MAPPA,Antagonista,Masculino,Humano,Personaje de Attack on Titan.,zeke_yeager.png,True
-roy_mustang,Roy Mustang,Fullmetal Alchemist,Shonen,2001,Adulto,Adulto,Bones,Secundario,Masculino,Humano,Personaje de Fullmetal Alchemist.,roy_mustang.png,True
-scar,Scar,Fullmetal Alchemist,Shonen,2001,Adulto,Adulto,Bones,Antagonista,Masculino,Humano,Personaje de Fullmetal Alchemist.,scar.png,True
-gon_freecss,Gon Freecss,Hunter x Hunter,Shonen,1998,Niño,Niño,Madhouse,Protagonista,Masculino,Humano,Personaje de Hunter x Hunter.,gon_freecss.png,True
-kurapika,Kurapika,Hunter x Hunter,Shonen,1998,Adolescente,Joven,Madhouse,Secundario,Masculino,Humano,Personaje de Hunter x Hunter.,kurapika.png,True
-hisoka,Hisoka,Hunter x Hunter,Shonen,1998,Adulto,Adulto,Madhouse,Antagonista,Masculino,Humano,Personaje de Hunter x Hunter.,hisoka.png,True
-meruem,Meruem,Hunter x Hunter,Shonen,1998,Mayor,Mayor,Madhouse,Antagonista,Masculino,Otro,Personaje de Hunter x Hunter.,meruem.png,True
-isaac_netero,Isaac Netero,Hunter x Hunter,Shonen,1998,Adulto,Mayor,Madhouse,Secundario,Masculino,Humano,Personaje de Hunter x Hunter.,isaac_netero.png,True
-jonathan_joestar,Jonathan Joestar,JoJo's Bizarre Adventure,Shonen,1987,Joven,Joven,David Production,Protagonista,Masculino,Humano,Personaje de JoJo's Bizarre Adventure.,jonathan_joestar.png,True
-joseph_joestar,Joseph Joestar,JoJo's Bizarre Adventure,Shonen,1987,Joven,Mayor,David Production,Protagonista,Masculino,Humano,Personaje de JoJo's Bizarre Adventure.,joseph_joestar.png,True
-jotaro_kujo,Jotaro Kujo,JoJo's Bizarre Adventure,Shonen,1987,Adolescente,Adulto,David Production,Protagonista,Masculino,Humano,Personaje de JoJo's Bizarre Adventure.,jotaro_kujo.png,True
-dio_brando,Dio Brando,JoJo's Bizarre Adventure,Shonen,1987,Mayor,Mayor,David Production,Antagonista,Masculino,Otro,Personaje de JoJo's Bizarre Adventure.,dio_brando.png,True
-josuke_higashikata,Josuke Higashikata,JoJo's Bizarre Adventure,Shonen,1987,Adolescente,Adolescente,David Production,Protagonista,Masculino,Humano,Personaje de JoJo's Bizarre Adventure.,josuke_higashikata.png,True
-giorno_giovanna,Giorno Giovanna,JoJo's Bizarre Adventure,Shonen,1987,Adolescente,Adolescente,David Production,Protagonista,Masculino,Humano,Personaje de JoJo's Bizarre Adventure.,giorno_giovanna.png,True
-saitama,Saitama,One Punch Man,Shonen,2009,Adulto,Adulto,Madhouse,Protagonista,Masculino,Humano,Personaje de One Punch Man.,saitama.png,True
-genos,Genos,One Punch Man,Shonen,2009,Joven,Joven,Madhouse,Deuteragonista,Masculino,Cyborg,Personaje de One Punch Man.,genos.png,True
-tatsumaki,Tatsumaki,One Punch Man,Shonen,2009,Adulto,Adulto,Madhouse,Secundario,Femenino,Humano,Personaje de One Punch Man.,tatsumaki.png,True
-garou,Garou,One Punch Man,Shonen,2009,Joven,Joven,Madhouse,Antagonista,Masculino,Humano,Personaje de One Punch Man.,garou.png,True
-king,King,One Punch Man,Shonen,2009,Adulto,Adulto,Madhouse,Secundario,Masculino,Humano,Personaje de One Punch Man.,king.png,True
-ken_kaneki,Ken Kaneki,Tokyo Ghoul,Otros,2011,Adolescente,Joven,Studio Pierrot,Protagonista,Masculino,Ghoul,Personaje de Tokyo Ghoul.,ken_kaneki.png,True
-touka_kirishima,Touka Kirishima,Tokyo Ghoul,Otros,2011,Adolescente,Joven,Studio Pierrot,Deuteragonista,Femenino,Ghoul,Personaje de Tokyo Ghoul.,touka_kirishima.png,True
-jason,Jason,Tokyo Ghoul,Otros,2011,Adulto,Adulto,Studio Pierrot,Antagonista,Masculino,Ghoul,Personaje de Tokyo Ghoul.,jason.png,True
-tooru_oikawa,Tooru Oikawa,Haikyuu!!,Deportes,2012,Adolescente,Adolescente,Production I.G,Secundario,Masculino,Humano,Personaje de Haikyuu!!.,tooru_oikawa.png,True
-kenma_kozume,Kenma Kozume,Haikyuu!!,Deportes,2012,Adolescente,Adolescente,Production I.G,Secundario,Masculino,Humano,Personaje de Haikyuu!!.,kenma_kozume.png,True
-kei_tsukishima,Kei Tsukishima,Haikyuu!!,Deportes,2012,Adolescente,Adolescente,Production I.G,Secundario,Masculino,Humano,Personaje de Haikyuu!!.,kei_tsukishima.png,True
-takenori_akagi,Takenori Akagi,Slam Dunk,Deportes,1990,Adolescente,Adolescente,Toei Animation,Secundario,Masculino,Humano,Personaje de Slam Dunk.,takenori_akagi.png,True
-hisashi_mitsui,Hisashi Mitsui,Slam Dunk,Deportes,1990,Adolescente,Adolescente,Toei Animation,Secundario,Masculino,Humano,Personaje de Slam Dunk.,hisashi_mitsui.png,True
-ryota_miyagi,Ryota Miyagi,Slam Dunk,Deportes,1990,Adolescente,Adolescente,Toei Animation,Secundario,Masculino,Humano,Personaje de Slam Dunk.,ryota_miyagi.png,True
-tetsuya_kuroko,Tetsuya Kuroko,Kuroko no Basket,Deportes,2008,Adolescente,Adolescente,Production I.G,Protagonista,Masculino,Humano,Personaje de Kuroko no Basket.,tetsuya_kuroko.png,True
-daiki_aomine,Daiki Aomine,Kuroko no Basket,Deportes,2008,Adolescente,Adolescente,Production I.G,Secundario,Masculino,Humano,Personaje de Kuroko no Basket.,daiki_aomine.png,True
-seijuro_akashi,Seijuro Akashi,Kuroko no Basket,Deportes,2008,Adolescente,Adolescente,Production I.G,Secundario,Masculino,Humano,Personaje de Kuroko no Basket.,seijuro_akashi.png,True
-miyuki_shirogane,Miyuki Shirogane,Kaguya-sama: Love is War,Romance,2015,Adolescente,Adolescente,A-1 Pictures,Deuteragonista,Masculino,Humano,Personaje de Kaguya-sama: Love is War.,miyuki_shirogane.png,True
-chika_fujiwara,Chika Fujiwara,Kaguya-sama: Love is War,Romance,2015,Adolescente,Adolescente,A-1 Pictures,Secundario,Femenino,Humano,Personaje de Kaguya-sama: Love is War.,chika_fujiwara.png,True
-yu_ishigami,Yu Ishigami,Kaguya-sama: Love is War,Romance,2015,Adolescente,Adolescente,A-1 Pictures,Secundario,Masculino,Humano,Personaje de Kaguya-sama: Love is War.,yu_ishigami.png,True
-hiro,Hiro,Darling in the Franxx,Romance,2018,Adolescente,Adolescente,Trigger / A-1 Pictures,Deuteragonista,Masculino,Humano,Personaje de Darling in the Franxx.,hiro.png,True
-shinji_ikari,Shinji Ikari,Neon Genesis Evangelion,Otros,1995,Adolescente,Adolescente,Gainax,Protagonista,Masculino,Humano,Personaje de Neon Genesis Evangelion.,shinji_ikari.png,True
-misato_katsuragi,Misato Katsuragi,Neon Genesis Evangelion,Otros,1995,Adulto,Adulto,Gainax,Secundario,Femenino,Humano,Personaje de Neon Genesis Evangelion.,misato_katsuragi.png,True
-happy,Happy,Fairy Tail,Shonen,2006,Niño,Niño,A-1 Pictures,Secundario,Masculino,Otro,Personaje de Fairy Tail.,happy.png,True
-asta,Asta,Black Clover,Shonen,2015,Adolescente,Adolescente,Studio Pierrot,Protagonista,Masculino,Humano,Personaje de Black Clover.,asta.png,True
-yuno,Yuno,Black Clover,Shonen,2015,Adolescente,Adolescente,Studio Pierrot,Deuteragonista,Masculino,Humano,Personaje de Black Clover.,yuno.png,True
-rintaro_okabe,Rintaro Okabe,Steins;Gate,Otros,2009,Joven,Joven,White Fox,Protagonista,Masculino,Humano,Personaje de Steins;Gate.,rintaro_okabe.png,True
-kurisu_makise,Kurisu Makise,Steins;Gate,Otros,2009,Joven,Joven,White Fox,Deuteragonista,Femenino,Humano,Personaje de Steins;Gate.,kurisu_makise.png,True
-mayuri_shiina,Mayuri Shiina,Steins;Gate,Otros,2009,Joven,Joven,White Fox,Secundario,Femenino,Humano,Personaje de Steins;Gate.,mayuri_shiina.png,True
-subaru_natsuki,Subaru Natsuki,Re:Zero,Otros,2014,Adolescente,Joven,White Fox,Protagonista,Masculino,Humano,Personaje de Re:Zero.,subaru_natsuki.png,True
-rem,Rem,Re:Zero,Otros,2014,Adolescente,Adolescente,White Fox,Secundario,Femenino,Otro,Personaje de Re:Zero.,rem.png,True
-ram,Ram,Re:Zero,Otros,2014,Adolescente,Adolescente,White Fox,Secundario,Femenino,Otro,Personaje de Re:Zero.,ram.png,True
-kirito,Kirito,Sword Art Online,Shonen,2009,Adolescente,Joven,A-1 Pictures,Protagonista,Masculino,Humano,Personaje de Sword Art Online.,kirito.png,True
-asuna,Asuna,Sword Art Online,Shonen,2009,Adolescente,Joven,A-1 Pictures,Deuteragonista,Femenino,Humano,Personaje de Sword Art Online.,asuna.png,True
-sinon,Sinon,Sword Art Online,Shonen,2009,Adolescente,Joven,A-1 Pictures,Secundario,Femenino,Humano,Personaje de Sword Art Online.,sinon.png,True
-saber,Saber,Fate/stay night,Otros,2004,Joven,Joven,Ufotable,Protagonista,Femenino,Otro,Personaje de Fate/stay night.,saber.png,True
-rin_tohsaka,Rin Tohsaka,Fate/stay night,Otros,2004,Adolescente,Adolescente,Ufotable,Deuteragonista,Femenino,Humano,Personaje de Fate/stay night.,rin_tohsaka.png,True
-archer,Archer,Fate/stay night,Otros,2004,Adulto,Adulto,Ufotable,Secundario,Masculino,Otro,Personaje de Fate/stay night.,archer.png,True
-gintoki_sakata,Gintoki Sakata,Gintama,Shonen,2003,Adulto,Adulto,Sunrise,Protagonista,Masculino,Humano,Personaje de Gintama.,gintoki_sakata.png,True
-kagura,Kagura,Gintama,Shonen,2003,Adolescente,Adolescente,Sunrise,Deuteragonista,Femenino,Otro,Personaje de Gintama.,kagura.png,True
-shinpachi_shimura,Shinpachi Shimura,Gintama,Shonen,2003,Adolescente,Adolescente,Sunrise,Secundario,Masculino,Humano,Personaje de Gintama.,shinpachi_shimura.png,True
-arataka_reigen,Arataka Reigen,Mob Psycho 100,Otros,2012,Adulto,Adulto,Bones,Deuteragonista,Masculino,Humano,Personaje de Mob Psycho 100.,arataka_reigen.png,True
-anya_forger,Anya Forger,Spy x Family,Otros,2019,Niño,Niño,Wit Studio / CloverWorks,Protagonista,Femenino,Humano,Personaje de Spy x Family.,anya_forger.png,True
-yor_forger,Yor Forger,Spy x Family,Otros,2019,Adulto,Adulto,Wit Studio / CloverWorks,Deuteragonista,Femenino,Humano,Personaje de Spy x Family.,yor_forger.png,True
-denji,Denji,Chainsaw Man,Shonen,2018,Adolescente,Adolescente,MAPPA,Protagonista,Masculino,Humano,Personaje de Chainsaw Man.,denji.png,True
-power,Power,Chainsaw Man,Shonen,2018,Adulto,Adulto,MAPPA,Deuteragonista,Femenino,Demonio,Personaje de Chainsaw Man.,power.png,True
-makima,Makima,Chainsaw Man,Shonen,2018,Adulto,Adulto,MAPPA,Antagonista,Femenino,Demonio,Personaje de Chainsaw Man.,makima.png,True
-aki_hayakawa,Aki Hayakawa,Chainsaw Man,Shonen,2018,Joven,Joven,MAPPA,Secundario,Masculino,Humano,Personaje de Chainsaw Man.,aki_hayakawa.png,True
-ash_ketchum,Ash Ketchum,Pokemon,Otros,1997,Niño,Niño,OLM,Protagonista,Masculino,Humano,Personaje de Pokemon.,ash_ketchum.png,True
-pikachu,Pikachu,Pokemon,Otros,1997,Niño,Niño,OLM,Deuteragonista,Otro,Otro,Personaje de Pokemon.,pikachu.png,True
-misty,Misty,Pokemon,Otros,1997,Adolescente,Adolescente,OLM,Secundario,Femenino,Humano,Personaje de Pokemon.,misty.png,True
-brock,Brock,Pokemon,Otros,1997,Joven,Joven,OLM,Secundario,Masculino,Humano,Personaje de Pokemon.,brock.png,True
-jessie,Jessie,Pokemon,Otros,1997,Adulto,Adulto,OLM,Antagonista,Femenino,Humano,Personaje de Pokemon.,jessie.png,True
-james,James,Pokemon,Otros,1997,Adulto,Adulto,OLM,Antagonista,Masculino,Humano,Personaje de Pokemon.,james.png,True
-meowth,Meowth,Pokemon,Otros,1997,Niño,Niño,OLM,Antagonista,Masculino,Otro,Personaje de Pokemon.,meowth.png,True
-giovanni,Giovanni,Pokemon,Otros,1997,Adulto,Adulto,OLM,Antagonista,Masculino,Humano,Personaje de Pokemon.,giovanni.png,True
-seiya,Seiya,Saint Seiya,Shonen,1986,Adolescente,Adolescente,Toei Animation,Protagonista,Masculino,Humano,Personaje de Saint Seiya.,seiya.png,True
-shiryu,Shiryu,Saint Seiya,Shonen,1986,Adolescente,Adolescente,Toei Animation,Deuteragonista,Masculino,Humano,Personaje de Saint Seiya.,shiryu.png,True
-hyoga,Hyoga,Saint Seiya,Shonen,1986,Adolescente,Adolescente,Toei Animation,Secundario,Masculino,Humano,Personaje de Saint Seiya.,hyoga.png,True
-shun,Shun,Saint Seiya,Shonen,1986,Adolescente,Adolescente,Toei Animation,Secundario,Masculino,Humano,Personaje de Saint Seiya.,shun.png,True
-ikki,Ikki,Saint Seiya,Shonen,1986,Adolescente,Adolescente,Toei Animation,Secundario,Masculino,Humano,Personaje de Saint Seiya.,ikki.png,True
-athena,Athena,Saint Seiya,Shonen,1986,Adolescente,Adolescente,Toei Animation,Secundario,Femenino,Dios,Personaje de Saint Seiya.,athena.png,True
-hades,Hades,Saint Seiya,Shonen,1986,Mayor,Mayor,Toei Animation,Antagonista,Masculino,Dios,Personaje de Saint Seiya.,hades.png,True
-kazuma_kuwabara,Kazuma Kuwabara,Yu Yu Hakusho,Shonen,1990,Adolescente,Adolescente,Studio Pierrot,Deuteragonista,Masculino,Humano,Personaje de Yu Yu Hakusho.,kazuma_kuwabara.png,True
-hiei,Hiei,Yu Yu Hakusho,Shonen,1990,Adolescente,Adolescente,Studio Pierrot,Secundario,Masculino,Otro,Personaje de Yu Yu Hakusho.,hiei.png,True
-toguro,Toguro,Yu Yu Hakusho,Shonen,1990,Adulto,Adulto,Studio Pierrot,Antagonista,Masculino,Demonio,Personaje de Yu Yu Hakusho.,toguro.png,True
-inuyasha,Inuyasha,Inuyasha,Shonen,1996,Adolescente,Adulto,Sunrise,Protagonista,Masculino,Demonio,Personaje de Inuyasha.,inuyasha.png,True
-kagome_higurashi,Kagome Higurashi,Inuyasha,Shonen,1996,Adolescente,Adolescente,Sunrise,Deuteragonista,Femenino,Humano,Personaje de Inuyasha.,kagome_higurashi.png,True
-sesshomaru,Sesshomaru,Inuyasha,Shonen,1996,Adulto,Adulto,Sunrise,Secundario,Masculino,Demonio,Personaje de Inuyasha.,sesshomaru.png,True
-naraku,Naraku,Inuyasha,Shonen,1996,Adulto,Adulto,Sunrise,Antagonista,Masculino,Demonio,Personaje de Inuyasha.,naraku.png,True
-shippo,Shippo,Inuyasha,Shonen,1996,Niño,Niño,Sunrise,Secundario,Masculino,Otro,Personaje de Inuyasha.,shippo.png,True
-kenshin_himura,Kenshin Himura,Rurouni Kenshin,Shonen,1994,Adulto,Adulto,Studio Gallop,Protagonista,Masculino,Humano,Personaje de Rurouni Kenshin.,kenshin_himura.png,True
-kaoru_kamiya,Kaoru Kamiya,Rurouni Kenshin,Shonen,1994,Joven,Joven,Studio Gallop,Deuteragonista,Femenino,Humano,Personaje de Rurouni Kenshin.,kaoru_kamiya.png,True
-makoto_shishio,Makoto Shishio,Rurouni Kenshin,Shonen,1994,Adulto,Adulto,Studio Gallop,Antagonista,Masculino,Humano,Personaje de Rurouni Kenshin.,makoto_shishio.png,True
-sanosuke_sagara,Sanosuke Sagara,Rurouni Kenshin,Shonen,1994,Joven,Joven,Studio Gallop,Secundario,Masculino,Humano,Personaje de Rurouni Kenshin.,sanosuke_sagara.png,True
-taichi_yagami,Taichi Yagami,Digimon Adventure,Otros,1999,Niño,Niño,Toei Animation,Protagonista,Masculino,Humano,Personaje de Digimon Adventure.,taichi_yagami.png,True
-agumon,Agumon,Digimon Adventure,Otros,1999,Niño,Niño,Toei Animation,Deuteragonista,Masculino,Otro,Personaje de Digimon Adventure.,agumon.png,True
-yamato_ishida,Yamato Ishida,Digimon Adventure,Otros,1999,Niño,Niño,Toei Animation,Secundario,Masculino,Humano,Personaje de Digimon Adventure.,yamato_ishida.png,True
-gabumon,Gabumon,Digimon Adventure,Otros,1999,Niño,Niño,Toei Animation,Secundario,Masculino,Otro,Personaje de Digimon Adventure.,gabumon.png,True
-sora_takenouchi,Sora Takenouchi,Digimon Adventure,Otros,1999,Niño,Niño,Toei Animation,Secundario,Femenino,Humano,Personaje de Digimon Adventure.,sora_takenouchi.png,True
-sakura_kinomoto,Sakura Kinomoto,Cardcaptor Sakura,Romance,1996,Niño,Niño,Madhouse,Protagonista,Femenino,Humano,Personaje de Cardcaptor Sakura.,sakura_kinomoto.png,True
-kero,Kero,Cardcaptor Sakura,Romance,1996,Niño,Niño,Madhouse,Secundario,Otro,Otro,Personaje de Cardcaptor Sakura.,kero.png,True
-tomoyo_daidouji,Tomoyo Daidouji,Cardcaptor Sakura,Romance,1996,Niño,Niño,Madhouse,Secundario,Femenino,Humano,Personaje de Cardcaptor Sakura.,tomoyo_daidouji.png,True
-kousei_arima,Kousei Arima,Your Lie in April,Romance,2011,Adolescente,Adolescente,A-1 Pictures,Protagonista,Masculino,Humano,Personaje de Your Lie in April.,kousei_arima.png,True
-kaori_miyazono,Kaori Miyazono,Your Lie in April,Romance,2011,Adolescente,Adolescente,A-1 Pictures,Deuteragonista,Femenino,Humano,Personaje de Your Lie in April.,kaori_miyazono.png,True
+id,name,anime,genre,debutYear,ageDebutGroup,ageMainGroup,studio,role,gender,race,debutInfo,imageFileName,active
+goku,Goku,Dragon Ball,Shonen,1984,Niño,Adulto,Toei Animation,Protagonista,Masculino,Saiyajin,Aparece por primera vez en el capítulo 1 del manga de Dragon Ball.,goku.png,TRUE
+vegeta,Vegeta,Dragon Ball,Shonen,1988,Adulto,Adulto,Toei Animation,Deuteragonista,Masculino,Saiyajin,"Príncipe de los saiyajin, aparece como rival y enemigo de Goku antes de unirse a los Guerreros Z.",vegeta.png,TRUE
+naruto,Naruto,Naruto,Shonen,1999,Adolescente,Joven,Studio Pierrot,Protagonista,Masculino,Humano,"Debuta en el capítulo 1 del manga, como el ninja problemático de la aldea.",naruto.png,TRUE
+luffy,Luffy,One Piece,Shonen,1997,Adolescente,Joven,Toei Animation,Protagonista,Masculino,Humano,"Lo vemos por primera vez en el capítulo 1 del manga, dentro de un barril.",luffy.png,TRUE
+ichigo,Ichigo,Bleach,Shonen,2001,Adolescente,Adolescente,Studio Pierrot,Protagonista,Masculino,Humano,Ichigo Kurosaki debuta como un estudiante que puede ver espíritus y obtiene poderes de shinigami.,ichigo.png,TRUE
+edward_elric,Edward Elric,Fullmetal Alchemist,Shonen,2001,Adolescente,Adolescente,Bones,Protagonista,Masculino,Humano,El joven alquimista estatal que busca recuperar el cuerpo de su hermano tras un fallo en una transmutación prohibida.,edward_elric.png,TRUE
+tanjiro,Tanjiro,Kimetsu no Yaiba,Shonen,2016,Adolescente,Adolescente,Ufotable,Protagonista,Masculino,Humano,Tanjiro Kamado debuta como un chico que pierde a su familia y decide convertirse en cazador de demonios.,tanjiro.png,TRUE
+deku,Deku,My Hero Academia,Shonen,2014,Adolescente,Adolescente,Bones,Protagonista,Masculino,Humano,"Izuku Midoriya, un chico sin poderes en un mundo de héroes, hereda el One For All.",deku.png,TRUE
+light_yagami,Light Yagami,Death Note,Otros,2003,Adolescente,Joven,Madhouse,Protagonista,Masculino,Humano,Estudiante ejemplar que encuentra un cuaderno con el poder de matar a quien tenga su nombre escrito.,light_yagami.png,TRUE
+lelouch,Lelouch,Code Geass,Otros,2006,Adolescente,Adolescente,Sunrise,Protagonista,Masculino,Humano,Príncipe exiliado que obtiene el poder del Geass y lidera una rebelión usando el alias Zero.,lelouch.png,TRUE
+spike,Spike Spiegel,Cowboy Bebop,Otros,1998,Adulto,Adulto,Sunrise,Protagonista,Masculino,Humano,"Cazarrecompensas relajado y letal, con un pasado oscuro ligado al sindicato criminal.",spike.png,TRUE
+sakuragi,Sakuragi,Slam Dunk,Deportes,1990,Adolescente,Adolescente,Toei Animation,Protagonista,Masculino,Humano,"Hanamichi Sakuragi aparece en el capítulo 1, rechazado por una chica y metido en peleas.",sakuragi.png,TRUE
+rukawa,Rukawa,Slam Dunk,Deportes,1990,Adolescente,Adolescente,Toei Animation,Deuteragonista,Masculino,Humano,"Kaede Rukawa es el talentoso rival de Sakuragi en el Shohoku, frío y centrado en el básquetbol.",rukawa.png,TRUE
+hinata,Hinata,Haikyuu!!,Deportes,2012,Adolescente,Joven,Production I.G,Protagonista,Masculino,Humano,Shoyo Hinata debuta como el pequeño atacante apasionado por el vóleibol.,hinata.png,TRUE
+kageyama,Kageyama,Haikyuu!!,Deportes,2012,Adolescente,Adolescente,Production I.G,Deuteragonista,Masculino,Humano,Tobio Kageyama es el talentoso colocador apodado el “Rey de la cancha”.,kageyama.png,TRUE
+taiga,Taiga,Toradora!,Romance,2006,Adolescente,Adolescente,J.C.Staff,Protagonista,Femenino,Humano,"Taiga Aisaka aparece como la “Tigre de Bolsillo”, conocida por su mal carácter.",taiga.png,TRUE
+kaguya,Kaguya,Kaguya-sama: Love is War,Romance,2015,Adolescente,Adolescente,A-1 Pictures,Protagonista,Femenino,Humano,Kaguya Shinomiya es la vicepresidenta del consejo estudiantil que compite en juegos mentales de amor con Shirogane.,kaguya.png,TRUE
+usagi,Usagi,Sailor Moon,Otros,1991,Adolescente,Adolescente,Toei Animation,Protagonista,Femenino,Humano,Usagi Tsukino debuta como una estudiante torpe que descubre que es Sailor Moon.,usagi.png,TRUE
+zero_two,Zero Two,Darling in the Franxx,Otros,2018,Adolescente,Adolescente,Trigger / A-1 Pictures,Deuteragonista,Femenino,Otro,"Piloto misteriosa con cuernos rojos, conocida como el “monstruo” que nadie quiere como pareja… hasta Hiro.",zero_two.png,TRUE
+gohan,Gohan,Dragon Ball,Shonen,1988,Niño,Adolescente,Toei Animation,Deuteragonista,Masculino,Saiyajin,Personaje de Dragon Ball.,gohan.png,TRUE
+piccolo,Piccolo,Dragon Ball,Shonen,1984,Adulto,Adulto,Toei Animation,Secundario,Masculino,Otro,Personaje de Dragon Ball.,piccolo.png,TRUE
+freezer,Freezer,Dragon Ball,Shonen,1984,Adulto,Adulto,Toei Animation,Antagonista,Otro,Alien,Personaje de Dragon Ball.,freezer.png,TRUE
+cell,Cell,Dragon Ball,Shonen,1984,Adulto,Adulto,Toei Animation,Antagonista,Masculino,Androide,Personaje de Dragon Ball.,cell.png,TRUE
+trunks,Trunks,Dragon Ball,Shonen,1984,Joven,Joven,Toei Animation,Secundario,Masculino,Saiyajin,Personaje de Dragon Ball.,trunks.png,TRUE
+bulma,Bulma,Dragon Ball,Shonen,1984,Joven,Adulto,Toei Animation,Secundario,Femenino,Humano,Personaje de Dragon Ball.,bulma.png,TRUE
+krillin,Krillin,Dragon Ball,Shonen,1984,Adolescente,Adulto,Toei Animation,Secundario,Masculino,Humano,Personaje de Dragon Ball.,krillin.png,TRUE
+majin_buu,Majin Buu,Dragon Ball,Shonen,1984,Adulto,Adulto,Toei Animation,Antagonista,Masculino,Demonio,Personaje de Dragon Ball.,majin_buu.png,TRUE
+beerus,Beerus,Dragon Ball,Shonen,1984,Mayor,Mayor,Toei Animation,Secundario,Masculino,Dios,Personaje de Dragon Ball.,beerus.png,TRUE
+whis,Whis,Dragon Ball,Shonen,1984,Mayor,Mayor,Toei Animation,Secundario,Masculino,Angel,Personaje de Dragon Ball.,whis.png,TRUE
+roronoa_zoro,Roronoa Zoro,One Piece,Shonen,1997,Joven,Joven,Toei Animation,Deuteragonista,Masculino,Humano,Personaje de One Piece.,roronoa_zoro.png,TRUE
+nami,Nami,One Piece,Shonen,1997,Joven,Joven,Toei Animation,Secundario,Femenino,Humano,Personaje de One Piece.,nami.png,TRUE
+sanji,Sanji,One Piece,Shonen,1997,Joven,Joven,Toei Animation,Secundario,Masculino,Humano,Personaje de One Piece.,sanji.png,TRUE
+usopp,Usopp,One Piece,Shonen,1997,Adolescente,Joven,Toei Animation,Secundario,Masculino,Humano,Personaje de One Piece.,usopp.png,TRUE
+tony_tony_chopper,Tony Tony Chopper,One Piece,Shonen,1997,Adolescente,Adolescente,Toei Animation,Secundario,Masculino,Otro,Personaje de One Piece.,tony_tony_chopper.png,TRUE
+nico_robin,Nico Robin,One Piece,Shonen,1997,Adulto,Adulto,Toei Animation,Secundario,Femenino,Humano,Personaje de One Piece.,nico_robin.png,TRUE
+franky,Franky,One Piece,Shonen,1997,Adulto,Adulto,Toei Animation,Secundario,Masculino,Cyborg,Personaje de One Piece.,franky.png,TRUE
+brook,Brook,One Piece,Shonen,1997,Adulto,Adulto,Toei Animation,Secundario,Masculino,Otro,Personaje de One Piece.,brook.png,TRUE
+jinbe,Jinbe,One Piece,Shonen,1997,Adulto,Adulto,Toei Animation,Secundario,Masculino,Otro,Personaje de One Piece.,jinbe.png,TRUE
+portgas_d_ace,Portgas D. Ace,One Piece,Shonen,1997,Joven,Joven,Toei Animation,Secundario,Masculino,Humano,Personaje de One Piece.,portgas_d_ace.png,TRUE
+trafalgar_law,Trafalgar Law,One Piece,Shonen,1997,Adulto,Adulto,Toei Animation,Secundario,Masculino,Humano,Personaje de One Piece.,trafalgar_law.png,TRUE
+shanks,Shanks,One Piece,Shonen,1997,Adulto,Adulto,Toei Animation,Secundario,Masculino,Humano,Personaje de One Piece.,shanks.png,TRUE
+marshall_d_teach,Marshall D. Teach,One Piece,Shonen,1997,Adulto,Adulto,Toei Animation,Antagonista,Masculino,Humano,Personaje de One Piece.,marshall_d_teach.png,TRUE
+boa_hancock,Boa Hancock,One Piece,Shonen,1997,Adulto,Adulto,Toei Animation,Secundario,Femenino,Humano,Personaje de One Piece.,boa_hancock.png,TRUE
+sabo,Sabo,One Piece,Shonen,1997,Joven,Joven,Toei Animation,Secundario,Masculino,Humano,Personaje de One Piece.,sabo.png,TRUE
+donquixote_doflamingo,Donquixote Doflamingo,One Piece,Shonen,1997,Adulto,Adulto,Toei Animation,Antagonista,Masculino,Humano,Personaje de One Piece.,donquixote_doflamingo.png,TRUE
+kaido,Kaido,One Piece,Shonen,1997,Mayor,Mayor,Toei Animation,Antagonista,Masculino,Otro,Personaje de One Piece.,kaido.png,TRUE
+big_mom,Big Mom,One Piece,Shonen,1997,Mayor,Mayor,Toei Animation,Antagonista,Femenino,Humano,Personaje de One Piece.,big_mom.png,TRUE
+sasuke_uchiha,Sasuke Uchiha,Naruto,Shonen,1999,Adolescente,Joven,Studio Pierrot,Deuteragonista,Masculino,Humano,Personaje de Naruto.,sasuke_uchiha.png,TRUE
+sakura_haruno,Sakura Haruno,Naruto,Shonen,1999,Adolescente,Joven,Studio Pierrot,Secundario,Femenino,Humano,Personaje de Naruto.,sakura_haruno.png,TRUE
+kakashi_hatake,Kakashi Hatake,Naruto,Shonen,1999,Adulto,Adulto,Studio Pierrot,Secundario,Masculino,Humano,Personaje de Naruto.,kakashi_hatake.png,TRUE
+itachi_uchiha,Itachi Uchiha,Naruto,Shonen,1999,Adulto,Adulto,Studio Pierrot,Secundario,Masculino,Humano,Personaje de Naruto.,itachi_uchiha.png,TRUE
+gaara,Gaara,Naruto,Shonen,1999,Adolescente,Adulto,Studio Pierrot,Secundario,Masculino,Humano,Personaje de Naruto.,gaara.png,TRUE
+jiraiya,Jiraiya,Naruto,Shonen,1999,Adulto,Mayor,Studio Pierrot,Secundario,Masculino,Humano,Personaje de Naruto.,jiraiya.png,TRUE
+orochimaru,Orochimaru,Naruto,Shonen,1999,Adulto,Mayor,Studio Pierrot,Antagonista,Masculino,Humano,Personaje de Naruto.,orochimaru.png,TRUE
+pain,Pain,Naruto,Shonen,1999,Adulto,Adulto,Studio Pierrot,Antagonista,Masculino,Humano,Personaje de Naruto.,pain.png,TRUE
+madara_uchiha,Madara Uchiha,Naruto,Shonen,1999,Mayor,Mayor,Studio Pierrot,Antagonista,Masculino,Humano,Personaje de Naruto.,madara_uchiha.png,TRUE
+obito_uchiha,Obito Uchiha,Naruto,Shonen,1999,Adulto,Adulto,Studio Pierrot,Antagonista,Masculino,Humano,Personaje de Naruto.,obito_uchiha.png,TRUE
+tsunade,Tsunade,Naruto,Shonen,1999,Adulto,Mayor,Studio Pierrot,Secundario,Femenino,Humano,Personaje de Naruto.,tsunade.png,TRUE
+shikamaru_nara,Shikamaru Nara,Naruto,Shonen,1999,Adolescente,Adulto,Studio Pierrot,Secundario,Masculino,Humano,Personaje de Naruto.,shikamaru_nara.png,TRUE
+rukia_kuchiki,Rukia Kuchiki,Bleach,Shonen,2001,Adolescente,Joven,Studio Pierrot,Deuteragonista,Femenino,Shinigami,Personaje de Bleach.,rukia_kuchiki.png,TRUE
+sosuke_aizen,Sosuke Aizen,Bleach,Shonen,2001,Adulto,Adulto,Studio Pierrot,Antagonista,Masculino,Shinigami,Personaje de Bleach.,sosuke_aizen.png,TRUE
+renji_abarai,Renji Abarai,Bleach,Shonen,2001,Joven,Joven,Studio Pierrot,Secundario,Masculino,Shinigami,Personaje de Bleach.,renji_abarai.png,TRUE
+byakuya_kuchiki,Byakuya Kuchiki,Bleach,Shonen,2001,Adulto,Adulto,Studio Pierrot,Secundario,Masculino,Shinigami,Personaje de Bleach.,byakuya_kuchiki.png,TRUE
+orihime_inoue,Orihime Inoue,Bleach,Shonen,2001,Adolescente,Adolescente,Studio Pierrot,Secundario,Femenino,Humano,Personaje de Bleach.,orihime_inoue.png,TRUE
+uryu_ishida,Uryu Ishida,Bleach,Shonen,2001,Adolescente,Adolescente,Studio Pierrot,Secundario,Masculino,Humano,Personaje de Bleach.,uryu_ishida.png,TRUE
+kenpachi_zaraki,Kenpachi Zaraki,Bleach,Shonen,2001,Adulto,Adulto,Studio Pierrot,Secundario,Masculino,Shinigami,Personaje de Bleach.,kenpachi_zaraki.png,TRUE
+toshiro_hitsugaya,Toshiro Hitsugaya,Bleach,Shonen,2001,Adolescente,Adolescente,Studio Pierrot,Secundario,Masculino,Shinigami,Personaje de Bleach.,toshiro_hitsugaya.png,TRUE
+yoruichi_shihoin,Yoruichi Shihoin,Bleach,Shonen,2001,Adulto,Adulto,Studio Pierrot,Secundario,Femenino,Shinigami,Personaje de Bleach.,yoruichi_shihoin.png,TRUE
+nezuko_kamado,Nezuko Kamado,Kimetsu no Yaiba,Shonen,2016,Adolescente,Adolescente,Ufotable,Deuteragonista,Femenino,Demonio,Personaje de Kimetsu no Yaiba.,nezuko_kamado.png,TRUE
+zenitsu_agatsuma,Zenitsu Agatsuma,Kimetsu no Yaiba,Shonen,2016,Adolescente,Adolescente,Ufotable,Secundario,Masculino,Humano,Personaje de Kimetsu no Yaiba.,zenitsu_agatsuma.png,TRUE
+inosuke_hashibira,Inosuke Hashibira,Kimetsu no Yaiba,Shonen,2016,Adolescente,Adolescente,Ufotable,Secundario,Masculino,Humano,Personaje de Kimetsu no Yaiba.,inosuke_hashibira.png,TRUE
+giyu_tomioka,Giyu Tomioka,Kimetsu no Yaiba,Shonen,2016,Adulto,Adulto,Ufotable,Secundario,Masculino,Humano,Personaje de Kimetsu no Yaiba.,giyu_tomioka.png,TRUE
+shinobu_kocho,Shinobu Kocho,Kimetsu no Yaiba,Shonen,2016,Adulto,Adulto,Ufotable,Secundario,Femenino,Humano,Personaje de Kimetsu no Yaiba.,shinobu_kocho.png,TRUE
+muzan_kibutsuji,Muzan Kibutsuji,Kimetsu no Yaiba,Shonen,2016,Adulto,Mayor,Ufotable,Antagonista,Masculino,Demonio,Personaje de Kimetsu no Yaiba.,muzan_kibutsuji.png,TRUE
+izuku_midoriya,Izuku Midoriya,My Hero Academia,Shonen,2014,Adolescente,Adolescente,Bones,Protagonista,Masculino,Humano,Personaje de My Hero Academia.,izuku_midoriya.png,TRUE
+katsuki_bakugo,Katsuki Bakugo,My Hero Academia,Shonen,2014,Adolescente,Adolescente,Bones,Deuteragonista,Masculino,Humano,Personaje de My Hero Academia.,katsuki_bakugo.png,TRUE
+shoto_todoroki,Shoto Todoroki,My Hero Academia,Shonen,2014,Adolescente,Adolescente,Bones,Secundario,Masculino,Humano,Personaje de My Hero Academia.,shoto_todoroki.png,TRUE
+all_might,All Might,My Hero Academia,Shonen,2014,Adulto,Mayor,Bones,Secundario,Masculino,Humano,Personaje de My Hero Academia.,all_might.png,TRUE
+ochaco_uraraka,Ochaco Uraraka,My Hero Academia,Shonen,2014,Adolescente,Adolescente,Bones,Secundario,Femenino,Humano,Personaje de My Hero Academia.,ochaco_uraraka.png,TRUE
+shota_aizawa,Shota Aizawa,My Hero Academia,Shonen,2014,Adulto,Adulto,Bones,Secundario,Masculino,Humano,Personaje de My Hero Academia.,shota_aizawa.png,TRUE
+tomura_shigaraki,Tomura Shigaraki,My Hero Academia,Shonen,2014,Adulto,Adulto,Bones,Antagonista,Masculino,Humano,Personaje de My Hero Academia.,tomura_shigaraki.png,TRUE
+dabi,Dabi,My Hero Academia,Shonen,2014,Adulto,Adulto,Bones,Antagonista,Masculino,Humano,Personaje de My Hero Academia.,dabi.png,TRUE
+l,L,Death Note,Shonen,2003,Adulto,Adulto,Madhouse,Deuteragonista,Masculino,Humano,Personaje de Death Note.,l.png,TRUE
+ryuk,Ryuk,Death Note,Shonen,2003,Mayor,Mayor,Madhouse,Secundario,Masculino,Shinigami,Personaje de Death Note.,ryuk.png,TRUE
+misa_amane,Misa Amane,Death Note,Shonen,2003,Joven,Joven,Madhouse,Secundario,Femenino,Humano,Personaje de Death Note.,misa_amane.png,TRUE
+near,Near,Death Note,Shonen,2003,Niño,Adolescente,Madhouse,Secundario,Masculino,Humano,Personaje de Death Note.,near.png,TRUE
+suzaku_kururugi,Suzaku Kururugi,Code Geass,Otros,2006,Adolescente,Adolescente,Sunrise,Deuteragonista,Masculino,Humano,Personaje de Code Geass.,suzaku_kururugi.png,TRUE
+c_c,C.C.,Code Geass,Otros,2006,Mayor,Mayor,Sunrise,Secundario,Femenino,Humano,Personaje de Code Geass.,c_c.png,TRUE
+ed,Ed,Cowboy Bebop,Otros,1998,Niño,Niño,Sunrise,Secundario,Otro,Humano,Personaje de Cowboy Bebop.,ed.png,TRUE
+vicious,Vicious,Cowboy Bebop,Otros,1998,Adulto,Adulto,Sunrise,Antagonista,Masculino,Humano,Personaje de Cowboy Bebop.,vicious.png,TRUE
+yuji_itadori,Yuji Itadori,Jujutsu Kaisen,Shonen,2018,Adolescente,Adolescente,MAPPA,Protagonista,Masculino,Humano,Personaje de Jujutsu Kaisen.,yuji_itadori.png,TRUE
+megumi_fushiguro,Megumi Fushiguro,Jujutsu Kaisen,Shonen,2018,Adolescente,Adolescente,MAPPA,Deuteragonista,Masculino,Humano,Personaje de Jujutsu Kaisen.,megumi_fushiguro.png,TRUE
+nobara_kugisaki,Nobara Kugisaki,Jujutsu Kaisen,Shonen,2018,Adolescente,Adolescente,MAPPA,Secundario,Femenino,Humano,Personaje de Jujutsu Kaisen.,nobara_kugisaki.png,TRUE
+satoru_gojo,Satoru Gojo,Jujutsu Kaisen,Shonen,2018,Adulto,Adulto,MAPPA,Secundario,Masculino,Humano,Personaje de Jujutsu Kaisen.,satoru_gojo.png,TRUE
+ryomen_sukuna,Ryomen Sukuna,Jujutsu Kaisen,Shonen,2018,Mayor,Mayor,MAPPA,Antagonista,Masculino,Demonio,Personaje de Jujutsu Kaisen.,ryomen_sukuna.png,TRUE
+suguru_geto,Suguru Geto,Jujutsu Kaisen,Shonen,2018,Adulto,Adulto,MAPPA,Antagonista,Masculino,Humano,Personaje de Jujutsu Kaisen.,suguru_geto.png,TRUE
+eren_yeager,Eren Yeager,Attack on Titan,Otros,2009,Adolescente,Joven,Wit Studio / MAPPA,Protagonista,Masculino,Humano,Personaje de Attack on Titan.,eren_yeager.png,TRUE
+mikasa_ackerman,Mikasa Ackerman,Attack on Titan,Otros,2009,Adolescente,Joven,Wit Studio / MAPPA,Deuteragonista,Femenino,Humano,Personaje de Attack on Titan.,mikasa_ackerman.png,TRUE
+erwin_smith,Erwin Smith,Attack on Titan,Otros,2009,Adulto,Adulto,Wit Studio / MAPPA,Secundario,Masculino,Humano,Personaje de Attack on Titan.,erwin_smith.png,TRUE
+hange_zoe,Hange Zoe,Attack on Titan,Otros,2009,Adulto,Adulto,Wit Studio / MAPPA,Secundario,Otro,Humano,Personaje de Attack on Titan.,hange_zoe.png,TRUE
+reiner_braun,Reiner Braun,Attack on Titan,Otros,2009,Adolescente,Joven,Wit Studio / MAPPA,Antagonista,Masculino,Humano,Personaje de Attack on Titan.,reiner_braun.png,TRUE
+zeke_yeager,Zeke Yeager,Attack on Titan,Otros,2009,Adulto,Adulto,Wit Studio / MAPPA,Antagonista,Masculino,Humano,Personaje de Attack on Titan.,zeke_yeager.png,TRUE
+roy_mustang,Roy Mustang,Fullmetal Alchemist,Shonen,2001,Adulto,Adulto,Bones,Secundario,Masculino,Humano,Personaje de Fullmetal Alchemist.,roy_mustang.png,TRUE
+scar,Scar,Fullmetal Alchemist,Shonen,2001,Adulto,Adulto,Bones,Antagonista,Masculino,Humano,Personaje de Fullmetal Alchemist.,scar.png,TRUE
+gon_freecss,Gon Freecss,Hunter x Hunter,Shonen,1998,Niño,Niño,Madhouse,Protagonista,Masculino,Humano,Personaje de Hunter x Hunter.,gon_freecss.png,TRUE
+kurapika,Kurapika,Hunter x Hunter,Shonen,1998,Adolescente,Joven,Madhouse,Secundario,Masculino,Humano,Personaje de Hunter x Hunter.,kurapika.png,TRUE
+hisoka,Hisoka,Hunter x Hunter,Shonen,1998,Adulto,Adulto,Madhouse,Antagonista,Masculino,Humano,Personaje de Hunter x Hunter.,hisoka.png,TRUE
+meruem,Meruem,Hunter x Hunter,Shonen,1998,Mayor,Mayor,Madhouse,Antagonista,Masculino,Otro,Personaje de Hunter x Hunter.,meruem.png,TRUE
+isaac_netero,Isaac Netero,Hunter x Hunter,Shonen,1998,Adulto,Mayor,Madhouse,Secundario,Masculino,Humano,Personaje de Hunter x Hunter.,isaac_netero.png,TRUE
+jonathan_joestar,Jonathan Joestar,JoJo's Bizarre Adventure,Shonen,1987,Joven,Joven,David Production,Protagonista,Masculino,Humano,Personaje de JoJo's Bizarre Adventure.,jonathan_joestar.png,TRUE
+joseph_joestar,Joseph Joestar,JoJo's Bizarre Adventure,Shonen,1987,Joven,Mayor,David Production,Protagonista,Masculino,Humano,Personaje de JoJo's Bizarre Adventure.,joseph_joestar.png,TRUE
+jotaro_kujo,Jotaro Kujo,JoJo's Bizarre Adventure,Shonen,1987,Adolescente,Adulto,David Production,Protagonista,Masculino,Humano,Personaje de JoJo's Bizarre Adventure.,jotaro_kujo.png,TRUE
+dio_brando,Dio Brando,JoJo's Bizarre Adventure,Shonen,1987,Mayor,Mayor,David Production,Antagonista,Masculino,Otro,Personaje de JoJo's Bizarre Adventure.,dio_brando.png,TRUE
+josuke_higashikata,Josuke Higashikata,JoJo's Bizarre Adventure,Shonen,1987,Adolescente,Adolescente,David Production,Protagonista,Masculino,Humano,Personaje de JoJo's Bizarre Adventure.,josuke_higashikata.png,TRUE
+giorno_giovanna,Giorno Giovanna,JoJo's Bizarre Adventure,Shonen,1987,Adolescente,Adolescente,David Production,Protagonista,Masculino,Humano,Personaje de JoJo's Bizarre Adventure.,giorno_giovanna.png,TRUE
+saitama,Saitama,One Punch Man,Shonen,2009,Adulto,Adulto,Madhouse,Protagonista,Masculino,Humano,Personaje de One Punch Man.,saitama.png,TRUE
+genos,Genos,One Punch Man,Shonen,2009,Joven,Joven,Madhouse,Deuteragonista,Masculino,Cyborg,Personaje de One Punch Man.,genos.png,TRUE
+tatsumaki,Tatsumaki,One Punch Man,Shonen,2009,Adulto,Adulto,Madhouse,Secundario,Femenino,Humano,Personaje de One Punch Man.,tatsumaki.png,TRUE
+garou,Garou,One Punch Man,Shonen,2009,Joven,Joven,Madhouse,Antagonista,Masculino,Humano,Personaje de One Punch Man.,garou.png,TRUE
+king,King,One Punch Man,Shonen,2009,Adulto,Adulto,Madhouse,Secundario,Masculino,Humano,Personaje de One Punch Man.,king.png,TRUE
+ken_kaneki,Ken Kaneki,Tokyo Ghoul,Otros,2011,Adolescente,Joven,Studio Pierrot,Protagonista,Masculino,Ghoul,Personaje de Tokyo Ghoul.,ken_kaneki.png,TRUE
+touka_kirishima,Touka Kirishima,Tokyo Ghoul,Otros,2011,Adolescente,Joven,Studio Pierrot,Deuteragonista,Femenino,Ghoul,Personaje de Tokyo Ghoul.,touka_kirishima.png,TRUE
+jason,Jason,Tokyo Ghoul,Otros,2011,Adulto,Adulto,Studio Pierrot,Antagonista,Masculino,Ghoul,Personaje de Tokyo Ghoul.,jason.png,TRUE
+tooru_oikawa,Tooru Oikawa,Haikyuu!!,Deportes,2012,Adolescente,Adolescente,Production I.G,Secundario,Masculino,Humano,Personaje de Haikyuu!!.,tooru_oikawa.png,TRUE
+kenma_kozume,Kenma Kozume,Haikyuu!!,Deportes,2012,Adolescente,Adolescente,Production I.G,Secundario,Masculino,Humano,Personaje de Haikyuu!!.,kenma_kozume.png,TRUE
+kei_tsukishima,Kei Tsukishima,Haikyuu!!,Deportes,2012,Adolescente,Adolescente,Production I.G,Secundario,Masculino,Humano,Personaje de Haikyuu!!.,kei_tsukishima.png,TRUE
+takenori_akagi,Takenori Akagi,Slam Dunk,Deportes,1990,Adolescente,Adolescente,Toei Animation,Secundario,Masculino,Humano,Personaje de Slam Dunk.,takenori_akagi.png,TRUE
+hisashi_mitsui,Hisashi Mitsui,Slam Dunk,Deportes,1990,Adolescente,Adolescente,Toei Animation,Secundario,Masculino,Humano,Personaje de Slam Dunk.,hisashi_mitsui.png,TRUE
+ryota_miyagi,Ryota Miyagi,Slam Dunk,Deportes,1990,Adolescente,Adolescente,Toei Animation,Secundario,Masculino,Humano,Personaje de Slam Dunk.,ryota_miyagi.png,TRUE
+tetsuya_kuroko,Tetsuya Kuroko,Kuroko no Basket,Deportes,2008,Adolescente,Adolescente,Production I.G,Protagonista,Masculino,Humano,Personaje de Kuroko no Basket.,tetsuya_kuroko.png,TRUE
+daiki_aomine,Daiki Aomine,Kuroko no Basket,Deportes,2008,Adolescente,Adolescente,Production I.G,Secundario,Masculino,Humano,Personaje de Kuroko no Basket.,daiki_aomine.png,TRUE
+seijuro_akashi,Seijuro Akashi,Kuroko no Basket,Deportes,2008,Adolescente,Adolescente,Production I.G,Secundario,Masculino,Humano,Personaje de Kuroko no Basket.,seijuro_akashi.png,TRUE
+miyuki_shirogane,Miyuki Shirogane,Kaguya-sama: Love is War,Romance,2015,Adolescente,Adolescente,A-1 Pictures,Deuteragonista,Masculino,Humano,Personaje de Kaguya-sama: Love is War.,miyuki_shirogane.png,TRUE
+chika_fujiwara,Chika Fujiwara,Kaguya-sama: Love is War,Romance,2015,Adolescente,Adolescente,A-1 Pictures,Secundario,Femenino,Humano,Personaje de Kaguya-sama: Love is War.,chika_fujiwara.png,TRUE
+yu_ishigami,Yu Ishigami,Kaguya-sama: Love is War,Romance,2015,Adolescente,Adolescente,A-1 Pictures,Secundario,Masculino,Humano,Personaje de Kaguya-sama: Love is War.,yu_ishigami.png,TRUE
+hiro,Hiro,Darling in the Franxx,Romance,2018,Adolescente,Adolescente,Trigger / A-1 Pictures,Deuteragonista,Masculino,Humano,Personaje de Darling in the Franxx.,hiro.png,TRUE
+shinji_ikari,Shinji Ikari,Neon Genesis Evangelion,Otros,1995,Adolescente,Adolescente,Gainax,Protagonista,Masculino,Humano,Personaje de Neon Genesis Evangelion.,shinji_ikari.png,TRUE
+misato_katsuragi,Misato Katsuragi,Neon Genesis Evangelion,Otros,1995,Adulto,Adulto,Gainax,Secundario,Femenino,Humano,Personaje de Neon Genesis Evangelion.,misato_katsuragi.png,TRUE
+happy,Happy,Fairy Tail,Shonen,2006,Niño,Niño,A-1 Pictures,Secundario,Masculino,Otro,Personaje de Fairy Tail.,happy.png,TRUE
+asta,Asta,Black Clover,Shonen,2015,Adolescente,Adolescente,Studio Pierrot,Protagonista,Masculino,Humano,Personaje de Black Clover.,asta.png,TRUE
+yuno,Yuno,Black Clover,Shonen,2015,Adolescente,Adolescente,Studio Pierrot,Deuteragonista,Masculino,Humano,Personaje de Black Clover.,yuno.png,TRUE
+rintaro_okabe,Rintaro Okabe,Steins;Gate,Otros,2009,Joven,Joven,White Fox,Protagonista,Masculino,Humano,Personaje de Steins;Gate.,rintaro_okabe.png,TRUE
+kurisu_makise,Kurisu Makise,Steins;Gate,Otros,2009,Joven,Joven,White Fox,Deuteragonista,Femenino,Humano,Personaje de Steins;Gate.,kurisu_makise.png,TRUE
+mayuri_shiina,Mayuri Shiina,Steins;Gate,Otros,2009,Joven,Joven,White Fox,Secundario,Femenino,Humano,Personaje de Steins;Gate.,mayuri_shiina.png,TRUE
+subaru_natsuki,Subaru Natsuki,Re:Zero,Otros,2014,Adolescente,Joven,White Fox,Protagonista,Masculino,Humano,Personaje de Re:Zero.,subaru_natsuki.png,TRUE
+rem,Rem,Re:Zero,Otros,2014,Adolescente,Adolescente,White Fox,Secundario,Femenino,Otro,Personaje de Re:Zero.,rem.png,TRUE
+ram,Ram,Re:Zero,Otros,2014,Adolescente,Adolescente,White Fox,Secundario,Femenino,Otro,Personaje de Re:Zero.,ram.png,TRUE
+kirito,Kirito,Sword Art Online,Shonen,2009,Adolescente,Joven,A-1 Pictures,Protagonista,Masculino,Humano,Personaje de Sword Art Online.,kirito.png,TRUE
+asuna,Asuna,Sword Art Online,Shonen,2009,Adolescente,Joven,A-1 Pictures,Deuteragonista,Femenino,Humano,Personaje de Sword Art Online.,asuna.png,TRUE
+sinon,Sinon,Sword Art Online,Shonen,2009,Adolescente,Joven,A-1 Pictures,Secundario,Femenino,Humano,Personaje de Sword Art Online.,sinon.png,TRUE
+saber,Saber,Fate/stay night,Otros,2004,Joven,Joven,Ufotable,Protagonista,Femenino,Otro,Personaje de Fate/stay night.,saber.png,TRUE
+rin_tohsaka,Rin Tohsaka,Fate/stay night,Otros,2004,Adolescente,Adolescente,Ufotable,Deuteragonista,Femenino,Humano,Personaje de Fate/stay night.,rin_tohsaka.png,TRUE
+archer,Archer,Fate/stay night,Otros,2004,Adulto,Adulto,Ufotable,Secundario,Masculino,Otro,Personaje de Fate/stay night.,archer.png,TRUE
+gintoki_sakata,Gintoki Sakata,Gintama,Shonen,2003,Adulto,Adulto,Sunrise,Protagonista,Masculino,Humano,Personaje de Gintama.,gintoki_sakata.png,TRUE
+kagura,Kagura,Gintama,Shonen,2003,Adolescente,Adolescente,Sunrise,Deuteragonista,Femenino,Otro,Personaje de Gintama.,kagura.png,TRUE
+shinpachi_shimura,Shinpachi Shimura,Gintama,Shonen,2003,Adolescente,Adolescente,Sunrise,Secundario,Masculino,Humano,Personaje de Gintama.,shinpachi_shimura.png,TRUE
+arataka_reigen,Arataka Reigen,Mob Psycho 100,Otros,2012,Adulto,Adulto,Bones,Deuteragonista,Masculino,Humano,Personaje de Mob Psycho 100.,arataka_reigen.png,TRUE
+anya_forger,Anya Forger,Spy x Family,Otros,2019,Niño,Niño,Wit Studio / CloverWorks,Protagonista,Femenino,Humano,Personaje de Spy x Family.,anya_forger.png,TRUE
+yor_forger,Yor Forger,Spy x Family,Otros,2019,Adulto,Adulto,Wit Studio / CloverWorks,Deuteragonista,Femenino,Humano,Personaje de Spy x Family.,yor_forger.png,TRUE
+denji,Denji,Chainsaw Man,Shonen,2018,Adolescente,Adolescente,MAPPA,Protagonista,Masculino,Humano,Personaje de Chainsaw Man.,denji.png,TRUE
+power,Power,Chainsaw Man,Shonen,2018,Adulto,Adulto,MAPPA,Deuteragonista,Femenino,Demonio,Personaje de Chainsaw Man.,power.png,TRUE
+makima,Makima,Chainsaw Man,Shonen,2018,Adulto,Adulto,MAPPA,Antagonista,Femenino,Demonio,Personaje de Chainsaw Man.,makima.png,TRUE
+aki_hayakawa,Aki Hayakawa,Chainsaw Man,Shonen,2018,Joven,Joven,MAPPA,Secundario,Masculino,Humano,Personaje de Chainsaw Man.,aki_hayakawa.png,TRUE
+ash_ketchum,Ash Ketchum,Pokemon,Otros,1997,Niño,Niño,OLM,Protagonista,Masculino,Humano,Personaje de Pokemon.,ash_ketchum.png,TRUE
+pikachu,Pikachu,Pokemon,Otros,1997,Niño,Niño,OLM,Deuteragonista,Otro,Otro,Personaje de Pokemon.,pikachu.png,TRUE
+misty,Misty,Pokemon,Otros,1997,Adolescente,Adolescente,OLM,Secundario,Femenino,Humano,Personaje de Pokemon.,misty.png,TRUE
+brock,Brock,Pokemon,Otros,1997,Joven,Joven,OLM,Secundario,Masculino,Humano,Personaje de Pokemon.,brock.png,TRUE
+jessie,Jessie,Pokemon,Otros,1997,Adulto,Adulto,OLM,Antagonista,Femenino,Humano,Personaje de Pokemon.,jessie.png,TRUE
+james,James,Pokemon,Otros,1997,Adulto,Adulto,OLM,Antagonista,Masculino,Humano,Personaje de Pokemon.,james.png,TRUE
+meowth,Meowth,Pokemon,Otros,1997,Niño,Niño,OLM,Antagonista,Masculino,Otro,Personaje de Pokemon.,meowth.png,TRUE
+giovanni,Giovanni,Pokemon,Otros,1997,Adulto,Adulto,OLM,Antagonista,Masculino,Humano,Personaje de Pokemon.,giovanni.png,TRUE
+seiya,Seiya,Saint Seiya,Shonen,1986,Adolescente,Adolescente,Toei Animation,Protagonista,Masculino,Humano,Personaje de Saint Seiya.,seiya.png,TRUE
+shiryu,Shiryu,Saint Seiya,Shonen,1986,Adolescente,Adolescente,Toei Animation,Deuteragonista,Masculino,Humano,Personaje de Saint Seiya.,shiryu.png,TRUE
+hyoga,Hyoga,Saint Seiya,Shonen,1986,Adolescente,Adolescente,Toei Animation,Secundario,Masculino,Humano,Personaje de Saint Seiya.,hyoga.png,TRUE
+shun,Shun,Saint Seiya,Shonen,1986,Adolescente,Adolescente,Toei Animation,Secundario,Masculino,Humano,Personaje de Saint Seiya.,shun.png,TRUE
+ikki,Ikki,Saint Seiya,Shonen,1986,Adolescente,Adolescente,Toei Animation,Secundario,Masculino,Humano,Personaje de Saint Seiya.,ikki.png,TRUE
+athena,Athena,Saint Seiya,Shonen,1986,Adolescente,Adolescente,Toei Animation,Secundario,Femenino,Dios,Personaje de Saint Seiya.,athena.png,TRUE
+hades,Hades,Saint Seiya,Shonen,1986,Mayor,Mayor,Toei Animation,Antagonista,Masculino,Dios,Personaje de Saint Seiya.,hades.png,TRUE
+kazuma_kuwabara,Kazuma Kuwabara,Yu Yu Hakusho,Shonen,1990,Adolescente,Adolescente,Studio Pierrot,Deuteragonista,Masculino,Humano,Personaje de Yu Yu Hakusho.,kazuma_kuwabara.png,TRUE
+hiei,Hiei,Yu Yu Hakusho,Shonen,1990,Adolescente,Adolescente,Studio Pierrot,Secundario,Masculino,Otro,Personaje de Yu Yu Hakusho.,hiei.png,TRUE
+toguro,Toguro,Yu Yu Hakusho,Shonen,1990,Adulto,Adulto,Studio Pierrot,Antagonista,Masculino,Demonio,Personaje de Yu Yu Hakusho.,toguro.png,TRUE
+inuyasha,Inuyasha,Inuyasha,Shonen,1996,Adolescente,Adulto,Sunrise,Protagonista,Masculino,Demonio,Personaje de Inuyasha.,inuyasha.png,TRUE
+kagome_higurashi,Kagome Higurashi,Inuyasha,Shonen,1996,Adolescente,Adolescente,Sunrise,Deuteragonista,Femenino,Humano,Personaje de Inuyasha.,kagome_higurashi.png,TRUE
+sesshomaru,Sesshomaru,Inuyasha,Shonen,1996,Adulto,Adulto,Sunrise,Secundario,Masculino,Demonio,Personaje de Inuyasha.,sesshomaru.png,TRUE
+naraku,Naraku,Inuyasha,Shonen,1996,Adulto,Adulto,Sunrise,Antagonista,Masculino,Demonio,Personaje de Inuyasha.,naraku.png,TRUE
+shippo,Shippo,Inuyasha,Shonen,1996,Niño,Niño,Sunrise,Secundario,Masculino,Otro,Personaje de Inuyasha.,shippo.png,TRUE
+kenshin_himura,Kenshin Himura,Rurouni Kenshin,Shonen,1994,Adulto,Adulto,Studio Gallop,Protagonista,Masculino,Humano,Personaje de Rurouni Kenshin.,kenshin_himura.png,TRUE
+kaoru_kamiya,Kaoru Kamiya,Rurouni Kenshin,Shonen,1994,Joven,Joven,Studio Gallop,Deuteragonista,Femenino,Humano,Personaje de Rurouni Kenshin.,kaoru_kamiya.png,TRUE
+makoto_shishio,Makoto Shishio,Rurouni Kenshin,Shonen,1994,Adulto,Adulto,Studio Gallop,Antagonista,Masculino,Humano,Personaje de Rurouni Kenshin.,makoto_shishio.png,TRUE
+sanosuke_sagara,Sanosuke Sagara,Rurouni Kenshin,Shonen,1994,Joven,Joven,Studio Gallop,Secundario,Masculino,Humano,Personaje de Rurouni Kenshin.,sanosuke_sagara.png,TRUE
+taichi_yagami,Taichi Yagami,Digimon Adventure,Otros,1999,Niño,Niño,Toei Animation,Protagonista,Masculino,Humano,Personaje de Digimon Adventure.,taichi_yagami.png,TRUE
+agumon,Agumon,Digimon Adventure,Otros,1999,Niño,Niño,Toei Animation,Deuteragonista,Masculino,Otro,Personaje de Digimon Adventure.,agumon.png,TRUE
+yamato_ishida,Yamato Ishida,Digimon Adventure,Otros,1999,Niño,Niño,Toei Animation,Secundario,Masculino,Humano,Personaje de Digimon Adventure.,yamato_ishida.png,TRUE
+gabumon,Gabumon,Digimon Adventure,Otros,1999,Niño,Niño,Toei Animation,Secundario,Masculino,Otro,Personaje de Digimon Adventure.,gabumon.png,TRUE
+sora_takenouchi,Sora Takenouchi,Digimon Adventure,Otros,1999,Niño,Niño,Toei Animation,Secundario,Femenino,Humano,Personaje de Digimon Adventure.,sora_takenouchi.png,TRUE
+sakura_kinomoto,Sakura Kinomoto,Cardcaptor Sakura,Romance,1996,Niño,Niño,Madhouse,Protagonista,Femenino,Humano,Personaje de Cardcaptor Sakura.,sakura_kinomoto.png,TRUE
+kero,Kero,Cardcaptor Sakura,Romance,1996,Niño,Niño,Madhouse,Secundario,Otro,Otro,Personaje de Cardcaptor Sakura.,kero.png,TRUE
+tomoyo_daidouji,Tomoyo Daidouji,Cardcaptor Sakura,Romance,1996,Niño,Niño,Madhouse,Secundario,Femenino,Humano,Personaje de Cardcaptor Sakura.,tomoyo_daidouji.png,TRUE
+kousei_arima,Kousei Arima,Your Lie in April,Romance,2011,Adolescente,Adolescente,A-1 Pictures,Protagonista,Masculino,Humano,Personaje de Your Lie in April.,kousei_arima.png,TRUE
+kaori_miyazono,Kaori Miyazono,Your Lie in April,Romance,2011,Adolescente,Adolescente,A-1 Pictures,Deuteragonista,Femenino,Humano,Personaje de Your Lie in April.,kaori_miyazono.png,TRUE
