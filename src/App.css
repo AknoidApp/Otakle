@@ -10,7 +10,8 @@ body {
 }
 
 #root {
-  max-width: 1160px;
+  /* ✅ MÁS ANCHO EN PC para evitar scroll horizontal en la grilla */
+  max-width: 1600px;
   margin: 0 auto;
   padding: 1.5rem 1rem 2rem;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -1045,4 +1046,3 @@ button[type='submit']:disabled {
   background: #0b1220;
   color: rgba(255, 255, 255, 0.92);
 }
-

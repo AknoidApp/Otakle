@@ -88,8 +88,7 @@ function getModeKey(mode: Mode, suffix: string) {
 function buildShareText(args: { dayNumber: number; mode: Mode; tries: number; isWin: boolean }) {
   const header = `Otakle #${args.dayNumber} • ${args.mode === 'easy' ? 'Easy' : 'Normal'}`
   const result = args.isWin ? `✅ ${args.tries}/${MAX_TRIES}` : `❌ X/${MAX_TRIES}`
-  const line = `${header}\n${result}\n${location.origin}`
-  return line
+  return `${header}\n${result}\n${location.origin}`
 }
 
 function yearClass(secret: number, guess: number) {
@@ -97,9 +96,9 @@ function yearClass(secret: number, guess: number) {
   return secret > guess ? 'higher' : 'lower'
 }
 
-
 /**
  * ✅ Normaliza anime para evitar “Boku no Hero” vs “My Hero Academia”
+ * Agrega más alias aquí cuando detectes duplicados.
  */
 function canonicalAnime(input: string) {
   const s = norm(input)
@@ -113,6 +112,22 @@ function canonicalAnime(input: string) {
 
 function displayText(s: string) {
   return (s ?? '').trim()
+}
+
+function getDebutYear(c: any): number | null {
+  const v = c?.yearDebut ?? c?.debutYear ?? null
+  const n = Number(v)
+  return Number.isFinite(n) ? n : null
+}
+
+function getAgeDebutGroup(c: any): string {
+  const v = c?.ageDebutGroup ?? c?.edadDebutGroup ?? c?.age_debut_group
+  return (v ?? 'Desconocido').toString().trim() || 'Desconocido'
+}
+
+function getAgeMainGroup(c: any): string {
+  const v = c?.ageMainGroup ?? c?.edadMainGroup ?? c?.age_main_group
+  return (v ?? 'Desconocido').toString().trim() || 'Desconocido'
 }
 
 export default function Game() {
@@ -144,7 +159,7 @@ export default function Game() {
   const [isHowToOpen, setIsHowToOpen] = useState(false)
   const [isResultOpen, setIsResultOpen] = useState(false)
 
-  const activeCharacters = useMemo(() => CHARACTERS.filter((c) => c.active !== false), [])
+  const activeCharacters = useMemo(() => CHARACTERS.filter((c) => (c as any).active !== false), [])
 
   // ✅ opciones de anime (únicas)
   const animeOptions = useMemo(() => {
@@ -165,11 +180,11 @@ export default function Game() {
     let base = activeCharacters
 
     if (mode === 'easy') {
-      const filtered = activeCharacters.filter((c) => EASY_GUESS_IDS.has(c.id))
+      const filtered = activeCharacters.filter((c) => EASY_GUESS_IDS.has((c as any).id))
       base = filtered.length ? filtered : activeCharacters
     }
 
-    // ✅ aplica filtro anime a sugerencias
+    // ✅ aplica filtro anime SOLO a sugerencias
     if (animeFilter && animeFilter !== 'ALL') {
       base = base.filter((c) => canonicalAnime((c as any).anime) === animeFilter)
     }
@@ -180,9 +195,16 @@ export default function Game() {
   // --- Fetch daily from server ---
   useEffect(() => {
     saveJSON('otakle_mode', mode)
+
+    // ✅ IMPORTANTÍSIMO: limpiar UI para evitar crash mientras `secret` queda null
     setDaily(null)
     setDailyError(null)
     setSecret(null)
+    setGuesses([])
+    setTries(0)
+    setIsFinished(false)
+    setIsWin(false)
+    setGuessInput('')
     setMessage(null)
     setShareMessage(null)
     setIsHowToOpen(false)
@@ -197,7 +219,7 @@ export default function Game() {
         const data = (await res.json()) as DailyResponse
         setDaily(data)
 
-        const found = activeCharacters.find((c) => c.id === data.id) ?? null
+        const found = activeCharacters.find((c) => (c as any).id === data.id) ?? null
         setSecret(found)
         if (!found) setDailyError('No encuentro el personaje del día en CHARACTERS (revisa ids / CSV).')
       } catch (e: any) {
@@ -218,7 +240,7 @@ export default function Game() {
 
     if (saved && saved.dayIndex === daily.dayIndex) {
       const loadedGuesses = saved.guesses
-        .map((id) => activeCharacters.find((c) => c.id === id))
+        .map((id) => activeCharacters.find((c) => (c as any).id === id))
         .filter(Boolean)
         .map((character) => ({ character: character! }))
 
@@ -226,20 +248,7 @@ export default function Game() {
       setTries(saved.tries)
       setIsFinished(saved.isFinished)
       setIsWin(saved.isWin)
-
-      // ✅ FIX: si el juego estaba terminado (por ejemplo tras recargar),
-      // reconstruimos shareMessage para que los botones NO queden deshabilitados.
-      if (saved.isFinished) {
-        setIsResultOpen(true)
-        setShareMessage(
-          buildShareText({
-            dayNumber: daily.dayNumber,
-            mode,
-            tries: saved.isWin ? saved.tries : MAX_TRIES,
-            isWin: saved.isWin,
-          }),
-        )
-      }
+      if (saved.isFinished) setIsResultOpen(true)
     } else {
       setGuesses([])
       setTries(0)
@@ -267,7 +276,7 @@ export default function Game() {
   const suggestions = useMemo(() => {
     const q = norm(guessInput)
     if (q.length < 1) return []
-    return guessPool.filter((c) => norm(c.name).startsWith(q)).slice(0, 10)
+    return guessPool.filter((c) => norm((c as any).name).startsWith(q)).slice(0, 10)
   }, [guessInput, guessPool])
 
   function persistGame(next: Partial<SavedGame>) {
@@ -311,7 +320,7 @@ export default function Game() {
     if (tries >= MAX_TRIES) return
 
     const q = norm(guessInput)
-    const picked = guessPool.find((c) => norm(c.name) === q) ?? suggestions[0] ?? null
+    const picked = guessPool.find((c) => norm((c as any).name) === q) ?? suggestions[0] ?? null
 
     if (!picked) {
       setMessage('Elige un personaje válido de la lista.')
@@ -327,11 +336,11 @@ export default function Game() {
     setMessage(null)
 
     persistGame({
-      guesses: nextGuesses.map((g) => g.character.id),
+      guesses: nextGuesses.map((g) => (g.character as any).id),
       tries: nextTry,
     })
 
-    const win = picked.id === (secret as any).id
+    const win = (picked as any).id === (secret as any).id
     const outOfTries = nextTry >= MAX_TRIES
 
     if (win || outOfTries) {
@@ -366,13 +375,15 @@ export default function Game() {
   function shareX() {
     if (!shareMessage) return
     const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareMessage)}`
-    window.open(url, '_blank', 'noopener,noreferrer')
+    const w = window.open(url, '_blank', 'noopener,noreferrer')
+    if (!w) window.location.href = url
   }
 
   function shareWhatsApp() {
     if (!shareMessage) return
     const url = `https://wa.me/?text=${encodeURIComponent(shareMessage)}`
-    window.open(url, '_blank', 'noopener,noreferrer')
+    const w = window.open(url, '_blank', 'noopener,noreferrer')
+    if (!w) window.location.href = url
   }
 
   const headerSubtitle = useMemo(() => {
@@ -381,6 +392,9 @@ export default function Game() {
   }, [daily])
 
   const remaining = clamp(MAX_TRIES - tries, 0, MAX_TRIES)
+
+  const hasSecret = !!secret
+  const secretAny: any = secret ?? {}
 
   return (
     <div className="otakudle-container">
@@ -423,7 +437,7 @@ export default function Game() {
           </button>
         </div>
 
-        {/* ✅ Selector anime (solo para sugerencias) */}
+        {/* ✅ Selector anime (solo sugerencias) */}
         <div className="anime-select">
           <label className="anime-label" htmlFor="animeFilter">
             Anime
@@ -475,10 +489,10 @@ export default function Game() {
           value={guessInput}
           onChange={(e) => setGuessInput(e.target.value)}
           placeholder={isFinished ? 'Juego terminado' : 'Escribe un personaje...'}
-          disabled={isFinished || !secret}
+          disabled={isFinished || !hasSecret}
           autoComplete="off"
         />
-        <button type="submit" disabled={isFinished || !secret || tries >= MAX_TRIES}>
+        <button type="submit" disabled={isFinished || !hasSecret || tries >= MAX_TRIES}>
           Probar
         </button>
       </form>
@@ -486,9 +500,9 @@ export default function Game() {
       {suggestions.length > 0 && !isFinished && (
         <div className="suggestions" role="listbox" aria-label="Sugerencias">
           {suggestions.map((c) => (
-            <button key={c.id} type="button" className="suggestion-item" onClick={() => setGuessInput(c.name)}>
+            <button key={(c as any).id} type="button" className="suggestion-item" onClick={() => setGuessInput((c as any).name)}>
               <img className="suggestion-avatar" src={(c as any).imageUrl} alt="" />
-              <span className="suggestion-name">{c.name}</span>
+              <span className="suggestion-name">{(c as any).name}</span>
               <span className="suggestion-anime">{canonicalAnime((c as any).anime)}</span>
             </button>
           ))}
@@ -520,29 +534,29 @@ export default function Game() {
 
         {guesses.map((g, idx) => {
           const c: any = g.character
-          const rowCorrect = !!secret && c.id === (secret as any).id
 
-          const secretAny: any = secret
+          const rowCorrect = hasSecret && c.id === secretAny.id
 
-          const animeOk = !!secret && canonicalAnime(c.anime) === canonicalAnime(secretAny.anime)
-          const typeOk = !!secret && c.genre === secretAny.genre
-          const yearCls = secret ? yearClass(secretAny.yearDebut ?? secretAny.debutYear, c.yearDebut ?? c.debutYear) : 'incorrect'
-          const studioOk = !!secret && c.studio === secretAny.studio
-          const roleOk = !!secret && c.role === secretAny.role
-          const genderOk = !!secret && c.gender === secretAny.gender
-          const raceOk = !!secret && c.race === secretAny.race
+          const animeOk = hasSecret && canonicalAnime(c.anime) === canonicalAnime(secretAny.anime)
+          const typeOk = hasSecret && c.genre === secretAny.genre
 
-          // ✅ edades por categoría (texto)
-          const cAgeDebut = (c.ageDebutGroup ?? 'Desconocido') as string
-          const cAgeMain = (c.ageMainGroup ?? 'Desconocido') as string
-          const sAgeDebut = (secretAny.ageDebutGroup ?? 'Desconocido') as string
-          const sAgeMain = (secretAny.ageMainGroup ?? 'Desconocido') as string
+          const cYear = getDebutYear(c)
+          const sYear = getDebutYear(secretAny)
+          const yearCls =
+            hasSecret && sYear != null && cYear != null ? yearClass(sYear, cYear) : 'unknown'
 
-          const ageDebutOk = !!secret && cAgeDebut === sAgeDebut
-          const ageMainOk = !!secret && cAgeMain === sAgeMain
+          const studioOk = hasSecret && c.studio === secretAny.studio
+          const roleOk = hasSecret && c.role === secretAny.role
+          const genderOk = hasSecret && c.gender === secretAny.gender
+          const raceOk = hasSecret && c.race === secretAny.race
 
-          const cYear = c.yearDebut ?? c.debutYear
-          const sYear = secretAny.yearDebut ?? secretAny.debutYear
+          const cAgeDebut = getAgeDebutGroup(c)
+          const cAgeMain = getAgeMainGroup(c)
+          const sAgeDebut = getAgeDebutGroup(secretAny)
+          const sAgeMain = getAgeMainGroup(secretAny)
+
+          const ageDebutOk = hasSecret && cAgeDebut === sAgeDebut
+          const ageMainOk = hasSecret && cAgeMain === sAgeMain
 
           return (
             <div key={idx} className={rowCorrect ? 'grid-row row-correct' : 'grid-row'}>
@@ -558,10 +572,12 @@ export default function Game() {
                 {displayText(c.genre)}
               </div>
 
-              <div className={'hint-box year-box ' + yearCls} data-label="Año debut" title={String(cYear)}>
+              <div className={'hint-box year-box ' + yearCls} data-label="Año debut" title={String(cYear ?? '?')}>
                 <span className="year-inline">
                   <span>{cYear ?? '?'}</span>
-                  {secret && sYear !== cYear && <span className="year-arrow">{sYear > cYear ? '↑' : '↓'}</span>}
+                  {hasSecret && sYear != null && cYear != null && sYear !== cYear && (
+                    <span className="year-arrow">{sYear > cYear ? '↑' : '↓'}</span>
+                  )}
                 </span>
               </div>
 
@@ -623,18 +639,21 @@ export default function Game() {
                   <b>Rojo</b>: no coincide.
                 </li>
                 <li>
-                  <b>Naranja/Azul</b>: el personaje del día es mayor/menor (año).
+                  <b>Azul/Naranja</b>: el personaje del día debutó después/antes (Año debut).
                 </li>
               </ul>
               <p>
                 El día cambia a las <b>00:00 UTC</b>.
+              </p>
+              <p>
+                El selector <b>Anime</b> solo filtra sugerencias (no cambia el personaje del día).
               </p>
             </div>
           </div>
         </div>
       )}
 
-      {isResultOpen && secret && daily && (
+      {isResultOpen && hasSecret && daily && (
         <div className="modal-overlay" role="dialog" aria-modal="true" onClick={() => setIsResultOpen(false)}>
           <div className="modal modal-wide" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
@@ -646,23 +665,23 @@ export default function Game() {
 
             <div className="modal-body">
               <div className="result-top">
-                <img className="secret-image" src={(secret as any).imageUrl} alt={secret.name} />
+                <img className="secret-image" src={(secretAny as any).imageUrl} alt={(secretAny as any).name} />
                 <div className="result-info">
                   <div className="result-title">
-                    <span className="result-name">{secret.name}</span>
-                    <span className="result-meta">• {canonicalAnime((secret as any).anime)}</span>
+                    <span className="result-name">{(secretAny as any).name}</span>
+                    <span className="result-meta">• {canonicalAnime((secretAny as any).anime)}</span>
                   </div>
 
                   <div className="result-tags">
-                    <span className="tag">{(secret as any).genre}</span>
-                    <span className="tag">{(secret as any).studio}</span>
-                    <span className="tag">{(secret as any).race}</span>
-                    <span className="tag">{(secret as any).yearDebut ?? (secret as any).debutYear}</span>
-                    <span className="tag">Debut: {(secret as any).ageDebutGroup ?? 'Desconocido'}</span>
-                    <span className="tag">Main: {(secret as any).ageMainGroup ?? 'Desconocido'}</span>
+                    <span className="tag">{(secretAny as any).genre}</span>
+                    <span className="tag">{(secretAny as any).studio}</span>
+                    <span className="tag">{(secretAny as any).race}</span>
+                    <span className="tag">{getDebutYear(secretAny) ?? '?'}</span>
+                    <span className="tag">Debut: {getAgeDebutGroup(secretAny)}</span>
+                    <span className="tag">Main: {getAgeMainGroup(secretAny)}</span>
                   </div>
 
-                  <p className="result-desc">{(secret as any).debutInfo}</p>
+                  <p className="result-desc">{(secretAny as any).debutInfo}</p>
                 </div>
               </div>
 
