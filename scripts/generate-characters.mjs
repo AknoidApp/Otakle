@@ -204,7 +204,17 @@ function writeLiteTS(characters) {
     active,
   }))
 
-  const content = `export const CHARACTERS_LITE = ${JSON.stringify(lite, null, 2)} as const\n`
+  const content =
+    `export const CHARACTERS_LITE = ${JSON.stringify(lite, null, 2)} as const
+
+` +
+    `export const CHARACTER_IDS = CHARACTERS_LITE
+` +
+    `  .filter((c) => c.active)
+` +
+    `  .map((c) => c.id)
+`
+
   fs.writeFileSync(OUT_LITE_TS, content, 'utf8')
 }
 

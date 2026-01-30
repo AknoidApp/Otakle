@@ -1400,3 +1400,7 @@ export const CHARACTERS_LITE = [
     "active": true
   }
 ] as const
+
+export const CHARACTER_IDS = CHARACTERS_LITE
+  .filter((c) => c.active)
+  .map((c) => c.id)
