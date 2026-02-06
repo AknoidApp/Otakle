@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 // NOTE: omit extension so TypeScript can resolve the .ts module during Vercel builds
-import { CHARACTER_IDS } from './characters-lite'
+import { CHARACTER_IDS } from './characters-lite.js'
 
 // Mantener igual que tu versión: 2026-01-06 UTC => Día #1
 const LAUNCH_DATE_UTC = { y: 2026, m: 0, d: 6 }
