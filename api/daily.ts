@@ -62,7 +62,7 @@ const EASY_POOL_IDS = [
   'ichigo','edward_elric',
   'light_yagami','lelouch',
   'kageyama','kaguya','zero_two',
-  'saitama','spike_spiegel',
+  'saitama','spike',
 ]
 
 export default function handler(req: VercelRequest, res: VercelResponse) {

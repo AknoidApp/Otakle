@@ -1144,21 +1144,21 @@ export const CHARACTERS_LITE = [
     "id": "ash_ketchum",
     "name": "Ash Ketchum",
     "anime": "Pokemon",
-    "imageUrl": "/images/ash_ketchum.png",
+    "imageUrl": "/images/ash_ketchum.svg",
     "active": true
   },
   {
     "id": "pikachu",
     "name": "Pikachu",
     "anime": "Pokemon",
-    "imageUrl": "/images/pikachu.png",
+    "imageUrl": "/images/pikachu.svg",
     "active": true
   },
   {
     "id": "misty",
     "name": "Misty",
     "anime": "Pokemon",
-    "imageUrl": "/images/misty.png",
+    "imageUrl": "/images/misty.svg",
     "active": true
   },
   {
@@ -1186,7 +1186,7 @@ export const CHARACTERS_LITE = [
     "id": "meowth",
     "name": "Meowth",
     "anime": "Pokemon",
-    "imageUrl": "/images/meowth.png",
+    "imageUrl": "/images/meowth.svg",
     "active": true
   },
   {
