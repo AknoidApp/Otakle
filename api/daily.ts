@@ -1,11 +1,10 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-// NOTE: omit extension so TypeScript can resolve the .ts module during Vercel builds
-import { CHARACTER_IDS } from './characters-lite.js'
+import { getActiveCharacterIds, getDailyOverride, type Mode } from './lib/catalog.js'
 
 // Mantener igual que tu versión: 2026-01-06 UTC => Día #1
 const LAUNCH_DATE_UTC = { y: 2026, m: 0, d: 6 }
 
-// ENV en Vercel (Production): OTakle_DAILY_SALT (recomendado)
+// ENV en Vercel (Production): OTAKLE_DAILY_SALT (recomendado)
 const DAILY_SALT = process.env.OTAKLE_DAILY_SALT || 'dev-salt-change-me'
 
 const getLaunchBaseUTC = () => new Date(Date.UTC(LAUNCH_DATE_UTC.y, LAUNCH_DATE_UTC.m, LAUNCH_DATE_UTC.d))
@@ -16,6 +15,12 @@ function getDayIndex(date = new Date()) {
   const diffMs = utcToday.getTime() - base.getTime()
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
   return Math.max(0, diffDays)
+}
+
+function formatDateUTCFromDayIndex(dayIndex: number) {
+  const base = getLaunchBaseUTC()
+  const date = new Date(Date.UTC(base.getUTCFullYear(), base.getUTCMonth(), base.getUTCDate() + dayIndex))
+  return date.toISOString().slice(0, 10)
 }
 
 // xmur3 + mulberry32: hash/PRNG determinístico
@@ -45,52 +50,40 @@ function mulberry32(a: number) {
 function seededShuffle<T>(arr: T[], seedStr: string) {
   const seed = xmur3(seedStr)()
   const rand = mulberry32(seed)
-  const a = [...arr]
-  for (let i = a.length - 1; i > 0; i--) {
+  const copy = [...arr]
+  for (let i = copy.length - 1; i > 0; i--) {
     const j = Math.floor(rand() * (i + 1))
-    ;[a[i], a[j]] = [a[j], a[i]]
+    ;[copy[i], copy[j]] = [copy[j], copy[i]]
   }
-  return a
+  return copy
 }
 
-// Pool “Easy” server-side
-const EASY_POOL_IDS = [
-  'goku','vegeta','gohan',
-  'naruto','sasuke_uchiha',
-  'luffy','roronoa_zoro','shanks',
-  'tanjiro','deku',
-  'ichigo','edward_elric',
-  'light_yagami','lelouch',
-  'kageyama','kaguya','zero_two',
-  'saitama','spike',
-]
-
-export default function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
   const modeRaw = String(req.query.mode || 'normal').toLowerCase()
-  const mode = modeRaw === 'easy' ? 'easy' : 'normal'
+  const mode: Mode = modeRaw === 'easy' ? 'easy' : 'normal'
 
   const dayIndex = getDayIndex()
   const dayNumber = dayIndex + 1
+  const dateUTC = formatDateUTCFromDayIndex(dayIndex)
 
-  // ✅ Si el lite está vacío, devuelve error claro (no fallback a goku)
-  if (!Array.isArray(CHARACTER_IDS) || CHARACTER_IDS.length === 0) {
-    res.setHeader('Cache-Control', 'no-store, max-age=0')
-    return res.status(500).json({
-      error: 'CHARACTER_IDS está vacío. Ejecuta `npm run generate:characters` para regenerar api/characters-lite.ts desde el CSV.',
-    })
+  const overrideId = await getDailyOverride({ dateUTC, mode })
+
+  let pickId = overrideId
+
+  if (!pickId) {
+    const pool = await getActiveCharacterIds(mode)
+
+    if (!Array.isArray(pool) || pool.length === 0) {
+      res.setHeader('Cache-Control', 'no-store, max-age=0')
+      return res.status(500).json({
+        error: 'No hay personajes activos disponibles. Revisa el catálogo o la conexión con Supabase.',
+      })
+    }
+
+    const seedStr = `otakle|${mode}|${dayIndex}|${DAILY_SALT}`
+    const shuffled = seededShuffle(pool, seedStr)
+    pickId = shuffled[0]
   }
-
-  let pool = CHARACTER_IDS
-
-  if (mode === 'easy') {
-    const easySet = new Set(EASY_POOL_IDS)
-    const easy = CHARACTER_IDS.filter((id) => easySet.has(id))
-    pool = easy.length >= 8 ? easy : CHARACTER_IDS.slice(0, Math.min(80, CHARACTER_IDS.length))
-  }
-
-  const seedStr = `otakle|${mode}|${dayIndex}|${DAILY_SALT}`
-  const shuffled = seededShuffle(pool, seedStr)
-  const pickId = shuffled[0]
 
   res.setHeader('Cache-Control', 'no-store, max-age=0')
   res.status(200).json({

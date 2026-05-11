@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import './App.css'
-import { CHARACTERS } from './characters'
 import type { Character } from './characters'
 
 type Mode = 'normal' | 'easy'
@@ -9,6 +8,8 @@ type Mode = 'normal' | 'easy'
 type GuessRow = {
   character: Character
 }
+
+type CharacterLite = Pick<Character, 'id' | 'name' | 'anime' | 'imageUrl' | 'active'>
 
 type Stats = {
   currentStreak: number
@@ -32,33 +33,21 @@ type DailyResponse = {
   changesAtUTC: string
 }
 
+type CharactersResponse = {
+  characters: Character[]
+}
+
+type CharacterSearchResponse = {
+  characters: CharacterLite[]
+}
+
+type AnimeOptionsResponse = {
+  animes: string[]
+}
+
 const MAX_TRIES = 8
 const DEFAULT_MODE: Mode = 'normal'
 const DEFAULT_SECRET_IMAGE = '/otakle-logo.png'
-
-// Pool “Easy” (client-side) solo para limitar sugerencias.
-// El “daily real” lo decide el server, así que esto NO revela el futuro.
-const EASY_GUESS_IDS = new Set<string>([
-  'goku',
-  'vegeta',
-  'gohan',
-  'naruto',
-  'sasuke_uchiha',
-  'luffy',
-  'roronoa_zoro',
-  'shanks',
-  'tanjiro',
-  'deku',
-  'ichigo',
-  'edward_elric',
-  'light_yagami',
-  'lelouch',
-  'kageyama',
-  'kaguya',
-  'zero_two',
-  'saitama',
-  'spike',
-])
 
 function clamp(n: number, min: number, max: number) {
   return Math.max(min, Math.min(max, n))
@@ -97,10 +86,6 @@ function yearClass(secret: number, guess: number) {
   return secret > guess ? 'higher' : 'lower'
 }
 
-/**
- * ✅ Normaliza anime para evitar “Boku no Hero” vs “My Hero Academia”
- * Agrega más alias aquí cuando detectes duplicados.
- */
 function canonicalAnime(input?: string) {
   const s = norm(input ?? '')
 
@@ -135,15 +120,50 @@ function isAbortError(error: unknown) {
   return error instanceof DOMException && error.name === 'AbortError'
 }
 
+async function fetchJson<T>(url: string, signal?: AbortSignal) {
+  const res = await fetch(url, { signal, cache: 'no-store' })
+  if (!res.ok) throw new Error(`HTTP ${res.status}`)
+  return (await res.json()) as T
+}
+
+async function fetchCharactersByIds(ids: string[], signal?: AbortSignal) {
+  if (!ids.length) return [] as Character[]
+
+  const params = new URLSearchParams({ ids: ids.join(',') })
+  const data = await fetchJson<CharactersResponse>(`/api/characters?${params.toString()}`, signal)
+  return data.characters
+}
+
+async function fetchCharacterSearch(
+  args: { q: string; mode: Mode; anime: string; limit?: number },
+  signal?: AbortSignal,
+) {
+  const params = new URLSearchParams({
+    q: args.q,
+    mode: args.mode,
+    anime: args.anime,
+    limit: String(args.limit ?? 10),
+  })
+
+  const data = await fetchJson<CharacterSearchResponse>(`/api/characters-search?${params.toString()}`, signal)
+  return data.characters
+}
+
+async function fetchAnimeOptions(signal?: AbortSignal) {
+  const data = await fetchJson<AnimeOptionsResponse>('/api/animes', signal)
+  return data.animes
+}
+
 export default function Game() {
   const [mode, setMode] = useState<Mode>(() => loadJSON<Mode>('otakle_mode', DEFAULT_MODE))
-
-  // ✅ selector anime (SOLO FILTRA SUGERENCIAS)
   const [animeFilter, setAnimeFilter] = useState<string>(() => loadJSON<string>('otakle_anime_filter', 'ALL'))
 
   const [daily, setDaily] = useState<DailyResponse | null>(null)
   const [dailyError, setDailyError] = useState<string | null>(null)
   const [secret, setSecret] = useState<Character | null>(null)
+  const [animeOptions, setAnimeOptions] = useState<string[]>([])
+  const [suggestions, setSuggestions] = useState<CharacterLite[]>([])
+  const [isSubmittingGuess, setIsSubmittingGuess] = useState(false)
 
   const [guessInput, setGuessInput] = useState('')
   const [guesses, setGuesses] = useState<GuessRow[]>([])
@@ -164,44 +184,29 @@ export default function Game() {
   const [isHowToOpen, setIsHowToOpen] = useState(false)
   const [isResultOpen, setIsResultOpen] = useState(false)
 
-  const activeCharacters = useMemo(() => CHARACTERS.filter((c) => c.active !== false), [])
-
-  // ✅ opciones de anime (únicas)
-  const animeOptions = useMemo(() => {
-    const set = new Set<string>()
-    for (const c of activeCharacters) {
-      const a = canonicalAnime(c.anime)
-      if (a) set.add(a)
-    }
-    return Array.from(set).sort((a, b) => a.localeCompare(b))
-  }, [activeCharacters])
-
-  // persist filtro
   useEffect(() => {
     saveJSON('otakle_anime_filter', animeFilter)
   }, [animeFilter])
 
-  const guessPool = useMemo(() => {
-    let base = activeCharacters
+  useEffect(() => {
+    const ctrl = new AbortController()
 
-    if (mode === 'easy') {
-      const filtered = activeCharacters.filter((c) => EASY_GUESS_IDS.has(c.id))
-      base = filtered.length ? filtered : activeCharacters
-    }
+    ;(async () => {
+      try {
+        const nextOptions = await fetchAnimeOptions(ctrl.signal)
+        setAnimeOptions(nextOptions)
+      } catch (error: unknown) {
+        if (isAbortError(error)) return
+        setAnimeOptions([])
+      }
+    })()
 
-    // ✅ aplica filtro anime SOLO a sugerencias
-    if (animeFilter && animeFilter !== 'ALL') {
-      base = base.filter((c) => canonicalAnime(c.anime) === animeFilter)
-    }
+    return () => ctrl.abort()
+  }, [])
 
-    return base
-  }, [activeCharacters, mode, animeFilter])
-
-  // --- Fetch daily from server ---
   useEffect(() => {
     saveJSON('otakle_mode', mode)
 
-    // ✅ IMPORTANTÍSIMO: limpiar UI para evitar crash mientras `secret` queda null
     setDaily(null)
     setDailyError(null)
     setSecret(null)
@@ -212,6 +217,8 @@ export default function Game() {
     setGuessInput('')
     setMessage(null)
     setShareMessage(null)
+    setSuggestions([])
+    setIsSubmittingGuess(false)
     setIsHowToOpen(false)
     setIsResultOpen(false)
 
@@ -219,70 +226,122 @@ export default function Game() {
 
     ;(async () => {
       try {
-        const res = await fetch(`/api/daily?mode=${mode}`, { signal: ctrl.signal, cache: 'no-store' })
-        if (!res.ok) throw new Error(`HTTP ${res.status}`)
-        const data = (await res.json()) as DailyResponse
+        const data = await fetchJson<DailyResponse>(`/api/daily?mode=${mode}`, ctrl.signal)
         setDaily(data)
 
-        const found = activeCharacters.find((c) => c.id === data.id) ?? null
-        setSecret(found)
-        if (!found) setDailyError('No encuentro el personaje del día en CHARACTERS (revisa ids / CSV).')
-      } catch (e: unknown) {
-        if (isAbortError(e)) return
+        const [found] = await fetchCharactersByIds([data.id], ctrl.signal)
+        setSecret(found ?? null)
+
+        if (!found) {
+          setDailyError('No encuentro el personaje del día en el catálogo. Revisa la conexión de datos.')
+        }
+      } catch (error: unknown) {
+        if (isAbortError(error)) return
         setDailyError('No pude cargar el personaje del día. Revisa que Vercel tenga /api/daily funcionando.')
       }
     })()
 
     return () => ctrl.abort()
-  }, [mode, activeCharacters])
+  }, [mode])
 
-  // --- Load saved game for this day+mode ---
   useEffect(() => {
     if (!daily || !secret) return
 
+    const ctrl = new AbortController()
     const gameKey = getModeKey(mode, 'game')
     const saved = loadJSON<SavedGame | null>(gameKey, null)
 
-    if (saved && saved.dayIndex === daily.dayIndex) {
-      const loadedGuesses = saved.guesses
-        .map((id) => activeCharacters.find((c) => c.id === id))
-        .filter((character): character is Character => Boolean(character))
-        .map((character) => ({ character }))
+    ;(async () => {
+      if (saved && saved.dayIndex === daily.dayIndex) {
+        try {
+          const loadedCharacters = await fetchCharactersByIds(saved.guesses, ctrl.signal)
+          const byId = new Map(loadedCharacters.map((character) => [character.id, character]))
+          const loadedGuesses = saved.guesses
+            .map((id) => byId.get(id))
+            .filter((character): character is Character => Boolean(character))
+            .map((character) => ({ character }))
 
-      setGuesses(loadedGuesses)
-      setTries(saved.tries)
-      setIsFinished(saved.isFinished)
-      setIsWin(saved.isWin)
-      if (saved.isFinished) setIsResultOpen(true)
-    } else {
-      setGuesses([])
-      setTries(0)
-      setIsFinished(false)
-      setIsWin(false)
-      saveJSON(gameKey, {
-        dayIndex: daily.dayIndex,
-        guesses: [],
-        tries: 0,
-        isFinished: false,
-        isWin: false,
-      } satisfies SavedGame)
+          setGuesses(loadedGuesses)
+          setTries(saved.tries)
+          setIsFinished(saved.isFinished)
+          setIsWin(saved.isWin)
+          setShareMessage(
+            saved.isFinished
+              ? buildShareText({
+                  dayNumber: daily.dayNumber,
+                  mode,
+                  tries: saved.isWin ? saved.tries : MAX_TRIES,
+                  isWin: saved.isWin,
+                })
+              : null,
+          )
+          if (saved.isFinished) setIsResultOpen(true)
+        } catch (error: unknown) {
+          if (!isAbortError(error)) {
+            setGuesses([])
+            setTries(0)
+            setIsFinished(false)
+            setIsWin(false)
+            setShareMessage(null)
+          }
+        }
+      } else {
+        setGuesses([])
+        setTries(0)
+        setIsFinished(false)
+        setIsWin(false)
+        setShareMessage(null)
+        saveJSON(gameKey, {
+          dayIndex: daily.dayIndex,
+          guesses: [],
+          tries: 0,
+          isFinished: false,
+          isWin: false,
+        } satisfies SavedGame)
+      }
+
+      setStats(
+        loadJSON<Stats>(getModeKey(mode, 'stats'), {
+          currentStreak: 0,
+          maxStreak: 0,
+          lastWinDayIndex: null,
+        }),
+      )
+    })()
+
+    return () => ctrl.abort()
+  }, [daily, secret, mode])
+
+  useEffect(() => {
+    if (isFinished) {
+      setSuggestions([])
+      return
     }
 
-    setStats(
-      loadJSON<Stats>(getModeKey(mode, 'stats'), {
-        currentStreak: 0,
-        maxStreak: 0,
-        lastWinDayIndex: null,
-      }),
-    )
-  }, [daily, secret, mode, activeCharacters])
+    const q = guessInput.trim()
+    if (!q) {
+      setSuggestions([])
+      return
+    }
 
-  // --- Suggestions (startsWith, max 10) ---
-  const suggestions = useMemo(() => {
-    const q = norm(guessInput)
-    if (q.length < 1) return []
-    return guessPool.filter((c) => norm(c.name).startsWith(q)).slice(0, 10)
-  }, [guessInput, guessPool])
+    const ctrl = new AbortController()
+    const timeout = window.setTimeout(() => {
+      void (async () => {
+        try {
+          const nextSuggestions = await fetchCharacterSearch({ q, mode, anime: animeFilter, limit: 10 }, ctrl.signal)
+          setSuggestions(nextSuggestions)
+        } catch (error: unknown) {
+          if (isAbortError(error)) return
+          setSuggestions([])
+        }
+      })()
+    }, 120)
+
+    return () => {
+      window.clearTimeout(timeout)
+      ctrl.abort()
+    }
+  }, [guessInput, mode, animeFilter, isFinished])
 
   function persistGame(next: Partial<SavedGame>) {
     if (!daily) return
@@ -318,51 +377,76 @@ export default function Game() {
     setStats(next)
   }
 
-  function onSubmit(e: FormEvent) {
+  async function onSubmit(e: FormEvent) {
     e.preventDefault()
     if (!secret || !daily) return
-    if (isFinished) return
-    if (tries >= MAX_TRIES) return
+    if (isFinished || tries >= MAX_TRIES || isSubmittingGuess) return
 
     const q = norm(guessInput)
-    const picked = guessPool.find((c) => norm(c.name) === q) ?? suggestions[0] ?? null
+    let pickedLite: CharacterLite | null =
+      suggestions.find((character) => norm(character.name) === q) ?? suggestions[0] ?? null
 
-    if (!picked) {
+    if (!pickedLite && q) {
+      try {
+        const fallbackMatches = await fetchCharacterSearch({ q: guessInput, mode, anime: animeFilter, limit: 1 })
+        pickedLite = fallbackMatches[0] ?? null
+      } catch {
+        pickedLite = null
+      }
+    }
+
+    if (!pickedLite) {
       setMessage('Elige un personaje válido de la lista.')
       return
     }
 
-    const nextTry = tries + 1
-    const nextGuesses = [...guesses, { character: picked }]
+    setIsSubmittingGuess(true)
 
-    setGuesses(nextGuesses)
-    setTries(nextTry)
-    setGuessInput('')
-    setMessage(null)
+    try {
+      const [picked] = await fetchCharactersByIds([pickedLite.id])
 
-    persistGame({
-      guesses: nextGuesses.map((g) => g.character.id),
-      tries: nextTry,
-    })
+      if (!picked) {
+        setMessage('No pude cargar ese personaje. Inténtalo otra vez.')
+        return
+      }
 
-    const win = picked.id === secret.id
-    const outOfTries = nextTry >= MAX_TRIES
+      const nextTry = tries + 1
+      const nextGuesses = [...guesses, { character: picked }]
 
-    if (win || outOfTries) {
-      setIsFinished(true)
-      setIsWin(win)
-      persistGame({ isFinished: true, isWin: win })
-      updateStatsOnFinish(win)
+      setGuesses(nextGuesses)
+      setTries(nextTry)
+      setGuessInput('')
+      setSuggestions([])
+      setMessage(null)
 
-      setIsResultOpen(true)
-      setShareMessage(
-        buildShareText({
-          dayNumber: daily.dayNumber,
-          mode,
-          tries: win ? nextTry : MAX_TRIES,
-          isWin: win,
-        }),
-      )
+      persistGame({
+        guesses: nextGuesses.map((g) => g.character.id),
+        tries: nextTry,
+      })
+
+      const win = picked.id === secret.id
+      const outOfTries = nextTry >= MAX_TRIES
+
+      if (win || outOfTries) {
+        setIsFinished(true)
+        setIsWin(win)
+        persistGame({ isFinished: true, isWin: win })
+        updateStatsOnFinish(win)
+
+        setIsResultOpen(true)
+        setShareMessage(
+          buildShareText({
+            dayNumber: daily.dayNumber,
+            mode,
+            tries: win ? nextTry : MAX_TRIES,
+            isWin: win,
+          }),
+        )
+      }
+    } catch {
+      setMessage('No pude cargar ese personaje. Inténtalo otra vez.')
+    } finally {
+      setIsSubmittingGuess(false)
     }
   }
 
@@ -397,7 +481,6 @@ export default function Game() {
   }, [daily])
 
   const remaining = clamp(MAX_TRIES - tries, 0, MAX_TRIES)
-
   const hasSecret = !!secret
   const secretDetails: Partial<Character> = secret ?? {}
 
@@ -442,7 +525,6 @@ export default function Game() {
           </button>
         </div>
 
-        {/* ✅ Selector anime (solo sugerencias) */}
         <div className="anime-select">
           <label className="anime-label" htmlFor="animeFilter">
             Anime
@@ -494,18 +576,24 @@ export default function Game() {
           value={guessInput}
           onChange={(e) => setGuessInput(e.target.value)}
           placeholder={isFinished ? 'Juego terminado' : 'Escribe un personaje...'}
-          disabled={isFinished || !hasSecret}
+          disabled={isFinished || !hasSecret || isSubmittingGuess}
           autoComplete="off"
         />
-        <button type="submit" disabled={isFinished || !hasSecret || tries >= MAX_TRIES}>
-          Probar
+        <button type="submit" disabled={isFinished || !hasSecret || tries >= MAX_TRIES || isSubmittingGuess}>
+          {isSubmittingGuess ? 'Cargando...' : 'Probar'}
         </button>
       </form>
 
       {suggestions.length > 0 && !isFinished && (
         <div className="suggestions" role="listbox" aria-label="Sugerencias">
           {suggestions.map((c) => (
-            <button key={c.id} type="button" className="suggestion-item" onClick={() => setGuessInput(c.name)}>
+            <button
+              key={c.id}
+              type="button"
+              className="suggestion-item"
+              onClick={() => setGuessInput(c.name)}
+              disabled={isSubmittingGuess}
+            >
               <img className="suggestion-avatar" src={c.imageUrl} alt="" />
               <span className="suggestion-name">{c.name}</span>
               <span className="suggestion-anime">{canonicalAnime(c.anime)}</span>
@@ -547,8 +635,7 @@ export default function Game() {
 
           const cYear = getDebutYear(c)
           const sYear = getDebutYear(secretDetails)
-          const yearCls =
-            hasSecret && sYear != null && cYear != null ? yearClass(sYear, cYear) : 'unknown'
+          const yearCls = hasSecret && sYear != null && cYear != null ? yearClass(sYear, cYear) : 'unknown'
 
           const studioOk = hasSecret && c.studio === secretDetails.studio
           const roleOk = hasSecret && c.role === secretDetails.role
@@ -670,7 +757,11 @@ export default function Game() {
 
             <div className="modal-body">
               <div className="result-top">
-                <img className="secret-image" src={secretDetails.imageUrl ?? DEFAULT_SECRET_IMAGE} alt={secretDetails.name ?? 'Personaje secreto'} />
+                <img
+                  className="secret-image"
+                  src={secretDetails.imageUrl ?? DEFAULT_SECRET_IMAGE}
+                  alt={secretDetails.name ?? 'Personaje secreto'}
+                />
                 <div className="result-info">
                   <div className="result-title">
                     <span className="result-name">{secretDetails.name}</span>
