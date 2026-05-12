@@ -9,8 +9,8 @@ export default function Archive() {
     <div className="otakle-page">
       <header className="page-header">
         <div className="page-title">
-          <h1>Archive</h1>
-          <p>Historial local de días jugados (se guarda en tu navegador).</p>
+          <h1>Tu historial</h1>
+          <p>Historial local de días jugados. Se guarda solo en tu navegador.</p>
         </div>
 
         <div className="page-actions">
@@ -30,7 +30,7 @@ export default function Archive() {
                   <div className="archive-date">{e.dateUTC} (UTC)</div>
                 </div>
                 <div className="archive-right">
-                  <span className={`pill ${e.won ? 'pill-win' : 'pill-lose'}`}>{e.won ? 'Win' : 'Lose'}</span>
+                  <span className={`pill ${e.won ? 'pill-win' : 'pill-lose'}`}>{e.won ? 'Victoria' : 'Derrota'}</span>
                   <span className="pill pill-tries">{e.tries}/8</span>
                 </div>
               </div>
@@ -42,11 +42,11 @@ export default function Archive() {
       <footer className="page-footer">
         <Link to="/how-to-play">Cómo se juega</Link><span>·</span>
         <Link to="/strategy">Estrategia</Link><span>·</span>
-        <Link to="/stats">Stats</Link><span>·</span>
-        <Link to="/about">About</Link><span>·</span>
-        <Link to="/privacy">Privacy</Link><span>·</span>
-        <Link to="/terms">Terms</Link><span>·</span>
-        <Link to="/contact">Contact</Link>
+        <Link to="/stats">Estadísticas</Link><span>·</span>
+        <Link to="/about">Sobre Otakle</Link><span>·</span>
+        <Link to="/privacy">Privacidad</Link><span>·</span>
+        <Link to="/terms">Términos</Link><span>·</span>
+        <Link to="/contact">Contacto</Link>
       </footer>
     </div>
   )

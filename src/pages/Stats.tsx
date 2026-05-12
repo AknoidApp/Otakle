@@ -10,8 +10,8 @@ export default function StatsPage() {
     <div className="otakle-page">
       <header className="page-header">
         <div className="page-title">
-          <h1>Stats</h1>
-          <p>Estadísticas locales (se guardan en tu navegador).</p>
+          <h1>Tus estadísticas</h1>
+          <p>Estadísticas locales de tu progreso. Se guardan en tu navegador.</p>
         </div>
 
         <div className="page-actions">
@@ -64,13 +64,13 @@ export default function StatsPage() {
         <span>·</span>
         <Link to="/strategy">Estrategia</Link>
         <span>·</span>
-        <Link to="/archive">Archive</Link>
+        <Link to="/archive">Historial</Link>
         <span>·</span>
-        <Link to="/privacy">Privacy</Link>
+        <Link to="/privacy">Privacidad</Link>
         <span>·</span>
-        <Link to="/terms">Terms</Link>
+        <Link to="/terms">Términos</Link>
         <span>·</span>
-        <Link to="/contact">Contact</Link>
+        <Link to="/contact">Contacto</Link>
       </footer>
     </div>
   )

@@ -31,6 +31,13 @@ export default function About() {
           comparativas. El objetivo es resolver el personaje del día en la menor cantidad de intentos posible.
         </p>
 
+        <h2>Qué hace distinto a Otakle</h2>
+        <ul>
+          <li>No se basa solo en una imagen: mezcla pistas de anime, rol, raza, estudio, edad y año de debut.</li>
+          <li>Todos los jugadores tienen el mismo personaje del día, así que el reto es compartido.</li>
+          <li>Está pensado para fans del anime que quieren un juego rápido, diario y fácil de compartir.</li>
+        </ul>
+
         <h2>Reglas</h2>
         <ul>
           <li>
@@ -96,6 +103,12 @@ export default function About() {
           interpretar las pistas y acertar dentro del límite de intentos.
         </p>
 
+        <h2>Para quién es</h2>
+        <p>
+          Otakle está hecho para gente que disfruta reconocer personajes, comparar pistas y mantener una rutina diaria
+          tipo Wordle, pero con enfoque anime.
+        </p>
+
         <h2>Créditos y contacto</h2>
         <p>
           Hecho por <strong>Aknoid</strong>. Puedes contactarme en{' '}
@@ -118,16 +131,16 @@ export default function About() {
             Inicio
           </Link>
           <Link to="/about" className="footer-link">
-            About
+            Sobre Otakle
           </Link>
           <Link to="/privacy" className="footer-link">
-            Privacy
+            Privacidad
           </Link>
           <Link to="/terms" className="footer-link">
-            Terms
+            Términos
           </Link>
           <Link to="/contact" className="footer-link">
-            Contact
+            Contacto
           </Link>
           <a className="footer-link" href="https://twitter.com/aknoid" target="_blank" rel="noreferrer noopener">
             X @aknoid

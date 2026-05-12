@@ -12,44 +12,63 @@ import Archive from './pages/Archive'
 
 const SITE_NAME = 'Otakle'
 const SITE_URL = 'https://www.otakle.app'
-const DEFAULT_DESCRIPTION = 'Otakle: juego diario para adivinar personajes de anime usando pistas.'
+const SITE_IMAGE = `${SITE_URL}/otakle-logo.png`
+const ADSENSE_ACCOUNT = 'ca-pub-6805458140116682'
+const DEFAULT_DESCRIPTION =
+  'Otakle es un juego diario para adivinar personajes de anime usando pistas de serie, rol, año, raza y más.'
 
-const SEO_BY_PATH: Record<string, { title: string; description: string }> = {
+type SeoEntry = {
+  title: string
+  description: string
+  keywords: string
+}
+
+const SEO_BY_PATH: Record<string, SeoEntry> = {
   '/': {
-    title: 'Daily anime character guessing game',
+    title: 'Juego diario para adivinar personajes de anime',
     description: DEFAULT_DESCRIPTION,
+    keywords: 'anime, juego diario, adivinar personaje, otakle, anime wordle, anime guessing game',
   },
   '/about': {
-    title: 'About Otakle',
-    description: 'Descubre qué es Otakle, cómo funciona el reto diario y por qué está pensado para fans del anime.',
+    title: 'Qué es Otakle',
+    description:
+      'Descubre qué es Otakle, cómo funciona el reto diario y por qué está pensado para fans del anime.',
+    keywords: 'about otakle, juego anime, fan project anime, aknoid',
   },
   '/how-to-play': {
-    title: 'How to play',
-    description: 'Aprende cómo jugar a Otakle, interpretar las pistas y mejorar tus intentos cada día.',
+    title: 'Cómo jugar Otakle',
+    description: 'Aprende las reglas, cómo leer las pistas y cómo empezar a ganar en Otakle.',
+    keywords: 'como jugar otakle, reglas otakle, pistas otakle, anime guessing game help',
   },
   '/strategy': {
-    title: 'Strategy guide',
+    title: 'Estrategia para ganar más veces',
     description: 'Consejos y estrategia para acertar el personaje diario de Otakle en menos intentos.',
+    keywords: 'estrategia otakle, tips otakle, anime guessing game strategy',
   },
   '/stats': {
-    title: 'Your stats',
+    title: 'Tus estadísticas',
     description: 'Revisa tus estadísticas locales, rachas y distribución de intentos en Otakle.',
+    keywords: 'estadisticas otakle, racha otakle, historial de juego anime',
   },
   '/archive': {
-    title: 'Archive',
+    title: 'Tu historial',
     description: 'Consulta tu historial local de partidas jugadas en Otakle.',
+    keywords: 'historial otakle, archive otakle, partidas jugadas',
   },
   '/privacy': {
-    title: 'Privacy policy',
+    title: 'Política de privacidad',
     description: 'Lee la política de privacidad de Otakle y cómo se gestionan los datos del juego.',
+    keywords: 'privacy policy otakle, privacidad otakle, adsense privacy',
   },
   '/terms': {
-    title: 'Terms of service',
+    title: 'Términos de uso',
     description: 'Consulta los términos y condiciones de uso de Otakle.',
+    keywords: 'terms otakle, términos de uso, reglas del sitio',
   },
   '/contact': {
-    title: 'Contact',
-    description: 'Ponte en contacto con Otakle para soporte, feedback o consultas.',
+    title: 'Contacto y soporte',
+    description: 'Ponte en contacto con Otakle para soporte, feedback o sugerencias de personajes.',
+    keywords: 'contact otakle, soporte otakle, sugerir personaje anime',
   },
 }
 
@@ -73,6 +92,118 @@ function setCanonical(href: string) {
   link.href = href
 }
 
+function setJsonLd(data: object | object[]) {
+  let script = document.head.querySelector<HTMLScriptElement>('script[data-otakle-jsonld="route"]')
+  if (!script) {
+    script = document.createElement('script')
+    script.type = 'application/ld+json'
+    script.dataset.otakleJsonld = 'route'
+    document.head.appendChild(script)
+  }
+  script.textContent = JSON.stringify(Array.isArray(data) ? data : [data])
+}
+
+function getStructuredData(pathname: string) {
+  const pageUrl = `${SITE_URL}${pathname === '/' ? '/' : pathname}`
+  const website = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: SITE_NAME,
+    url: SITE_URL,
+    inLanguage: 'es',
+    description: DEFAULT_DESCRIPTION,
+    publisher: {
+      '@type': 'Person',
+      name: 'Aknoid',
+    },
+  }
+
+  if (pathname === '/') {
+    return [
+      website,
+      {
+        '@context': 'https://schema.org',
+        '@type': 'WebApplication',
+        name: SITE_NAME,
+        url: pageUrl,
+        applicationCategory: 'GameApplication',
+        operatingSystem: 'Any',
+        browserRequirements: 'Requires JavaScript',
+        inLanguage: 'es',
+        isAccessibleForFree: true,
+        image: SITE_IMAGE,
+        description: DEFAULT_DESCRIPTION,
+        offers: {
+          '@type': 'Offer',
+          price: '0',
+          priceCurrency: 'USD',
+        },
+      },
+    ]
+  }
+
+  if (pathname === '/how-to-play') {
+    return [
+      website,
+      {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: '¿Cuántos intentos tengo por día en Otakle?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Tienes 8 intentos máximos para adivinar el personaje del día.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: '¿A qué hora cambia el personaje diario?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Otakle cambia a las 00:00 UTC para que el personaje sea el mismo para todos.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: '¿El filtro por anime cambia el personaje del día?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'No. El filtro por anime solo reduce las sugerencias al escribir nombres.',
+            },
+          },
+        ],
+      },
+    ]
+  }
+
+  if (pathname === '/contact') {
+    return [
+      website,
+      {
+        '@context': 'https://schema.org',
+        '@type': 'ContactPage',
+        name: 'Contacto Otakle',
+        url: pageUrl,
+        description: 'Canales de contacto para soporte, feedback y sugerencias de personajes.',
+      },
+    ]
+  }
+
+  return [
+    website,
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: SEO_BY_PATH[pathname]?.title ?? SITE_NAME,
+      url: pageUrl,
+      description: SEO_BY_PATH[pathname]?.description ?? DEFAULT_DESCRIPTION,
+      inLanguage: 'es',
+    },
+  ]
+}
+
 function RouteSeo() {
   const { pathname } = useLocation()
 
@@ -82,16 +213,26 @@ function RouteSeo() {
     const url = `${SITE_URL}${pathname === '/' ? '/' : pathname}`
 
     document.title = title
+    document.documentElement.lang = 'es'
+
     setMeta('meta[name="description"]', 'name', seo.description)
+    setMeta('meta[name="keywords"]', 'name', seo.keywords)
+    setMeta('meta[name="robots"]', 'name', 'index,follow,max-image-preview:large')
+    setMeta('meta[name="theme-color"]', 'name', '#0b1220')
+    setMeta('meta[name="google-adsense-account"]', 'name', ADSENSE_ACCOUNT)
     setMeta('meta[property="og:title"]', 'property', title)
     setMeta('meta[property="og:description"]', 'property', seo.description)
     setMeta('meta[property="og:type"]', 'property', 'website')
     setMeta('meta[property="og:url"]', 'property', url)
     setMeta('meta[property="og:site_name"]', 'property', SITE_NAME)
+    setMeta('meta[property="og:image"]', 'property', SITE_IMAGE)
+    setMeta('meta[property="og:locale"]', 'property', 'es_CL')
     setMeta('meta[name="twitter:card"]', 'name', 'summary')
     setMeta('meta[name="twitter:title"]', 'name', title)
     setMeta('meta[name="twitter:description"]', 'name', seo.description)
+    setMeta('meta[name="twitter:image"]', 'name', SITE_IMAGE)
     setCanonical(url)
+    setJsonLd(getStructuredData(pathname))
   }, [pathname])
 
   return null
@@ -100,7 +241,6 @@ function RouteSeo() {
 function loadAdsenseOnce() {
   const host = window.location.hostname
 
-  // En local (dev) NO cargamos AdSense para evitar problemas con Vite/Vercel Dev
   const isLocal =
     host === 'localhost' ||
     host === '127.0.0.1' ||
@@ -110,16 +250,14 @@ function loadAdsenseOnce() {
 
   if (isLocal) return
 
-  // Evitar cargar 2 veces si React re-renderiza
   const existing = document.querySelector(
-    'script[src^="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"]'
+    'script[src^="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"]',
   )
   if (existing) return
 
   const s = document.createElement('script')
   s.async = true
-  s.src =
-    'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6805458140116682'
+  s.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_ACCOUNT}`
   s.crossOrigin = 'anonymous'
   document.head.appendChild(s)
 }

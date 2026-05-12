@@ -564,7 +564,49 @@ export default function Game() {
         </div>
       </div>
 
-      {dailyError && <p className="message">{dailyError}</p>}
+      <section className="home-info-grid" aria-label="Guía rápida de Otakle">
+        <article className="home-info-card">
+          <span className="home-kicker">Qué es Otakle</span>
+          <h2>Un reto diario para fans del anime</h2>
+          <p>
+            Cada día hay un personaje nuevo para adivinar. Todos juegan el mismo reto y las pistas te ayudan a
+            acercarte por anime, rol, año, raza y más.
+          </p>
+        </article>
+
+        <article className="home-info-card">
+          <span className="home-kicker">Lo esencial</span>
+          <h2>Cómo se gana sin frustrarse</h2>
+          <ul className="home-info-list">
+            <li>Tienes 8 intentos por día.</li>
+            <li>El personaje cambia a las 00:00 UTC.</li>
+            <li>El filtro por anime solo afecta las sugerencias, no el resultado.</li>
+          </ul>
+        </article>
+
+        <article className="home-info-card">
+          <span className="home-kicker">Más ayuda</span>
+          <h2>Guías y páginas útiles</h2>
+          <div className="home-link-list">
+            <Link to="/how-to-play" className="home-link-pill">
+              Cómo se juega
+            </Link>
+            <Link to="/strategy" className="home-link-pill">
+              Estrategia
+            </Link>
+            <Link to="/about" className="home-link-pill">
+              Sobre Otakle
+            </Link>
+            <Link to="/contact" className="home-link-pill">
+              Contacto
+            </Link>
+          </div>
+          <p className="helper-note">Proyecto fan-made por Aknoid. Si falta un personaje, puedes sugerirlo.</p>
+        </article>
+      </section>
+
+      {dailyError && <p className="message" aria-live="polite">{dailyError}</p>}
+      {!hasSecret && !dailyError && <p className="helper-note">Cargando el reto diario y el catálogo…</p>}
 
       <form className="guess-form" onSubmit={onSubmit}>
         <label className="sr-only" htmlFor="guess">
@@ -603,7 +645,7 @@ export default function Game() {
       )}
 
       <div className="status-row">
-        <p className="message">{message ?? (isFinished ? (isWin ? '¡Correcto!' : 'Sin intentos 😅') : '')}</p>
+        <p className="message" aria-live="polite">{message ?? (isFinished ? (isWin ? '¡Correcto!' : 'Sin intentos 😅') : '')}</p>
         <p className="tries">
           Intentos usados: {tries}/{MAX_TRIES}
         </p>

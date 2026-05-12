@@ -49,23 +49,30 @@ export default function HowToPlay() {
           <li>Si te repetiste en un anime, cambia radicalmente el siguiente intento.</li>
         </ul>
 
+        <h2>Preguntas habituales</h2>
+        <ul>
+          <li>Si no aciertas en 8 intentos, el día se cierra y puedes ver el resultado.</li>
+          <li>Las estadísticas y el historial se guardan localmente en tu navegador.</li>
+          <li>El filtro por anime solo te ayuda a escribir nombres más rápido.</li>
+        </ul>
+
         <p style={{ marginTop: '1rem' }}>
           ¿Quieres estrategias más avanzadas? <Link to="/strategy">Ve la guía de estrategia</Link>.
         </p>
       </div>
 
       <footer className="page-footer">
-        <Link to="/about">About</Link>
+        <Link to="/about">Sobre Otakle</Link>
         <span>·</span>
-        <Link to="/stats">Stats</Link>
+        <Link to="/stats">Estadísticas</Link>
         <span>·</span>
-        <Link to="/archive">Archive</Link>
+        <Link to="/archive">Historial</Link>
         <span>·</span>
-        <Link to="/privacy">Privacy</Link>
+        <Link to="/privacy">Privacidad</Link>
         <span>·</span>
-        <Link to="/terms">Terms</Link>
+        <Link to="/terms">Términos</Link>
         <span>·</span>
-        <Link to="/contact">Contact</Link>
+        <Link to="/contact">Contacto</Link>
       </footer>
     </div>
   )

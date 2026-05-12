@@ -26,6 +26,11 @@ export default function Contact() {
       </header>
 
       <div className="legal-content">
+        <p>
+          Si quieres reportar un bug, sugerir personajes, dar feedback sobre el juego o consultar algo sobre privacidad
+          y anuncios, estos son los canales oficiales de contacto de Otakle.
+        </p>
+
         <h2>Email</h2>
         <p>
           <a href="mailto:oscarfernandezcepeda@gmail.com">oscarfernandezcepeda@gmail.com</a>
@@ -38,20 +43,28 @@ export default function Contact() {
           </a>
         </p>
 
+        <h2>Qué puedes escribirnos</h2>
+        <ul>
+          <li>Sugerencias de personajes o series que te gustaría ver en Otakle.</li>
+          <li>Errores visuales, pistas incoherentes o problemas con el personaje del día.</li>
+          <li>Dudas sobre privacidad, publicidad o funcionamiento del sitio.</li>
+        </ul>
+
         <h2>Qué incluir en tu mensaje</h2>
         <ul>
-          <li>Dispositivo / navegador (por ejemplo: iPhone + Safari, Android + Chrome)</li>
-          <li>Qué estabas haciendo y qué esperabas que pasara</li>
-          <li>Captura de pantalla si aplica</li>
+          <li>Dispositivo / navegador (por ejemplo: iPhone + Safari, Android + Chrome).</li>
+          <li>Qué estabas haciendo y qué esperabas que pasara.</li>
+          <li>El nombre del personaje o anime si el problema está en el catálogo.</li>
+          <li>Captura de pantalla si aplica.</li>
         </ul>
       </div>
 
       <footer className="footer">
         <div className="footer-links">
           <Link to="/" className="footer-link">Inicio</Link>
-          <Link to="/privacy" className="footer-link">Privacy</Link>
-          <Link to="/terms" className="footer-link">Terms</Link>
-          <Link to="/contact" className="footer-link">Contact</Link>
+          <Link to="/privacy" className="footer-link">Privacidad</Link>
+          <Link to="/terms" className="footer-link">Términos</Link>
+          <Link to="/contact" className="footer-link">Contacto</Link>
           <a className="footer-link" href="https://twitter.com/aknoid" target="_blank" rel="noreferrer noopener">X @aknoid</a>
           <a className="footer-link" href="mailto:oscarfernandezcepeda@gmail.com">oscarfernandezcepeda@gmail.com</a>
         </div>

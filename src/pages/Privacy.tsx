@@ -76,9 +76,9 @@ export default function Privacy() {
       <footer className="footer">
         <div className="footer-links">
           <Link to="/" className="footer-link">Inicio</Link>
-          <Link to="/privacy" className="footer-link">Privacy</Link>
-          <Link to="/terms" className="footer-link">Terms</Link>
-          <Link to="/contact" className="footer-link">Contact</Link>
+          <Link to="/privacy" className="footer-link">Privacidad</Link>
+          <Link to="/terms" className="footer-link">Términos</Link>
+          <Link to="/contact" className="footer-link">Contacto</Link>
           <a className="footer-link" href="https://twitter.com/aknoid" target="_blank" rel="noreferrer noopener">X @aknoid</a>
           <a className="footer-link" href="mailto:oscarfernandezcepeda@gmail.com">oscarfernandezcepeda@gmail.com</a>
         </div>

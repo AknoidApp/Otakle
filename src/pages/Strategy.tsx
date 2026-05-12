@@ -46,23 +46,30 @@ export default function Strategy() {
           Eso te dice exactamente qué falta.
         </p>
 
+        <h2>Errores comunes</h2>
+        <ul>
+          <li>Insistir con personajes demasiado parecidos cuando ya sabes que el anime o el rol no coinciden.</li>
+          <li>Usar el filtro por anime como si fuera una pista del juego.</li>
+          <li>Ignorar el año de debut, que suele recortar muchísimo el rango de opciones.</li>
+        </ul>
+
         <p style={{ marginTop: '1rem' }}>
           Si aún no viste las reglas: <Link to="/how-to-play">Cómo se juega</Link>.
         </p>
       </div>
 
       <footer className="page-footer">
-        <Link to="/about">About</Link>
+        <Link to="/about">Sobre Otakle</Link>
         <span>·</span>
-        <Link to="/stats">Stats</Link>
+        <Link to="/stats">Estadísticas</Link>
         <span>·</span>
-        <Link to="/archive">Archive</Link>
+        <Link to="/archive">Historial</Link>
         <span>·</span>
-        <Link to="/privacy">Privacy</Link>
+        <Link to="/privacy">Privacidad</Link>
         <span>·</span>
-        <Link to="/terms">Terms</Link>
+        <Link to="/terms">Términos</Link>
         <span>·</span>
-        <Link to="/contact">Contact</Link>
+        <Link to="/contact">Contacto</Link>
       </footer>
     </div>
   )
