@@ -15,7 +15,7 @@ export default function StatsPage() {
         </div>
 
         <div className="page-actions">
-          <Link to="/" className="btn-secondary">Volver al juego</Link>
+          <Link to="/play" className="btn-secondary">Ir a jugar</Link>
         </div>
       </header>
 
@@ -60,9 +60,19 @@ export default function StatsPage() {
       </div>
 
       <footer className="page-footer">
+        <Link to="/">Inicio</Link>
+        <span>·</span>
+        <Link to="/play">Jugar</Link>
+        <span>·</span>
         <Link to="/how-to-play">Cómo se juega</Link>
         <span>·</span>
         <Link to="/strategy">Estrategia</Link>
+        <span>·</span>
+        <Link to="/faq">FAQ</Link>
+        <span>·</span>
+        <Link to="/animes">Animes</Link>
+        <span>·</span>
+        <Link to="/personajes">Personajes</Link>
         <span>·</span>
         <Link to="/archive">Historial</Link>
         <span>·</span>

@@ -10,7 +10,7 @@ export default function Terms() {
             <img className="brand-logo" src="/otakle-logo.png" alt="Otakle" />
             <div className="brand-text">
               <div className="title-row">
-                <h1 className="brand-title">Terms of Service</h1>
+                <h1 className="brand-title">Términos de uso</h1>
                 <span className="daily-badge">Legal</span>
               </div>
               <p className="brand-subtitle">Última actualización: 2026-01-06</p>
@@ -18,8 +18,8 @@ export default function Terms() {
           </div>
 
           <div className="topbar-actions">
-            <Link className="howto-button" to="/">
-              Volver al juego
+            <Link className="howto-button" to="/play">
+              Ir a jugar
             </Link>
           </div>
         </div>
@@ -59,6 +59,10 @@ export default function Terms() {
       <footer className="footer">
         <div className="footer-links">
           <Link to="/" className="footer-link">Inicio</Link>
+          <Link to="/play" className="footer-link">Jugar</Link>
+          <Link to="/faq" className="footer-link">FAQ</Link>
+          <Link to="/animes" className="footer-link">Animes</Link>
+          <Link to="/personajes" className="footer-link">Personajes</Link>
           <Link to="/privacy" className="footer-link">Privacidad</Link>
           <Link to="/terms" className="footer-link">Términos</Link>
           <Link to="/contact" className="footer-link">Contacto</Link>

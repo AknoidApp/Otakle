@@ -78,7 +78,7 @@ function getModeKey(mode: Mode, suffix: string) {
 function buildShareText(args: { dayNumber: number; mode: Mode; tries: number; isWin: boolean }) {
   const header = `Otakle #${args.dayNumber} • ${args.mode === 'easy' ? 'Easy' : 'Normal'}`
   const result = args.isWin ? `✅ ${args.tries}/${MAX_TRIES}` : `❌ X/${MAX_TRIES}`
-  return `${header}\n${result}\n${location.origin}`
+  return `${header}\n${result}\n${location.origin}/play`
 }
 
 function yearClass(secret: number, guess: number) {
@@ -499,6 +499,9 @@ export default function Game() {
         </div>
 
         <div className="topbar-actions">
+          <Link to="/" className="howto-button">
+            Inicio
+          </Link>
           <button className="howto-button" type="button" onClick={() => setIsHowToOpen(true)}>
             ¿Cómo se juega?
           </button>
@@ -586,7 +589,7 @@ export default function Game() {
 
         <article className="home-info-card">
           <span className="home-kicker">Más ayuda</span>
-          <h2>Guías y páginas útiles</h2>
+          <h2>Guías, catálogo y páginas útiles</h2>
           <div className="home-link-list">
             <Link to="/how-to-play" className="home-link-pill">
               Cómo se juega
@@ -594,11 +597,17 @@ export default function Game() {
             <Link to="/strategy" className="home-link-pill">
               Estrategia
             </Link>
+            <Link to="/faq" className="home-link-pill">
+              FAQ
+            </Link>
+            <Link to="/animes" className="home-link-pill">
+              Animes
+            </Link>
+            <Link to="/personajes" className="home-link-pill">
+              Personajes
+            </Link>
             <Link to="/about" className="home-link-pill">
               Sobre Otakle
-            </Link>
-            <Link to="/contact" className="home-link-pill">
-              Contacto
             </Link>
           </div>
           <p className="helper-note">Proyecto fan-made por Aknoid. Si falta un personaje, puedes sugerirlo.</p>
@@ -744,14 +753,17 @@ export default function Game() {
       </div>
 
       <div className="page-footer">
-        <Link to="/about">About</Link>
-        <Link to="/how-to-play">How to play</Link>
-        <Link to="/strategy">Strategy</Link>
-        <Link to="/stats">Stats</Link>
-        <Link to="/archive">Archive</Link>
-        <Link to="/privacy">Privacy</Link>
-        <Link to="/terms">Terms</Link>
-        <Link to="/contact">Contact</Link>
+        <Link to="/">Inicio</Link>
+        <Link to="/how-to-play">Cómo se juega</Link>
+        <Link to="/strategy">Estrategia</Link>
+        <Link to="/faq">FAQ</Link>
+        <Link to="/animes">Animes</Link>
+        <Link to="/personajes">Personajes</Link>
+        <Link to="/stats">Estadísticas</Link>
+        <Link to="/archive">Historial</Link>
+        <Link to="/privacy">Privacidad</Link>
+        <Link to="/terms">Términos</Link>
+        <Link to="/contact">Contacto</Link>
       </div>
 
       {isHowToOpen && (

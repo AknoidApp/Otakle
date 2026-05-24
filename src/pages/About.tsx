@@ -10,7 +10,7 @@ export default function About() {
             <img className="brand-logo" src="/otakle-logo.png" alt="Otakle" />
             <div className="brand-text">
               <div className="title-row">
-                <h1 className="brand-title">About Otakle</h1>
+                <h1 className="brand-title">Sobre Otakle</h1>
                 <span className="daily-badge">Guía</span>
               </div>
               <p className="brand-subtitle">Reglas, pistas y preguntas frecuentes</p>
@@ -18,8 +18,8 @@ export default function About() {
           </div>
 
           <div className="topbar-actions">
-            <Link to="/" className="howto-button">
-              Volver al juego
+            <Link to="/play" className="howto-button">
+              Ir a jugar
             </Link>
           </div>
         </div>
@@ -129,6 +129,18 @@ export default function About() {
         <div className="footer-links">
           <Link to="/" className="footer-link">
             Inicio
+          </Link>
+          <Link to="/play" className="footer-link">
+            Jugar
+          </Link>
+          <Link to="/faq" className="footer-link">
+            FAQ
+          </Link>
+          <Link to="/animes" className="footer-link">
+            Animes
+          </Link>
+          <Link to="/personajes" className="footer-link">
+            Personajes
           </Link>
           <Link to="/about" className="footer-link">
             Sobre Otakle

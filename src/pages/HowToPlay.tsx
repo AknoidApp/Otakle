@@ -11,7 +11,7 @@ export default function HowToPlay() {
         </div>
 
         <div className="page-actions">
-          <Link to="/" className="btn-secondary">Volver al juego</Link>
+          <Link to="/play" className="btn-secondary">Ir a jugar</Link>
         </div>
       </header>
 
@@ -62,11 +62,21 @@ export default function HowToPlay() {
       </div>
 
       <footer className="page-footer">
+        <Link to="/">Inicio</Link>
+        <span>·</span>
+        <Link to="/play">Jugar</Link>
+        <span>·</span>
         <Link to="/about">Sobre Otakle</Link>
         <span>·</span>
         <Link to="/stats">Estadísticas</Link>
         <span>·</span>
         <Link to="/archive">Historial</Link>
+        <span>·</span>
+        <Link to="/faq">FAQ</Link>
+        <span>·</span>
+        <Link to="/animes">Animes</Link>
+        <span>·</span>
+        <Link to="/personajes">Personajes</Link>
         <span>·</span>
         <Link to="/privacy">Privacidad</Link>
         <span>·</span>
