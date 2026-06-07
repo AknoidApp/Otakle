@@ -695,7 +695,7 @@ function injectJsonLd(html, pathname) {
 
 function routeFile(pathname) {
   if (pathname === '/') return path.join(DIST_DIR, 'index.html')
-  return path.join(DIST_DIR, `${pathname.slice(1)}.html`)
+  return path.join(DIST_DIR, pathname.slice(1), 'index.html')
 }
 
 async function main() {
@@ -728,7 +728,9 @@ async function main() {
     html = html.replace('<div id="root"></div>', `<div id="root">${bodyMarkup}</div>`)
     html = injectJsonLd(html, pathname)
 
-    await fs.writeFile(routeFile(pathname), html)
+    const outputPath = routeFile(pathname)
+    await fs.mkdir(path.dirname(outputPath), { recursive: true })
+    await fs.writeFile(outputPath, html)
   }
 
   console.log(`✅ Prerender estático generado para ${Object.keys(routeBodies).length} rutas`)
