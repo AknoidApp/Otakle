@@ -1,3 +1,5 @@
+import { EDITORIAL_PAGES } from './editorialData.ts'
+
 export const SITE_NAME = 'Otakle'
 export const SITE_URL = 'https://www.otakle.app'
 export const SITE_IMAGE = `${SITE_URL}/otakle-logo.png`
@@ -12,13 +14,24 @@ export type SeoEntry = {
   robots?: string
 }
 
+const editorialSeoEntries = Object.fromEntries(
+  EDITORIAL_PAGES.map((page) => [
+    page.path,
+    {
+      title: page.title,
+      description: page.description,
+      keywords: `otakle, anime, ${page.title.toLowerCase()}, guía anime, juego diario anime, personajes de anime`,
+    },
+  ]),
+) as Record<string, SeoEntry>
+
 export const SEO_BY_PATH: Record<string, SeoEntry> = {
   '/': {
     title: 'Juego diario de anime, guías y catálogo público',
     description:
-      'Descubre Otakle: un juego diario para adivinar personajes de anime, con guías, preguntas frecuentes y un catálogo público de series y personajes.',
+      'Descubre Otakle: un juego diario para adivinar personajes de anime, con guías, preguntas frecuentes, recursos por franquicia y un catálogo público de series y personajes.',
     keywords:
-      'otakle, juego diario anime, personajes de anime, catálogo anime, anime wordle, guía anime, guessing game anime',
+      'otakle, juego diario anime, personajes de anime, catálogo anime, anime wordle, guía anime, guessing game anime, franquicias anime',
   },
   '/play': {
     title: 'Jugar el reto diario de personajes de anime',
@@ -87,6 +100,7 @@ export const SEO_BY_PATH: Record<string, SeoEntry> = {
     description: 'Ponte en contacto con Otakle para soporte, feedback o sugerencias de personajes.',
     keywords: 'contact otakle, soporte otakle, sugerir personaje anime',
   },
+  ...editorialSeoEntries,
 }
 
 export function getStructuredData(pathname: string) {
@@ -188,6 +202,30 @@ export function getStructuredData(pathname: string) {
         name: 'Contacto Otakle',
         url: pageUrl,
         description: seo.description,
+      },
+    ]
+  }
+
+  if (EDITORIAL_PAGES.some((page) => page.path === pathname)) {
+    return [
+      website,
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: seo.title,
+        name: seo.title,
+        url: pageUrl,
+        description: seo.description,
+        inLanguage: 'es',
+        author: {
+          '@type': 'Person',
+          name: 'Aknoid',
+        },
+        publisher: {
+          '@type': 'Person',
+          name: 'Aknoid',
+        },
+        image: SITE_IMAGE,
       },
     ]
   }

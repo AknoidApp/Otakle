@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import SiteFooter from '../components/SiteFooter'
 import '../App.css'
 import { ANIME_GROUPS, TOTAL_ANIMES, TOTAL_CHARACTERS } from '../lib/siteData'
 
@@ -68,17 +69,7 @@ export default function Animes() {
         ))}
       </div>
 
-      <footer className="page-footer">
-        <Link to="/">Inicio</Link>
-        <span>·</span>
-        <Link to="/play">Jugar</Link>
-        <span>·</span>
-        <Link to="/faq">FAQ</Link>
-        <span>·</span>
-        <Link to="/personajes">Personajes</Link>
-        <span>·</span>
-        <Link to="/about">Sobre Otakle</Link>
-      </footer>
+      <SiteFooter />
     </div>
   )
 }

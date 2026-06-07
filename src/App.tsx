@@ -9,6 +9,8 @@ import HowToPlay from './pages/HowToPlay'
 import Strategy from './pages/Strategy'
 import StatsPage from './pages/Stats'
 import Archive from './pages/Archive'
+import EditorialPage from './pages/EditorialPage'
+import { EDITORIAL_PAGES } from './lib/editorialData'
 import { ADSENSE_ACCOUNT, SEO_BY_PATH, SITE_IMAGE, SITE_NAME, SITE_URL, getStructuredData } from './lib/seoData'
 
 const Home = lazy(() => import('./pages/Home'))
@@ -84,12 +86,7 @@ function RouteSeo() {
 function loadAdsenseOnce() {
   const host = window.location.hostname
 
-  const isLocal =
-    host === 'localhost' ||
-    host === '127.0.0.1' ||
-    host.startsWith('192.168.') ||
-    host.startsWith('10.') ||
-    host.startsWith('172.')
+  const isLocal = host === 'localhost' || host === '127.0.0.1' || host.startsWith('192.168.') || host.startsWith('10.') || host.startsWith('172.')
 
   if (isLocal) return
 
@@ -133,6 +130,9 @@ export default function App() {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/contact" element={<Contact />} />
+          {EDITORIAL_PAGES.map((page) => (
+            <Route key={page.path} path={page.path} element={<EditorialPage page={page} />} />
+          ))}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>

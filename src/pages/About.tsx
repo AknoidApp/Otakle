@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import SiteFooter from '../components/SiteFooter'
 import '../App.css'
 
 export default function About() {
@@ -157,52 +158,7 @@ export default function About() {
         </p>
       </div>
 
-      <footer className="footer">
-        <div className="footer-links">
-          <Link to="/" className="footer-link">
-            Inicio
-          </Link>
-          <Link to="/play" className="footer-link">
-            Jugar
-          </Link>
-          <Link to="/how-to-play" className="footer-link">
-            Cómo se juega
-          </Link>
-          <Link to="/strategy" className="footer-link">
-            Estrategia
-          </Link>
-          <Link to="/faq" className="footer-link">
-            FAQ
-          </Link>
-          <Link to="/animes" className="footer-link">
-            Animes
-          </Link>
-          <Link to="/personajes" className="footer-link">
-            Personajes
-          </Link>
-          <Link to="/about" className="footer-link">
-            Sobre Otakle
-          </Link>
-          <Link to="/privacy" className="footer-link">
-            Privacidad
-          </Link>
-          <Link to="/terms" className="footer-link">
-            Términos
-          </Link>
-          <Link to="/contact" className="footer-link">
-            Contacto
-          </Link>
-          <a className="footer-link" href="https://twitter.com/aknoid" target="_blank" rel="noreferrer noopener">
-            X @aknoid
-          </a>
-          <a className="footer-link" href="mailto:oscarfernandezcepeda@gmail.com">
-            oscarfernandezcepeda@gmail.com
-          </a>
-        </div>
-        <div className="footer-note">
-          Otakle by <strong>Aknoid</strong>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   )
 }

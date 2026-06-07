@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import SiteFooter from '../components/SiteFooter'
 import '../App.css'
 import { FAQ_ITEMS } from '../lib/siteData'
 
@@ -35,19 +36,7 @@ export default function Faq() {
         </p>
       </div>
 
-      <footer className="page-footer">
-        <Link to="/">Inicio</Link>
-        <span>·</span>
-        <Link to="/play">Jugar</Link>
-        <span>·</span>
-        <Link to="/how-to-play">Cómo se juega</Link>
-        <span>·</span>
-        <Link to="/strategy">Estrategia</Link>
-        <span>·</span>
-        <Link to="/animes">Animes</Link>
-        <span>·</span>
-        <Link to="/personajes">Personajes</Link>
-      </footer>
+      <SiteFooter />
     </div>
   )
 }

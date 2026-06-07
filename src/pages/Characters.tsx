@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import SiteFooter from '../components/SiteFooter'
 import '../App.css'
 import { ANIME_GROUPS, TOTAL_CHARACTERS } from '../lib/siteData'
 
@@ -51,17 +52,7 @@ export default function Characters() {
         ))}
       </div>
 
-      <footer className="page-footer">
-        <Link to="/">Inicio</Link>
-        <span>·</span>
-        <Link to="/play">Jugar</Link>
-        <span>·</span>
-        <Link to="/animes">Animes</Link>
-        <span>·</span>
-        <Link to="/faq">FAQ</Link>
-        <span>·</span>
-        <Link to="/contact">Contacto</Link>
-      </footer>
+      <SiteFooter />
     </div>
   )
 }

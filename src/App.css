@@ -1352,9 +1352,99 @@ button[type='submit']:disabled {
   font-weight: 800;
 }
 
+.editorial-link-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.editorial-link-card p {
+  flex: 1;
+}
+
+.editorial-intro-card,
+.editorial-section-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.editorial-grid {
+  align-items: stretch;
+}
+
 .footer-note {
   color: rgba(229, 231, 235, 0.62);
   font-size: 0.9rem;
+}
+
+.site-footer {
+  margin-top: 1.25rem;
+  width: 100%;
+  align-items: stretch;
+  gap: 1rem;
+}
+
+.site-footer-topline {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(30, 41, 59, 0.88));
+}
+
+.site-footer-kicker {
+  margin: 0 0 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.76rem;
+  color: rgba(34, 211, 238, 0.82);
+  font-weight: 900;
+}
+
+.site-footer-title {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.site-footer-copy {
+  margin: 0.45rem 0 0;
+  max-width: 760px;
+  color: rgba(226, 232, 240, 0.82);
+}
+
+.site-footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  align-items: flex-end;
+}
+
+.site-footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.site-footer-section {
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: 18px;
+  padding: 0.95rem 1rem;
+  background: rgba(15, 23, 42, 0.74);
+}
+
+.site-footer-section h3 {
+  margin: 0 0 0.65rem;
+  font-size: 0.95rem;
+}
+
+.site-footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
 }
 
 @media (max-width: 820px) {
@@ -1365,8 +1455,17 @@ button[type='submit']:disabled {
   .directory-grid-wide,
   .character-showcase-grid,
   .faq-grid,
-  .faq-grid-full {
+  .faq-grid-full,
+  .site-footer-grid {
     grid-template-columns: 1fr;
+  }
+
+  .site-footer-topline {
+    flex-direction: column;
+  }
+
+  .site-footer-contact {
+    align-items: flex-start;
   }
 }
 

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import '../App.css'
+import SiteFooter from '../components/SiteFooter'
 import {
   EASY_MODE_COUNT,
   FAQ_ITEMS,
@@ -10,6 +10,8 @@ import {
   TOTAL_CHARACTERS,
   getCharacterExcerpt,
 } from '../lib/siteData'
+import { EDITORIAL_PAGES } from '../lib/editorialData'
+import '../App.css'
 
 export default function Home() {
   return (
@@ -39,14 +41,16 @@ export default function Home() {
       <section className="landing-hero">
         <div className="landing-copy">
           <span className="home-kicker">Qué es Otakle</span>
-          <h2>Un reto diario para fans del anime, con contenido útil más allá del juego</h2>
+          <h2>Un reto diario para fans del anime, con una capa pública real de contenido útil</h2>
           <p>
-            Otakle combina el formato de juego diario tipo Wordle con un catálogo de personajes, guías para entender
-            las pistas y páginas públicas para explorar series, franquicias y reglas del reto.
+            Otakle combina la lógica de un juego diario tipo Wordle con una base pública de guías, preguntas frecuentes,
+            catálogo de personajes, resúmenes por franquicia y páginas pensadas para que el sitio tenga valor incluso
+            fuera de la partida del día.
           </p>
           <p>
-            La idea es que el sitio sea útil tanto si vienes a jugar como si quieres revisar qué personajes están en el
-            catálogo, cómo funciona el modo easy o qué series están mejor representadas.
+            La idea es que puedas entrar a jugar, pero también volver para entender mejor las pistas, revisar qué animes
+            están representados, descubrir personajes del catálogo actual y leer recursos hechos para mejorar tu lectura
+            del reto.
           </p>
 
           <div className="landing-cta-row">
@@ -84,22 +88,44 @@ export default function Home() {
 
       <section className="page-grid">
         <article className="page-card">
-          <h2>Cómo funciona el juego</h2>
+          <h2>Qué puedes hacer en Otakle</h2>
           <ul>
-            <li>Cada día hay un personaje nuevo para todos los jugadores.</li>
-            <li>Tienes 8 intentos para resolverlo usando pistas por anime, rol, año, estudio, raza y edad.</li>
-            <li>El modo easy reduce el pool a personajes más reconocibles, pero mantiene la lógica del reto.</li>
+            <li>Jugar un personaje nuevo cada día con 8 intentos máximos.</li>
+            <li>Aprender a leer pistas por anime, rol, año de debut, estudio, raza y edad.</li>
+            <li>Consultar contenido público para mejorar tu tasa de acierto sin depender de búsquedas externas.</li>
           </ul>
         </article>
 
         <article className="page-card">
-          <h2>Qué aporta el sitio además del juego</h2>
+          <h2>Por qué esta web no es solo una landing</h2>
           <ul>
-            <li>Guías públicas para entender las reglas y jugar mejor.</li>
-            <li>Listado visible de animes y personajes actualmente presentes en el catálogo.</li>
-            <li>FAQ, contacto y páginas legales para que el proyecto sea claro y verificable.</li>
+            <li>Incluye guías completas sobre mecánicas y estrategia.</li>
+            <li>Tiene catálogo visible de personajes y series presentes en el juego.</li>
+            <li>Reúne recursos por franquicia, preguntas frecuentes y páginas legales claras.</li>
           </ul>
         </article>
+      </section>
+
+      <section className="catalog-section">
+        <div className="section-heading">
+          <div>
+            <span className="home-kicker">Guías destacadas</span>
+            <h2>Recursos públicos para entender mejor el juego y sus franquicias</h2>
+          </div>
+        </div>
+
+        <div className="directory-grid directory-grid-wide">
+          {EDITORIAL_PAGES.map((page) => (
+            <article key={page.path} className="directory-card editorial-link-card">
+              <span className="mini-label">{page.kicker}</span>
+              <h3>{page.title}</h3>
+              <p>{page.description}</p>
+              <Link to={page.path} className="btn-secondary">
+                Leer guía
+              </Link>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="catalog-section">
@@ -153,6 +179,40 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="page-grid">
+        <article className="page-card notice-card">
+          <h2>Señales de confianza del proyecto</h2>
+          <ul>
+            <li>Rutas públicas indexables con metadatos, sitemap y contenido informativo.</li>
+            <li>Páginas visibles de contacto, privacidad, términos y descripción del proyecto.</li>
+            <li>Catálogo público navegable con personajes, series y material editorial relacionado.</li>
+          </ul>
+        </article>
+
+        <article className="page-card">
+          <h2>Explora Otakle sin jugar todavía</h2>
+          <p>
+            Si llegaste por curiosidad o por una revisión de AdSense, la idea es que el sitio se entienda incluso fuera del
+            gameplay. Puedes recorrer primero las guías, revisar la FAQ, mirar las series activas y después entrar al reto
+            diario con más contexto.
+          </p>
+          <div className="chip-link-list">
+            <Link to="/about" className="home-link-pill">
+              Sobre Otakle
+            </Link>
+            <Link to="/faq" className="home-link-pill">
+              FAQ
+            </Link>
+            <Link to="/contact" className="home-link-pill">
+              Contacto
+            </Link>
+            <Link to="/privacy" className="home-link-pill">
+              Privacidad
+            </Link>
+          </div>
+        </article>
+      </section>
+
       <section className="catalog-section">
         <div className="section-heading">
           <div>
@@ -185,23 +245,7 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="page-footer">
-        <Link to="/play">Jugar</Link>
-        <span>·</span>
-        <Link to="/how-to-play">Cómo se juega</Link>
-        <span>·</span>
-        <Link to="/strategy">Estrategia</Link>
-        <span>·</span>
-        <Link to="/faq">FAQ</Link>
-        <span>·</span>
-        <Link to="/animes">Animes</Link>
-        <span>·</span>
-        <Link to="/personajes">Personajes</Link>
-        <span>·</span>
-        <Link to="/about">Sobre Otakle</Link>
-        <span>·</span>
-        <Link to="/contact">Contacto</Link>
-      </footer>
+      <SiteFooter />
     </div>
   )
 }

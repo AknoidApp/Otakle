@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
+import SiteFooter from './components/SiteFooter'
 import './App.css'
 import type { Character } from './characters'
 
@@ -752,19 +753,7 @@ export default function Game() {
         })}
       </div>
 
-      <div className="page-footer">
-        <Link to="/">Inicio</Link>
-        <Link to="/how-to-play">Cómo se juega</Link>
-        <Link to="/strategy">Estrategia</Link>
-        <Link to="/faq">FAQ</Link>
-        <Link to="/animes">Animes</Link>
-        <Link to="/personajes">Personajes</Link>
-        <Link to="/stats">Estadísticas</Link>
-        <Link to="/archive">Historial</Link>
-        <Link to="/privacy">Privacidad</Link>
-        <Link to="/terms">Términos</Link>
-        <Link to="/contact">Contacto</Link>
-      </div>
+      <SiteFooter />
 
       {isHowToOpen && (
         <div className="modal-overlay" role="dialog" aria-modal="true" onClick={() => setIsHowToOpen(false)}>

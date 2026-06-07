@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import SiteFooter from '../components/SiteFooter'
 import '../App.css'
 import { loadHistory } from '../lib/history'
 
@@ -39,20 +40,7 @@ export default function Archive() {
         )}
       </div>
 
-      <footer className="page-footer">
-        <Link to="/">Inicio</Link><span>·</span>
-        <Link to="/play">Jugar</Link><span>·</span>
-        <Link to="/how-to-play">Cómo se juega</Link><span>·</span>
-        <Link to="/strategy">Estrategia</Link><span>·</span>
-        <Link to="/faq">FAQ</Link><span>·</span>
-        <Link to="/animes">Animes</Link><span>·</span>
-        <Link to="/personajes">Personajes</Link><span>·</span>
-        <Link to="/stats">Estadísticas</Link><span>·</span>
-        <Link to="/about">Sobre Otakle</Link><span>·</span>
-        <Link to="/privacy">Privacidad</Link><span>·</span>
-        <Link to="/terms">Términos</Link><span>·</span>
-        <Link to="/contact">Contacto</Link>
-      </footer>
+      <SiteFooter />
     </div>
   )
 }
