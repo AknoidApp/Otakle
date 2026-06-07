@@ -428,11 +428,33 @@ function faqBody() {
       <header class="page-header">
         <div class="page-title">
           <h1>Preguntas frecuentes</h1>
-          <p>Respuestas sobre reglas, reinicios, pistas, modo easy, historial local y soporte.</p>
+          <p>Respuestas públicas sobre reglas, pistas, reinicios, modo easy, estadísticas locales, privacidad y funcionamiento general de Otakle.</p>
         </div>
         <div class="page-actions">${anchor('/play', 'Ir a jugar', 'btn-primary')}</div>
       </header>
+      <section class="page-grid">
+        <article class="page-card">
+          <h2>Qué resuelve esta página</h2>
+          <p>Esta FAQ está pensada para responder las dudas más comunes antes de que tengas que escribir por soporte. Si vienes por primera vez al sitio, aquí deberías poder entender qué es Otakle, cuántos intentos tienes, cómo se reinicia el reto y qué parte del historial se guarda solo en tu navegador.</p>
+        </article>
+        <article class="page-card">
+          <h2>Cuándo conviene revisar otras guías</h2>
+          <p>Si tu duda no es operativa sino estratégica, probablemente te convenga saltar luego a ${anchor('/how-to-play', 'cómo se juega')}, ${anchor('/strategy', 'estrategia')} o a las guías editoriales sobre lectura de pistas y franquicias destacadas.</p>
+        </article>
+      </section>
       <div class="faq-grid faq-grid-full">${cards}</div>
+      <section class="page-card notice-card">
+        <h2>Dudas frecuentes fuera del gameplay</h2>
+        <ul>
+          <li>Otakle no publica una tabla global de estadísticas personales; tus datos se guardan localmente.</li>
+          <li>El catálogo puede crecer con el tiempo, así que personajes y franquicias visibles hoy no son el límite final.</li>
+          <li>Si detectas una pista inconsistente o una ficha mal clasificada, lo más útil es reportar personaje, anime y captura.</li>
+        </ul>
+      </section>
+      <div class="page-card">
+        <h2>¿Todavía tienes dudas?</h2>
+        <p>Si tu pregunta no aparece aquí, puedes revisar la guía completa de ${anchor('/how-to-play', 'cómo se juega')}, la página de ${anchor('/strategy', 'estrategia')}, la guía de ${anchor('/como-leer-pistas-otakle', 'cómo leer las pistas')} o escribir por la sección de ${anchor('/contact', 'contacto')}.</p>
+      </div>
       ${footerLinks()}
     </div>
   `
@@ -446,7 +468,7 @@ function animesBody() {
           <h2>${escapeHtml(group.anime)}</h2>
           <span class="count-pill">${group.count}</span>
         </div>
-        <p>Series presentes en el catálogo público de Otakle con una muestra rápida de personajes ya disponibles.</p>
+        <p>Serie representada con personajes activos en el juego diario y en el catálogo público. Esta muestra ayuda a entender qué nombres ya están cubiertos dentro de Otakle.</p>
         <div class="chip-link-list">${group.sampleNames.map((name) => `<span class="name-chip">${escapeHtml(name)}</span>`).join('')}</div>
       </article>
     `,
@@ -457,7 +479,7 @@ function animesBody() {
       <header class="page-header">
         <div class="page-title">
           <h1>Animes incluidos en Otakle</h1>
-          <p>Resumen público de las series y franquicias presentes actualmente dentro del juego.</p>
+          <p>Esta página resume las series y franquicias que actualmente forman parte del catálogo del juego. El listado sirve como referencia pública para ver el rango del contenido cubierto por Otakle y entender mejor qué tan amplio es el universo de personajes disponible.</p>
         </div>
         <div class="page-actions">
           ${anchor('/personajes', 'Ver personajes', 'btn-secondary')}
@@ -466,7 +488,7 @@ function animesBody() {
       </header>
       <div class="page-grid">
         <article class="page-card">
-          <h2>Resumen</h2>
+          <h2>Resumen del catálogo</h2>
           <ul>
             <li><strong>${TOTAL_CHARACTERS}</strong> personajes activos.</li>
             <li><strong>${TOTAL_ANIMES}</strong> series o franquicias representadas.</li>
@@ -475,10 +497,23 @@ function animesBody() {
         </article>
         <article class="page-card">
           <h2>Cómo leer esta página</h2>
-          <p>Cada tarjeta resume una obra presente en Otakle con un conteo de personajes y una muestra visible de nombres disponibles.</p>
+          <p>Cada tarjeta muestra una serie presente en Otakle, la cantidad de personajes activos asociados y una muestra rápida de nombres ya disponibles dentro del juego. No es una wiki exhaustiva de cada franquicia, pero sí un directorio visible para entender la cobertura actual del proyecto.</p>
         </article>
       </div>
+      <section class="page-card notice-card">
+        <h2>Franquicias que ya tienen guías públicas</h2>
+        <div class="chip-link-list">
+          ${anchor('/guia-naruto-otakle', 'Guía de Naruto', 'home-link-pill')}
+          ${anchor('/guia-one-piece-otakle', 'Guía de One Piece', 'home-link-pill')}
+          ${anchor('/guia-dragon-ball-otakle', 'Guía de Dragon Ball', 'home-link-pill')}
+          ${anchor('/animes-faciles-para-empezar-en-otakle', 'Animes fáciles para empezar', 'home-link-pill')}
+        </div>
+      </section>
       <div class="directory-grid directory-grid-wide">${cards}</div>
+      <section class="page-card">
+        <h2>Por qué esta página importa para el sitio</h2>
+        <p>Más allá del juego diario, este directorio deja claro que Otakle tiene un catálogo visible y mantenido. Sirve para visitantes nuevos, para jugadores que quieren saber si una franquicia ya está representada y para mostrar que el proyecto tiene una base pública de contenido más amplia que una simple pantalla de juego.</p>
+      </section>
       ${footerLinks()}
     </div>
   `
@@ -578,13 +613,37 @@ function contactBody() {
               <h1 class="brand-title">Contacto</h1>
               <span class="daily-badge">INFO</span>
             </div>
-            <p class="brand-subtitle">Canales oficiales para bugs, sugerencias y consultas</p>
+            <p class="brand-subtitle">Canales oficiales para soporte, feedback y sugerencias del proyecto</p>
           </div>
         </div>
         <div class="topbar-actions">${anchor('/play', 'Ir a jugar', 'btn-secondary')}</div>
       </header>
       <div class="legal-content">
-        <p>Si quieres reportar un bug, proponer personajes o consultar algo sobre el proyecto, puedes escribir a <a href="mailto:${escapeHtml(SITE_EMAIL)}">${escapeHtml(SITE_EMAIL)}</a> o visitar <a href="${escapeHtml(SITE_X_URL)}" target="_blank" rel="noreferrer noopener">${escapeHtml(SITE_X_LABEL)}</a>.</p>
+        <p>Si quieres reportar un bug, sugerir personajes, dar feedback sobre el juego o consultar algo sobre privacidad, anuncios y funcionamiento del sitio, estos son los canales oficiales de contacto de Otakle.</p>
+        <p>La idea de esta página es que cualquier visitante pueda identificar con claridad quién recibe los mensajes del proyecto y qué tipo de consultas sí tienen sentido aquí. No es solo una página de cumplimiento: también es una vía real para mejorar el catálogo y detectar problemas del juego.</p>
+        <h2>Email</h2>
+        <p><a href="mailto:${escapeHtml(SITE_EMAIL)}">${escapeHtml(SITE_EMAIL)}</a></p>
+        <p>El correo es el mejor canal si quieres mandar comentarios largos, adjuntar capturas o dejar una explicación más completa de un error, propuesta o duda de privacidad.</p>
+        <h2>X (Twitter)</h2>
+        <p><a href="${escapeHtml(SITE_X_URL)}" target="_blank" rel="noreferrer noopener">${escapeHtml(SITE_X_LABEL)}</a></p>
+        <p>X sirve mejor para avisos rápidos, feedback corto o sugerencias puntuales sobre personajes, series y mejoras del juego diario.</p>
+        <h2>Qué puedes escribirnos</h2>
+        <ul>
+          <li>Sugerencias de personajes o series que te gustaría ver en Otakle.</li>
+          <li>Errores visuales, pistas incoherentes o problemas con el personaje del día.</li>
+          <li>Dudas sobre privacidad, publicidad, indexación o funcionamiento general del sitio.</li>
+          <li>Comentarios sobre guías públicas, catálogo o utilidad editorial de las páginas informativas.</li>
+        </ul>
+        <h2>Qué incluir en tu mensaje</h2>
+        <ul>
+          <li>Dispositivo / navegador (por ejemplo: iPhone + Safari, Android + Chrome).</li>
+          <li>Qué estabas haciendo y qué esperabas que pasara.</li>
+          <li>El nombre del personaje o anime si el problema está en el catálogo.</li>
+          <li>Captura de pantalla si aplica.</li>
+          <li>URL exacta si el problema ocurre en una página pública concreta.</li>
+        </ul>
+        <h2>Antes de escribir</h2>
+        <p>Si tu duda es sobre reglas, reinicio diario o lectura de pistas, puede que ya esté respondida en ${anchor('/faq', 'FAQ')}, ${anchor('/how-to-play', 'cómo se juega')} o ${anchor('/strategy', 'estrategia')}. Si aun así algo no cuadra, escríbenos con contexto y lo revisamos.</p>
       </div>
       ${footerLinks()}
     </div>
