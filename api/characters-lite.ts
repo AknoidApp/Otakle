@@ -1398,6 +1398,706 @@ export const CHARACTERS_LITE = [
     "anime": "Your Lie in April",
     "imageUrl": "/images/kaori_miyazono.png",
     "active": true
+  },
+  {
+    "id": "goten",
+    "name": "Goten",
+    "anime": "Dragon Ball",
+    "imageUrl": "/images/goten.png",
+    "active": true
+  },
+  {
+    "id": "broly",
+    "name": "Broly",
+    "anime": "Dragon Ball",
+    "imageUrl": "/images/broly.png",
+    "active": true
+  },
+  {
+    "id": "yamcha",
+    "name": "Yamcha",
+    "anime": "Dragon Ball",
+    "imageUrl": "/images/yamcha.png",
+    "active": true
+  },
+  {
+    "id": "ten_shin_han",
+    "name": "Ten Shin Han",
+    "anime": "Dragon Ball",
+    "imageUrl": "/images/ten_shin_han.png",
+    "active": true
+  },
+  {
+    "id": "android_18",
+    "name": "Android 18",
+    "anime": "Dragon Ball",
+    "imageUrl": "/images/android_18.png",
+    "active": true
+  },
+  {
+    "id": "android_17",
+    "name": "Android 17",
+    "anime": "Dragon Ball",
+    "imageUrl": "/images/android_17.png",
+    "active": true
+  },
+  {
+    "id": "master_roshi",
+    "name": "Master Roshi",
+    "anime": "Dragon Ball",
+    "imageUrl": "/images/master_roshi.png",
+    "active": true
+  },
+  {
+    "id": "hinata_hyuga",
+    "name": "Hinata Hyuga",
+    "anime": "Naruto",
+    "imageUrl": "/images/hinata_hyuga.png",
+    "active": true
+  },
+  {
+    "id": "rock_lee",
+    "name": "Rock Lee",
+    "anime": "Naruto",
+    "imageUrl": "/images/rock_lee.png",
+    "active": true
+  },
+  {
+    "id": "neji_hyuga",
+    "name": "Neji Hyuga",
+    "anime": "Naruto",
+    "imageUrl": "/images/neji_hyuga.png",
+    "active": true
+  },
+  {
+    "id": "kiba_inuzuka",
+    "name": "Kiba Inuzuka",
+    "anime": "Naruto",
+    "imageUrl": "/images/kiba_inuzuka.png",
+    "active": true
+  },
+  {
+    "id": "minato_namikaze",
+    "name": "Minato Namikaze",
+    "anime": "Naruto",
+    "imageUrl": "/images/minato_namikaze.png",
+    "active": true
+  },
+  {
+    "id": "killer_bee",
+    "name": "Killer Bee",
+    "anime": "Naruto",
+    "imageUrl": "/images/killer_bee.png",
+    "active": true
+  },
+  {
+    "id": "konan",
+    "name": "Konan",
+    "anime": "Naruto",
+    "imageUrl": "/images/konan.png",
+    "active": true
+  },
+  {
+    "id": "buggy",
+    "name": "Buggy",
+    "anime": "One Piece",
+    "imageUrl": "/images/buggy.png",
+    "active": true
+  },
+  {
+    "id": "crocodile",
+    "name": "Crocodile",
+    "anime": "One Piece",
+    "imageUrl": "/images/crocodile.png",
+    "active": true
+  },
+  {
+    "id": "enel",
+    "name": "Enel",
+    "anime": "One Piece",
+    "imageUrl": "/images/enel.png",
+    "active": true
+  },
+  {
+    "id": "eustass_kid",
+    "name": "Eustass Kid",
+    "anime": "One Piece",
+    "imageUrl": "/images/eustass_kid.png",
+    "active": true
+  },
+  {
+    "id": "killer",
+    "name": "Killer",
+    "anime": "One Piece",
+    "imageUrl": "/images/killer.png",
+    "active": true
+  },
+  {
+    "id": "kozuki_oden",
+    "name": "Kozuki Oden",
+    "anime": "One Piece",
+    "imageUrl": "/images/kozuki_oden.png",
+    "active": true
+  },
+  {
+    "id": "dracule_mihawk",
+    "name": "Dracule Mihawk",
+    "anime": "One Piece",
+    "imageUrl": "/images/dracule_mihawk.png",
+    "active": true
+  },
+  {
+    "id": "rob_lucci",
+    "name": "Rob Lucci",
+    "anime": "One Piece",
+    "imageUrl": "/images/rob_lucci.png",
+    "active": true
+  },
+  {
+    "id": "yamato",
+    "name": "Yamato",
+    "anime": "One Piece",
+    "imageUrl": "/images/yamato.png",
+    "active": true
+  },
+  {
+    "id": "bartolomeo",
+    "name": "Bartolomeo",
+    "anime": "One Piece",
+    "imageUrl": "/images/bartolomeo.png",
+    "active": true
+  },
+  {
+    "id": "kisuke_urahara",
+    "name": "Kisuke Urahara",
+    "anime": "Bleach",
+    "imageUrl": "/images/kisuke_urahara.png",
+    "active": true
+  },
+  {
+    "id": "grimmjow",
+    "name": "Grimmjow",
+    "anime": "Bleach",
+    "imageUrl": "/images/grimmjow.png",
+    "active": true
+  },
+  {
+    "id": "ulquiorra",
+    "name": "Ulquiorra",
+    "anime": "Bleach",
+    "imageUrl": "/images/ulquiorra.png",
+    "active": true
+  },
+  {
+    "id": "gin_ichimaru",
+    "name": "Gin Ichimaru",
+    "anime": "Bleach",
+    "imageUrl": "/images/gin_ichimaru.png",
+    "active": true
+  },
+  {
+    "id": "mayuri_kurotsuchi",
+    "name": "Mayuri Kurotsuchi",
+    "anime": "Bleach",
+    "imageUrl": "/images/mayuri_kurotsuchi.png",
+    "active": true
+  },
+  {
+    "id": "yamamoto",
+    "name": "Yamamoto",
+    "anime": "Bleach",
+    "imageUrl": "/images/yamamoto.png",
+    "active": true
+  },
+  {
+    "id": "eijiro_kirishima",
+    "name": "Eijiro Kirishima",
+    "anime": "My Hero Academia",
+    "imageUrl": "/images/eijiro_kirishima.png",
+    "active": true
+  },
+  {
+    "id": "tenya_iida",
+    "name": "Tenya Iida",
+    "anime": "My Hero Academia",
+    "imageUrl": "/images/tenya_iida.png",
+    "active": true
+  },
+  {
+    "id": "endeavor",
+    "name": "Endeavor",
+    "anime": "My Hero Academia",
+    "imageUrl": "/images/endeavor.png",
+    "active": true
+  },
+  {
+    "id": "himiko_toga",
+    "name": "Himiko Toga",
+    "anime": "My Hero Academia",
+    "imageUrl": "/images/himiko_toga.png",
+    "active": true
+  },
+  {
+    "id": "denki_kaminari",
+    "name": "Denki Kaminari",
+    "anime": "My Hero Academia",
+    "imageUrl": "/images/denki_kaminari.png",
+    "active": true
+  },
+  {
+    "id": "mina_ashido",
+    "name": "Mina Ashido",
+    "anime": "My Hero Academia",
+    "imageUrl": "/images/mina_ashido.png",
+    "active": true
+  },
+  {
+    "id": "dawn",
+    "name": "Dawn",
+    "anime": "Pokemon",
+    "imageUrl": "/images/dawn.png",
+    "active": true
+  },
+  {
+    "id": "serena",
+    "name": "Serena",
+    "anime": "Pokemon",
+    "imageUrl": "/images/serena.png",
+    "active": true
+  },
+  {
+    "id": "cynthia",
+    "name": "Cynthia",
+    "anime": "Pokemon",
+    "imageUrl": "/images/cynthia.png",
+    "active": true
+  },
+  {
+    "id": "gary_oak",
+    "name": "Gary Oak",
+    "anime": "Pokemon",
+    "imageUrl": "/images/gary_oak.png",
+    "active": true
+  },
+  {
+    "id": "lucario",
+    "name": "Lucario",
+    "anime": "Pokemon",
+    "imageUrl": "/images/lucario.png",
+    "active": true
+  },
+  {
+    "id": "charizard",
+    "name": "Charizard",
+    "anime": "Pokemon",
+    "imageUrl": "/images/charizard.png",
+    "active": true
+  },
+  {
+    "id": "eevee",
+    "name": "Eevee",
+    "anime": "Pokemon",
+    "imageUrl": "/images/eevee.png",
+    "active": true
+  },
+  {
+    "id": "kanao_tsuyuri",
+    "name": "Kanao Tsuyuri",
+    "anime": "Kimetsu no Yaiba",
+    "imageUrl": "/images/kanao_tsuyuri.png",
+    "active": true
+  },
+  {
+    "id": "kyojuro_rengoku",
+    "name": "Kyojuro Rengoku",
+    "anime": "Kimetsu no Yaiba",
+    "imageUrl": "/images/kyojuro_rengoku.png",
+    "active": true
+  },
+  {
+    "id": "tengen_uzui",
+    "name": "Tengen Uzui",
+    "anime": "Kimetsu no Yaiba",
+    "imageUrl": "/images/tengen_uzui.png",
+    "active": true
+  },
+  {
+    "id": "mitsuri_kanroji",
+    "name": "Mitsuri Kanroji",
+    "anime": "Kimetsu no Yaiba",
+    "imageUrl": "/images/mitsuri_kanroji.png",
+    "active": true
+  },
+  {
+    "id": "gyomei_himejima",
+    "name": "Gyomei Himejima",
+    "anime": "Kimetsu no Yaiba",
+    "imageUrl": "/images/gyomei_himejima.png",
+    "active": true
+  },
+  {
+    "id": "mu_aries",
+    "name": "Mu de Aries",
+    "anime": "Saint Seiya",
+    "imageUrl": "/images/mu_aries.png",
+    "active": true
+  },
+  {
+    "id": "aldebaran",
+    "name": "Aldebarán",
+    "anime": "Saint Seiya",
+    "imageUrl": "/images/aldebaran.png",
+    "active": true
+  },
+  {
+    "id": "saga",
+    "name": "Saga",
+    "anime": "Saint Seiya",
+    "imageUrl": "/images/saga.png",
+    "active": true
+  },
+  {
+    "id": "deathmask",
+    "name": "Deathmask",
+    "anime": "Saint Seiya",
+    "imageUrl": "/images/deathmask.png",
+    "active": true
+  },
+  {
+    "id": "camus",
+    "name": "Camus",
+    "anime": "Saint Seiya",
+    "imageUrl": "/images/camus.png",
+    "active": true
+  },
+  {
+    "id": "maki_zenin",
+    "name": "Maki Zenin",
+    "anime": "Jujutsu Kaisen",
+    "imageUrl": "/images/maki_zenin.png",
+    "active": true
+  },
+  {
+    "id": "toge_inumaki",
+    "name": "Toge Inumaki",
+    "anime": "Jujutsu Kaisen",
+    "imageUrl": "/images/toge_inumaki.png",
+    "active": true
+  },
+  {
+    "id": "yuta_okkotsu",
+    "name": "Yuta Okkotsu",
+    "anime": "Jujutsu Kaisen",
+    "imageUrl": "/images/yuta_okkotsu.png",
+    "active": true
+  },
+  {
+    "id": "kento_nanami",
+    "name": "Kento Nanami",
+    "anime": "Jujutsu Kaisen",
+    "imageUrl": "/images/kento_nanami.png",
+    "active": true
+  },
+  {
+    "id": "levi_ackerman",
+    "name": "Levi Ackerman",
+    "anime": "Attack on Titan",
+    "imageUrl": "/images/levi_ackerman.png",
+    "active": true
+  },
+  {
+    "id": "armin_arlert",
+    "name": "Armin Arlert",
+    "anime": "Attack on Titan",
+    "imageUrl": "/images/armin_arlert.png",
+    "active": true
+  },
+  {
+    "id": "annie_leonhart",
+    "name": "Annie Leonhart",
+    "anime": "Attack on Titan",
+    "imageUrl": "/images/annie_leonhart.png",
+    "active": true
+  },
+  {
+    "id": "jean_kirstein",
+    "name": "Jean Kirstein",
+    "anime": "Attack on Titan",
+    "imageUrl": "/images/jean_kirstein.png",
+    "active": true
+  },
+  {
+    "id": "bruno_bucciarati",
+    "name": "Bruno Bucciarati",
+    "anime": "JoJo's Bizarre Adventure",
+    "imageUrl": "/images/bruno_bucciarati.png",
+    "active": true
+  },
+  {
+    "id": "jolyne_cujoh",
+    "name": "Jolyne Cujoh",
+    "anime": "JoJo's Bizarre Adventure",
+    "imageUrl": "/images/jolyne_cujoh.png",
+    "active": true
+  },
+  {
+    "id": "noriaki_kakyoin",
+    "name": "Noriaki Kakyoin",
+    "anime": "JoJo's Bizarre Adventure",
+    "imageUrl": "/images/noriaki_kakyoin.png",
+    "active": true
+  },
+  {
+    "id": "yoshikage_kira",
+    "name": "Yoshikage Kira",
+    "anime": "JoJo's Bizarre Adventure",
+    "imageUrl": "/images/yoshikage_kira.png",
+    "active": true
+  },
+  {
+    "id": "teru_mikami",
+    "name": "Teru Mikami",
+    "anime": "Death Note",
+    "imageUrl": "/images/teru_mikami.png",
+    "active": true
+  },
+  {
+    "id": "touta_matsuda",
+    "name": "Touta Matsuda",
+    "anime": "Death Note",
+    "imageUrl": "/images/touta_matsuda.png",
+    "active": true
+  },
+  {
+    "id": "killua_zoldyck",
+    "name": "Killua Zoldyck",
+    "anime": "Hunter x Hunter",
+    "imageUrl": "/images/killua_zoldyck.png",
+    "active": true
+  },
+  {
+    "id": "leorio",
+    "name": "Leorio",
+    "anime": "Hunter x Hunter",
+    "imageUrl": "/images/leorio.png",
+    "active": true
+  },
+  {
+    "id": "chrollo_lucilfer",
+    "name": "Chrollo Lucilfer",
+    "anime": "Hunter x Hunter",
+    "imageUrl": "/images/chrollo_lucilfer.png",
+    "active": true
+  },
+  {
+    "id": "biscuit_krueger",
+    "name": "Biscuit Krueger",
+    "anime": "Hunter x Hunter",
+    "imageUrl": "/images/biscuit_krueger.png",
+    "active": true
+  },
+  {
+    "id": "miroku",
+    "name": "Miroku",
+    "anime": "Inuyasha",
+    "imageUrl": "/images/miroku.png",
+    "active": true
+  },
+  {
+    "id": "sango",
+    "name": "Sango",
+    "anime": "Inuyasha",
+    "imageUrl": "/images/sango.png",
+    "active": true
+  },
+  {
+    "id": "fubuki",
+    "name": "Fubuki",
+    "anime": "One Punch Man",
+    "imageUrl": "/images/fubuki.png",
+    "active": true
+  },
+  {
+    "id": "speed_o_sound_sonic",
+    "name": "Speed-o'-Sound Sonic",
+    "anime": "One Punch Man",
+    "imageUrl": "/images/speed_o_sound_sonic.png",
+    "active": true
+  },
+  {
+    "id": "kuroo_tetsuro",
+    "name": "Kuroo Tetsuro",
+    "anime": "Haikyuu!!",
+    "imageUrl": "/images/kuroo_tetsuro.png",
+    "active": true
+  },
+  {
+    "id": "kotaro_bokuto",
+    "name": "Kotaro Bokuto",
+    "anime": "Haikyuu!!",
+    "imageUrl": "/images/kotaro_bokuto.png",
+    "active": true
+  },
+  {
+    "id": "alphonse_elric",
+    "name": "Alphonse Elric",
+    "anime": "Fullmetal Alchemist",
+    "imageUrl": "/images/alphonse_elric.png",
+    "active": true
+  },
+  {
+    "id": "winry_rockbell",
+    "name": "Winry Rockbell",
+    "anime": "Fullmetal Alchemist",
+    "imageUrl": "/images/winry_rockbell.png",
+    "active": true
+  },
+  {
+    "id": "kobeni",
+    "name": "Kobeni",
+    "anime": "Chainsaw Man",
+    "imageUrl": "/images/kobeni.png",
+    "active": true
+  },
+  {
+    "id": "reze",
+    "name": "Reze",
+    "anime": "Chainsaw Man",
+    "imageUrl": "/images/reze.png",
+    "active": true
+  },
+  {
+    "id": "loid_forger",
+    "name": "Loid Forger",
+    "anime": "Spy x Family",
+    "imageUrl": "/images/loid_forger.png",
+    "active": true
+  },
+  {
+    "id": "natsu_dragneel",
+    "name": "Natsu Dragneel",
+    "anime": "Fairy Tail",
+    "imageUrl": "/images/natsu_dragneel.png",
+    "active": true
+  },
+  {
+    "id": "noelle_silva",
+    "name": "Noelle Silva",
+    "anime": "Black Clover",
+    "imageUrl": "/images/noelle_silva.png",
+    "active": true
+  },
+  {
+    "id": "ami_mizuno",
+    "name": "Ami Mizuno",
+    "anime": "Sailor Moon",
+    "imageUrl": "/images/ami_mizuno.png",
+    "active": true
+  },
+  {
+    "id": "rei_hino",
+    "name": "Rei Hino",
+    "anime": "Sailor Moon",
+    "imageUrl": "/images/rei_hino.png",
+    "active": true
+  },
+  {
+    "id": "makoto_kino",
+    "name": "Makoto Kino",
+    "anime": "Sailor Moon",
+    "imageUrl": "/images/makoto_kino.png",
+    "active": true
+  },
+  {
+    "id": "minako_aino",
+    "name": "Minako Aino",
+    "anime": "Sailor Moon",
+    "imageUrl": "/images/minako_aino.png",
+    "active": true
+  },
+  {
+    "id": "rei_ayanami",
+    "name": "Rei Ayanami",
+    "anime": "Neon Genesis Evangelion",
+    "imageUrl": "/images/rei_ayanami.png",
+    "active": true
+  },
+  {
+    "id": "asuka_langley",
+    "name": "Asuka Langley",
+    "anime": "Neon Genesis Evangelion",
+    "imageUrl": "/images/asuka_langley.png",
+    "active": true
+  },
+  {
+    "id": "kaworu_nagisa",
+    "name": "Kaworu Nagisa",
+    "anime": "Neon Genesis Evangelion",
+    "imageUrl": "/images/kaworu_nagisa.png",
+    "active": true
+  },
+  {
+    "id": "kallen_stadtfeld",
+    "name": "Kallen Stadtfeld",
+    "anime": "Code Geass",
+    "imageUrl": "/images/kallen_stadtfeld.png",
+    "active": true
+  },
+  {
+    "id": "faye_valentine",
+    "name": "Faye Valentine",
+    "anime": "Cowboy Bebop",
+    "imageUrl": "/images/faye_valentine.png",
+    "active": true
+  },
+  {
+    "id": "hajime_saito",
+    "name": "Hajime Saito",
+    "anime": "Rurouni Kenshin",
+    "imageUrl": "/images/hajime_saito.png",
+    "active": true
+  },
+  {
+    "id": "syaoran_li",
+    "name": "Syaoran Li",
+    "anime": "Cardcaptor Sakura",
+    "imageUrl": "/images/syaoran_li.png",
+    "active": true
+  },
+  {
+    "id": "itaru_hashida",
+    "name": "Itaru Hashida",
+    "anime": "Steins;Gate",
+    "imageUrl": "/images/itaru_hashida.png",
+    "active": true
+  },
+  {
+    "id": "juuzou_suzuya",
+    "name": "Juuzou Suzuya",
+    "anime": "Tokyo Ghoul",
+    "imageUrl": "/images/juuzou_suzuya.png",
+    "active": true
+  },
+  {
+    "id": "yusuke_urameshi",
+    "name": "Yusuke Urameshi",
+    "anime": "Yu Yu Hakusho",
+    "imageUrl": "/images/yusuke_urameshi.png",
+    "active": true
+  },
+  {
+    "id": "ai_hayasaka",
+    "name": "Ai Hayasaka",
+    "anime": "Kaguya-sama: Love is War",
+    "imageUrl": "/images/ai_hayasaka.png",
+    "active": true
+  },
+  {
+    "id": "ryuuji_takasu",
+    "name": "Ryuuji Takasu",
+    "anime": "Toradora!",
+    "imageUrl": "/images/ryuuji_takasu.png",
+    "active": true
   }
 ] as const
 

@@ -247,7 +247,7 @@ function homeBody() {
           <ul>
             <li>Rutas públicas indexables con metadatos, sitemap y contenido informativo.</li>
             <li>Páginas visibles de contacto, privacidad, términos y descripción del proyecto.</li>
-            <li>Catálogo público navegable con personajes, series y material editorial relacionado.</li>
+            <li>Catálogo público navegable con ${TOTAL_CHARACTERS} personajes activos, series visibles y material editorial relacionado.</li>
           </ul>
         </article>
         <article class="page-card">

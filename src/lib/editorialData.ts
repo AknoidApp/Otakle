@@ -249,6 +249,52 @@ export const EDITORIAL_PAGES: EditorialPage[] = [
       },
     ],
   },
+  {
+    path: '/como-explorar-catalogo-otakle',
+    kicker: 'Catálogo público',
+    title: 'Cómo usar el catálogo público de Otakle para descubrir animes y personajes',
+    description:
+      'Guía pública para entender qué ofrece el catálogo de Otakle, cómo leerlo y por qué sirve incluso fuera del reto diario.',
+    intro: [
+      'El catálogo público de Otakle no está pensado solo como una lista decorativa. Su función es mostrar de forma visible qué series y personajes ya forman parte del proyecto, ayudar a los jugadores a orientarse mejor y darle valor real al sitio incluso cuando no estás jugando la partida del día.',
+      'Si llegaste por curiosidad, por una búsqueda sobre anime o porque quieres entender el alcance del juego, esta guía te explica cómo aprovechar mejor esa parte del sitio y qué tipo de información puedes sacar de ella.',
+    ],
+    sections: [
+      {
+        heading: 'Qué puedes ver en el catálogo aunque no juegues todavía',
+        paragraphs: [
+          'La sección pública de personajes y animes te deja ver qué franquicias están representadas, cuántas entradas activas tiene cada una y una muestra concreta de nombres ya presentes. Eso ya convierte a Otakle en algo más que una sola pantalla de juego, porque existe una capa navegable para explorar el contenido del proyecto.',
+          'Para alguien nuevo, esa visibilidad también ayuda a calibrar expectativas: puedes entender si el sitio se mueve más en clásicos, shonen conocidos, series modernas o una mezcla amplia de referencias.',
+        ],
+      },
+      {
+        heading: 'Cómo leer la página de animes y la de personajes juntas',
+        paragraphs: [
+          'La página de animes funciona mejor como mapa general: te muestra cobertura por franquicia y volumen aproximado. La página de personajes, en cambio, sirve más como inventario público detallado de nombres activos. Usadas en conjunto, ambas páginas te permiten entender mejor la densidad del catálogo y el tipo de universo que maneja Otakle.',
+          'Si quieres usar el catálogo para jugar mejor, conviene empezar por las franquicias con más presencia y luego pasar a personajes concretos. Si quieres usarlo para descubrir contenido, puedes hacer exactamente el recorrido contrario.',
+        ],
+        bullets: [
+          'Animes = visión amplia del universo cubierto.',
+          'Personajes = detalle concreto de las entradas activas.',
+          'Guías editoriales = contexto para interpretar mejor lo que ves.',
+        ],
+      },
+      {
+        heading: 'Por qué este catálogo aporta valor editorial al sitio',
+        paragraphs: [
+          'Un catálogo visible demuestra que Otakle mantiene una base pública de contenido real, no solo una mecánica diaria aislada. Para visitantes, esto hace que el proyecto sea más fácil de entender. Para jugadores, crea un punto de apoyo concreto para revisar franquicias, recordar nombres y recorrer el universo disponible.',
+          'Además, al conectarse con FAQ, guías por franquicia, contacto y páginas legales, el catálogo ayuda a que la web se perciba como un sitio completo y no solo como una prueba o una landing mínima.',
+        ],
+      },
+      {
+        heading: 'La mejor forma de seguir explorando después del catálogo',
+        paragraphs: [
+          'Si ya revisaste personajes o animes, el siguiente paso lógico es saltar a una guía de mecánicas o a una franquicia destacada. Esa conexión entre catálogo y contenido editorial es una de las claves de Otakle: no solo mirar nombres, sino aprender a interpretarlos dentro del juego diario.',
+          'Por eso el catálogo funciona mejor cuando se recorre con intención. Puedes usarlo para estudiar, para descubrir series, para revisar cobertura o simplemente para entender qué tipo de reto propone Otakle antes de empezar a jugar.',
+        ],
+      },
+    ],
+  },
 ]
 
 export const EDITORIAL_PAGES_BY_PATH = Object.fromEntries(EDITORIAL_PAGES.map((page) => [page.path, page])) as Record<
