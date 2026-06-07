@@ -11,7 +11,8 @@ export default function Animes() {
           <h1>Animes incluidos en Otakle</h1>
           <p>
             Esta página resume las series y franquicias que actualmente forman parte del catálogo del juego. El listado
-            sirve como referencia pública para ver el rango del contenido cubierto por Otakle.
+            sirve como referencia pública para ver el rango del contenido cubierto por Otakle y entender mejor qué tan
+            amplio es el universo de personajes disponible.
           </p>
         </div>
 
@@ -43,10 +44,29 @@ export default function Animes() {
           <h2>Cómo leer este listado</h2>
           <p>
             Cada tarjeta muestra una serie presente en Otakle, la cantidad de personajes activos asociados y una muestra
-            rápida de nombres ya disponibles dentro del juego.
+            rápida de nombres ya disponibles dentro del juego. No es una wiki exhaustiva de cada franquicia, pero sí un
+            directorio visible para entender la cobertura actual del proyecto.
           </p>
         </article>
       </div>
+
+      <section className="page-card notice-card">
+        <h2>Franquicias que ya tienen guías públicas</h2>
+        <div className="chip-link-list">
+          <Link to="/guia-naruto-otakle" className="home-link-pill">
+            Guía de Naruto
+          </Link>
+          <Link to="/guia-one-piece-otakle" className="home-link-pill">
+            Guía de One Piece
+          </Link>
+          <Link to="/guia-dragon-ball-otakle" className="home-link-pill">
+            Guía de Dragon Ball
+          </Link>
+          <Link to="/animes-faciles-para-empezar-en-otakle" className="home-link-pill">
+            Animes fáciles para empezar
+          </Link>
+        </div>
+      </section>
 
       <div className="directory-grid directory-grid-wide">
         {ANIME_GROUPS.map((group) => (
@@ -56,7 +76,10 @@ export default function Animes() {
               <span className="count-pill">{group.count}</span>
             </div>
 
-            <p>Series representadas con personajes activos en el juego diario y en el catálogo público.</p>
+            <p>
+              Serie representada con personajes activos en el juego diario y en el catálogo público. Esta muestra ayuda a
+              entender qué nombres ya están cubiertos dentro de Otakle.
+            </p>
 
             <div className="chip-link-list" aria-label={`Personajes de ${group.anime}`}>
               {group.sampleNames.map((name) => (
@@ -68,6 +91,15 @@ export default function Animes() {
           </article>
         ))}
       </div>
+
+      <section className="page-card">
+        <h2>Por qué esta página importa para el sitio</h2>
+        <p>
+          Más allá del juego diario, este directorio deja claro que Otakle tiene un catálogo visible y mantenido. Sirve
+          para visitantes nuevos, para jugadores que quieren saber si una franquicia ya está representada y para mostrar
+          que el proyecto tiene una base pública de contenido más amplia que una simple pantalla de juego.
+        </p>
+      </section>
 
       <SiteFooter />
     </div>

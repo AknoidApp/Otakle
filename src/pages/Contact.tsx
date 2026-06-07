@@ -14,7 +14,7 @@ export default function Contact() {
                 <h1 className="brand-title">Contacto</h1>
                 <span className="daily-badge">Info</span>
               </div>
-              <p className="brand-subtitle">Escríbeme por cualquiera de estos canales</p>
+              <p className="brand-subtitle">Canales oficiales para soporte, feedback y sugerencias del proyecto</p>
             </div>
           </div>
 
@@ -28,13 +28,22 @@ export default function Contact() {
 
       <div className="legal-content">
         <p>
-          Si quieres reportar un bug, sugerir personajes, dar feedback sobre el juego o consultar algo sobre privacidad
-          y anuncios, estos son los canales oficiales de contacto de Otakle.
+          Si quieres reportar un bug, sugerir personajes, dar feedback sobre el juego o consultar algo sobre privacidad,
+          anuncios y funcionamiento del sitio, estos son los canales oficiales de contacto de Otakle.
+        </p>
+        <p>
+          La idea de esta página es que cualquier visitante pueda identificar con claridad quién recibe los mensajes del
+          proyecto y qué tipo de consultas sí tienen sentido aquí. No es solo una página de cumplimiento: también es una
+          vía real para mejorar el catálogo y detectar problemas del juego.
         </p>
 
         <h2>Email</h2>
         <p>
           <a href="mailto:oscarfernandezcepeda@gmail.com">oscarfernandezcepeda@gmail.com</a>
+        </p>
+        <p>
+          El correo es el mejor canal si quieres mandar comentarios largos, adjuntar capturas o dejar una explicación más
+          completa de un error, propuesta o duda de privacidad.
         </p>
 
         <h2>X (Twitter)</h2>
@@ -43,12 +52,17 @@ export default function Contact() {
             @aknoid
           </a>
         </p>
+        <p>
+          X sirve mejor para avisos rápidos, feedback corto o sugerencias puntuales sobre personajes, series y mejoras del
+          juego diario.
+        </p>
 
         <h2>Qué puedes escribirnos</h2>
         <ul>
           <li>Sugerencias de personajes o series que te gustaría ver en Otakle.</li>
           <li>Errores visuales, pistas incoherentes o problemas con el personaje del día.</li>
-          <li>Dudas sobre privacidad, publicidad o funcionamiento del sitio.</li>
+          <li>Dudas sobre privacidad, publicidad, indexación o funcionamiento general del sitio.</li>
+          <li>Comentarios sobre guías públicas, catálogo o utilidad editorial de las páginas informativas.</li>
         </ul>
 
         <h2>Qué incluir en tu mensaje</h2>
@@ -57,7 +71,15 @@ export default function Contact() {
           <li>Qué estabas haciendo y qué esperabas que pasara.</li>
           <li>El nombre del personaje o anime si el problema está en el catálogo.</li>
           <li>Captura de pantalla si aplica.</li>
+          <li>URL exacta si el problema ocurre en una página pública concreta.</li>
         </ul>
+
+        <h2>Antes de escribir</h2>
+        <p>
+          Si tu duda es sobre reglas, reinicio diario o lectura de pistas, puede que ya esté respondida en{' '}
+          <Link to="/faq">FAQ</Link>, <Link to="/how-to-play">cómo se juega</Link> o{' '}
+          <Link to="/strategy">estrategia</Link>. Si aun así algo no cuadra, escríbenos con contexto y lo revisamos.
+        </p>
       </div>
 
       <SiteFooter />
