@@ -14,6 +14,8 @@ import { EDITORIAL_PAGES } from '../lib/editorialData'
 import '../App.css'
 
 export default function Home() {
+  const featuredGuides = EDITORIAL_PAGES.slice(0, 8)
+
   return (
     <div className="otakle-page">
       <header className="brand landing-brand">
@@ -41,16 +43,15 @@ export default function Home() {
       <section className="landing-hero">
         <div className="landing-copy">
           <span className="home-kicker">Qué es Otakle</span>
-          <h2>Un reto diario para fans del anime, con una capa pública real de contenido útil</h2>
+          <h2>Un reto diario de anime con reglas claras, catálogo visible y guías públicas para jugar mejor</h2>
           <p>
-            Otakle combina la lógica de un juego diario tipo Wordle con una base pública de guías, preguntas frecuentes,
-            catálogo de personajes, resúmenes por franquicia y páginas pensadas para que el sitio tenga valor incluso
-            fuera de la partida del día.
+            Otakle es un juego diario donde intentas descubrir el personaje del día usando pistas comparativas como anime,
+            rol narrativo, demografía, año de debut, estudio, género, raza y otros atributos. La gracia está en deducir,
+            no en disparar nombres al azar.
           </p>
           <p>
-            La idea es que puedas entrar a jugar, pero también volver para entender mejor las pistas, revisar qué animes
-            están representados, descubrir personajes del catálogo actual y leer recursos hechos para mejorar tu lectura
-            del reto.
+            Además del reto, el sitio incluye páginas públicas para entender cómo funciona el juego, qué franquicias están
+            representadas, qué personajes forman parte del catálogo actual y qué estrategias suelen dar mejores resultados.
           </p>
 
           <div className="landing-cta-row">
@@ -92,17 +93,33 @@ export default function Home() {
           <ul>
             <li>Jugar un personaje nuevo cada día con 8 intentos máximos.</li>
             <li>Aprender a leer pistas por anime, rol, año de debut, estudio, raza y edad.</li>
-            <li>Consultar contenido público para mejorar tu tasa de acierto sin depender de búsquedas externas.</li>
+            <li>Revisar guías públicas para mejorar tus decisiones sin depender de búsquedas externas.</li>
+            <li>Explorar un catálogo visible de series y personajes ya presentes en el proyecto.</li>
           </ul>
         </article>
 
         <article className="page-card">
-          <h2>Por qué esta web no es solo una landing</h2>
-          <ul>
-            <li>Incluye guías completas sobre mecánicas y estrategia.</li>
-            <li>Tiene catálogo visible de personajes y series presentes en el juego.</li>
-            <li>Reúne recursos por franquicia, preguntas frecuentes y páginas legales claras.</li>
-          </ul>
+          <h2>Si es tu primera visita, empieza por aquí</h2>
+          <p>
+            La forma más simple de entender Otakle es esta: primero mira <Link to="/how-to-play">cómo se juega</Link>,
+            después revisa la <Link to="/strategy">estrategia</Link> básica y luego entra al reto diario. Si prefieres
+            curiosear antes de jugar, puedes recorrer la página de <Link to="/animes">animes</Link> o el{' '}
+            <Link to="/personajes">catálogo de personajes</Link>.
+          </p>
+          <div className="chip-link-list">
+            <Link to="/how-to-play" className="home-link-pill">
+              Reglas
+            </Link>
+            <Link to="/strategy" className="home-link-pill">
+              Estrategia
+            </Link>
+            <Link to="/faq" className="home-link-pill">
+              FAQ
+            </Link>
+            <Link to="/about" className="home-link-pill">
+              Sobre el proyecto
+            </Link>
+          </div>
         </article>
       </section>
 
@@ -110,12 +127,12 @@ export default function Home() {
         <div className="section-heading">
           <div>
             <span className="home-kicker">Guías destacadas</span>
-            <h2>Recursos públicos para entender mejor el juego y sus franquicias</h2>
+            <h2>Recursos públicos para entender mejor el juego, el catálogo y las franquicias</h2>
           </div>
         </div>
 
         <div className="directory-grid directory-grid-wide">
-          {EDITORIAL_PAGES.map((page) => (
+          {featuredGuides.map((page) => (
             <article key={page.path} className="directory-card editorial-link-card">
               <span className="mini-label">{page.kicker}</span>
               <h3>{page.title}</h3>
@@ -181,20 +198,24 @@ export default function Home() {
 
       <section className="page-grid">
         <article className="page-card notice-card">
-          <h2>Señales de confianza del proyecto</h2>
+          <h2>Qué encontrarás fuera del tablero</h2>
           <ul>
-            <li>Rutas públicas indexables con metadatos, sitemap y contenido informativo.</li>
+            <li>Rutas públicas indexables con contenido informativo y navegación clara.</li>
             <li>Páginas visibles de contacto, privacidad, términos y descripción del proyecto.</li>
-            <li>Catálogo público navegable con {TOTAL_CHARACTERS} personajes activos, series visibles y material editorial relacionado.</li>
+            <li>Guías prácticas sobre aperturas, errores comunes y lectura del catálogo.</li>
+            <li>
+              Un catálogo público navegable con {TOTAL_CHARACTERS} personajes activos y {TOTAL_ANIMES} franquicias
+              representadas.
+            </li>
           </ul>
         </article>
 
         <article className="page-card">
-          <h2>Explora Otakle sin jugar todavía</h2>
+          <h2>Explora Otakle a tu ritmo</h2>
           <p>
-            Si llegaste por curiosidad o por una revisión de AdSense, la idea es que el sitio se entienda incluso fuera del
-            gameplay. Puedes recorrer primero las guías, revisar la FAQ, mirar las series activas y después entrar al reto
-            diario con más contexto.
+            Puedes llegar aquí por ganas de jugar, por curiosidad sobre anime o simplemente porque quieres ver qué series y
+            personajes forman parte del proyecto. La idea es que el sitio se entienda también como directorio y como guía,
+            no solo como una partida diaria de un minuto.
           </p>
           <div className="chip-link-list">
             <Link to="/about" className="home-link-pill">
@@ -208,6 +229,9 @@ export default function Home() {
             </Link>
             <Link to="/privacy" className="home-link-pill">
               Privacidad
+            </Link>
+            <Link to="/terms" className="home-link-pill">
+              Términos
             </Link>
           </div>
         </article>

@@ -48,10 +48,10 @@ export default function SiteFooter() {
       <div className="site-footer-topline">
         <div>
           <p className="site-footer-kicker">Otakle · juego diario + guías + catálogo público</p>
-          <h2 className="site-footer-title">Una base pública de contenido para fans del anime</h2>
+          <h2 className="site-footer-title">Un sitio para jugar, consultar y volver con más contexto</h2>
           <p className="site-footer-copy">
-            Además del reto diario, Otakle reúne páginas de ayuda, explicaciones de mecánicas, resúmenes de franquicias y
-            recursos útiles para entender mejor cómo jugar.
+            Además del reto diario, Otakle reúne reglas, estrategia, directorios públicos y guías sobre franquicias,
+            errores comunes y lectura del catálogo.
           </p>
         </div>
         <div className="site-footer-contact">
@@ -80,7 +80,7 @@ export default function SiteFooter() {
       </div>
 
       <div className="footer-note">
-        Otakle by <strong>Aknoid</strong> · Proyecto fan con contenido público, catálogo visible y guías en español.
+        Otakle by <strong>Aknoid</strong> · Proyecto fan en español con juego diario, catálogo visible y guías públicas.
       </div>
     </footer>
   )

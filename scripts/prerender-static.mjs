@@ -74,8 +74,8 @@ function footerLinks() {
       <div class="site-footer-topline">
         <div>
           <p class="site-footer-kicker">Otakle · juego diario + guías + catálogo público</p>
-          <h2 class="site-footer-title">Una base pública de contenido para fans del anime</h2>
-          <p class="site-footer-copy">Además del reto diario, Otakle reúne páginas de ayuda, explicaciones de mecánicas, resúmenes de franquicias y recursos útiles para entender mejor cómo jugar.</p>
+          <h2 class="site-footer-title">Un sitio para jugar, consultar y volver con más contexto</h2>
+          <p class="site-footer-copy">Además del reto diario, Otakle reúne reglas, estrategia, directorios públicos y guías sobre franquicias, errores comunes y lectura del catálogo.</p>
         </div>
         <div class="site-footer-contact">
           <a class="footer-link" href="${escapeHtml(SITE_X_URL)}" target="_blank" rel="noreferrer noopener">X ${escapeHtml(SITE_X_LABEL)}</a>
@@ -94,7 +94,7 @@ function footerLinks() {
           )
           .join('')}
       </div>
-      <div class="footer-note">Otakle by <strong>Aknoid</strong> · Proyecto fan con contenido público, catálogo visible y guías en español.</div>
+      <div class="footer-note">Otakle by <strong>Aknoid</strong> · Proyecto fan en español con juego diario, catálogo visible y guías públicas.</div>
     </footer>
   `
 }
@@ -107,7 +107,7 @@ function homeBody() {
           <h3>${escapeHtml(group.anime)}</h3>
           <span class="count-pill">${group.count} personajes</span>
         </div>
-        <p>Algunas entradas presentes en el catálogo actual: <strong>${escapeHtml(group.sampleNames.join(', '))}</strong>.</p>
+        <p>Algunas entradas de esta serie dentro de Otakle: <strong>${escapeHtml(group.sampleNames.join(', '))}</strong>.</p>
       </article>
     `,
   ).join('')
@@ -139,16 +139,18 @@ function homeBody() {
     .join('')
 
   const quickLinks = PRIMARY_LINKS.map((link) => anchor(link.to, link.label, 'home-link-pill')).join('')
-  const editorialCards = EDITORIAL_PAGES.map(
-    (page) => `
-      <article class="directory-card editorial-link-card">
-        <span class="mini-label">${escapeHtml(page.kicker)}</span>
-        <h3>${escapeHtml(page.title)}</h3>
-        <p>${escapeHtml(page.description)}</p>
-        ${anchor(page.path, 'Leer guía', 'btn-secondary')}
-      </article>
-    `,
-  ).join('')
+  const editorialCards = EDITORIAL_PAGES.slice(0, 8)
+    .map(
+      (page) => `
+        <article class="directory-card editorial-link-card">
+          <span class="mini-label">${escapeHtml(page.kicker)}</span>
+          <h3>${escapeHtml(page.title)}</h3>
+          <p>${escapeHtml(page.description)}</p>
+          ${anchor(page.path, 'Leer guía', 'btn-secondary')}
+        </article>
+      `,
+    )
+    .join('')
 
   return `
     <div class="otakle-page">
@@ -172,9 +174,9 @@ function homeBody() {
       <section class="landing-hero">
         <div class="landing-copy">
           <span class="home-kicker">Qué es Otakle</span>
-          <h2>Un reto diario para fans del anime, con una capa pública real de contenido útil</h2>
-          <p>Otakle combina la lógica de un juego diario tipo Wordle con una base pública de guías, preguntas frecuentes, catálogo de personajes, resúmenes por franquicia y páginas pensadas para que el sitio tenga valor incluso fuera de la partida del día.</p>
-          <p>La idea es que puedas entrar a jugar, pero también volver para entender mejor las pistas, revisar qué animes están representados, descubrir personajes del catálogo actual y leer recursos hechos para mejorar tu lectura del reto.</p>
+          <h2>Un reto diario de anime con reglas claras, catálogo visible y guías públicas para jugar mejor</h2>
+          <p>Otakle es un juego diario donde intentas descubrir el personaje del día usando pistas comparativas como anime, rol narrativo, demografía, año de debut, estudio, género, raza y otros atributos. La gracia está en deducir, no en disparar nombres al azar.</p>
+          <p>Además del reto, el sitio incluye páginas públicas para entender cómo funciona el juego, qué franquicias están representadas, qué personajes forman parte del catálogo actual y qué estrategias suelen dar mejores resultados.</p>
           <div class="landing-cta-row">
             ${anchor('/play', 'Ir al reto diario', 'btn-primary')}
             ${anchor('/personajes', 'Ver catálogo de personajes', 'btn-secondary')}
@@ -196,16 +198,19 @@ function homeBody() {
           <ul>
             <li>Jugar un personaje nuevo cada día con 8 intentos máximos.</li>
             <li>Aprender a leer pistas por anime, rol, año de debut, estudio, raza y edad.</li>
-            <li>Consultar contenido público para mejorar tu tasa de acierto sin depender de búsquedas externas.</li>
+            <li>Revisar guías públicas para mejorar tus decisiones sin depender de búsquedas externas.</li>
+            <li>Explorar un catálogo visible de series y personajes ya presentes en el proyecto.</li>
           </ul>
         </article>
         <article class="page-card">
-          <h2>Por qué esta web no es solo una landing</h2>
-          <ul>
-            <li>Incluye guías completas sobre mecánicas y estrategia.</li>
-            <li>Tiene catálogo visible de personajes y series presentes en el juego.</li>
-            <li>Reúne recursos por franquicia, preguntas frecuentes y páginas legales claras.</li>
-          </ul>
+          <h2>Si es tu primera visita, empieza por aquí</h2>
+          <p>La forma más simple de entender Otakle es esta: primero mira ${anchor('/how-to-play', 'cómo se juega')}, después revisa la ${anchor('/strategy', 'estrategia')} básica y luego entra al reto diario. Si prefieres curiosear antes de jugar, puedes recorrer la página de ${anchor('/animes', 'animes')} o el ${anchor('/personajes', 'catálogo de personajes')}.</p>
+          <div class="chip-link-list">
+            ${anchor('/how-to-play', 'Reglas', 'home-link-pill')}
+            ${anchor('/strategy', 'Estrategia', 'home-link-pill')}
+            ${anchor('/faq', 'FAQ', 'home-link-pill')}
+            ${anchor('/about', 'Sobre el proyecto', 'home-link-pill')}
+          </div>
         </article>
       </section>
 
@@ -213,7 +218,7 @@ function homeBody() {
         <div class="section-heading">
           <div>
             <span class="home-kicker">Guías destacadas</span>
-            <h2>Recursos públicos para entender mejor el juego y sus franquicias</h2>
+            <h2>Recursos públicos para entender mejor el juego, el catálogo y las franquicias</h2>
           </div>
         </div>
         <div class="directory-grid directory-grid-wide">${editorialCards}</div>
@@ -234,7 +239,7 @@ function homeBody() {
         <div class="section-heading">
           <div>
             <span class="home-kicker">Muestra del catálogo</span>
-            <h2>Personajes destacados que ya están dentro de Otakle</h2>
+            <h2>Personajes destacados que ya forman parte de Otakle</h2>
           </div>
           ${anchor('/personajes', 'Ver catálogo completo', 'btn-secondary')}
         </div>
@@ -243,21 +248,23 @@ function homeBody() {
 
       <section class="page-grid">
         <article class="page-card notice-card">
-          <h2>Señales de confianza del proyecto</h2>
+          <h2>Qué encontrarás fuera del tablero</h2>
           <ul>
-            <li>Rutas públicas indexables con metadatos, sitemap y contenido informativo.</li>
+            <li>Rutas públicas indexables con contenido informativo y navegación clara.</li>
             <li>Páginas visibles de contacto, privacidad, términos y descripción del proyecto.</li>
-            <li>Catálogo público navegable con ${TOTAL_CHARACTERS} personajes activos, series visibles y material editorial relacionado.</li>
+            <li>Guías prácticas sobre aperturas, errores comunes y lectura del catálogo.</li>
+            <li>Un catálogo público navegable con ${TOTAL_CHARACTERS} personajes activos y ${TOTAL_ANIMES} franquicias representadas.</li>
           </ul>
         </article>
         <article class="page-card">
-          <h2>Explora Otakle sin jugar todavía</h2>
-          <p>Si llegaste por curiosidad, la idea es que el sitio se entienda incluso fuera del gameplay. Puedes recorrer primero las guías, revisar la FAQ, mirar las series activas y después entrar al reto diario con más contexto.</p>
+          <h2>Explora Otakle a tu ritmo</h2>
+          <p>Puedes llegar aquí por ganas de jugar, por curiosidad sobre anime o simplemente porque quieres ver qué series y personajes forman parte del proyecto. La idea es que el sitio se entienda también como directorio y como guía, no solo como una partida diaria de un minuto.</p>
           <div class="chip-link-list">
             ${anchor('/about', 'Sobre Otakle', 'home-link-pill')}
             ${anchor('/faq', 'FAQ', 'home-link-pill')}
             ${anchor('/contact', 'Contacto', 'home-link-pill')}
             ${anchor('/privacy', 'Privacidad', 'home-link-pill')}
+            ${anchor('/terms', 'Términos', 'home-link-pill')}
           </div>
         </article>
       </section>
@@ -335,21 +342,31 @@ function aboutBody() {
       <header class="page-header">
         <div class="page-title">
           <h1>Sobre Otakle</h1>
-          <p>Qué es el proyecto, cómo funciona el reto diario y por qué está hecho para fans del anime.</p>
+          <p>Qué es el proyecto, cómo funciona el reto diario, cómo crece el catálogo y para quién está hecho.</p>
         </div>
         <div class="page-actions">${anchor('/play', 'Ir a jugar', 'btn-primary')}</div>
       </header>
       <div class="legal-content">
-        <p><strong>Otakle</strong> es un juego diario de personajes de anime inspirado en la lógica de los retos tipo Wordle, pero adaptado a una experiencia más temática y comparativa. En vez de adivinar una palabra, aquí intentas descubrir el personaje del día usando pistas relacionadas con anime, rol narrativo, estudio, año de debut y otros atributos que ayudan a acotar opciones de forma progresiva.</p>
-        <p>Además del reto interactivo, el sitio incluye catálogo público, guías, FAQ y páginas de contexto para que la web tenga valor incluso cuando no estás jugando una ronda. La idea es que el proyecto funcione como juego, pero también como base pública de contenido para fans del anime.</p>
+        <p><strong>Otakle</strong> es un juego diario de personajes de anime inspirado en la lógica de los retos tipo Wordle, pero adaptado a una experiencia más temática y comparativa. En vez de adivinar una palabra, aquí intentas descubrir el personaje del día usando pistas relacionadas con anime, rol narrativo, demografía, estudio, año de debut, género, raza y otros atributos que ayudan a acotar opciones de forma progresiva.</p>
+        <p>El objetivo del proyecto es ofrecer una experiencia breve y clara para fans del anime, pero también un espacio público donde el catálogo, las guías y las páginas informativas tengan utilidad por sí mismos. Puedes llegar a Otakle para jugar una ronda, para revisar qué series están presentes o para entender mejor cómo se interpretan las pistas del tablero.</p>
         <h2>Qué hace distinto a Otakle</h2>
         <ul>
-          <li>No depende solo de una imagen: mezcla pistas comparativas para premiar conocimiento y deducción.</li>
-          <li>Todos reciben el mismo reto diario, lo que hace el resultado comparable y compartible.</li>
-          <li>La capa pública del sitio ayuda a entender reglas, franquicias y lógica del catálogo.</li>
+          <li><strong>No depende solo de imágenes.</strong> El juego premia conocimiento, memoria y deducción más que reconocimiento visual instantáneo.</li>
+          <li><strong>Todos comparten el mismo reto del día.</strong> Eso hace que el resultado sea comparable y fácil de comentar.</li>
+          <li><strong>Las pistas tienen contexto.</strong> Varias columnas ayudan a entender si vas cerca o si necesitas cambiar de enfoque.</li>
+          <li><strong>El sitio tiene una capa pública visible.</strong> Guías, FAQ, catálogo y páginas por franquicia ayudan a entender mejor el proyecto.</li>
         </ul>
+        <h2>Para quién está hecho</h2>
+        <p>Otakle está pensado para personas que disfrutan el anime como hobby cotidiano: quienes reconocen personajes, recuerdan arcos y disfrutan comparar obras distintas. También funciona para gente que no quiere una experiencia demasiado demandante: una ronda diaria, ocho intentos y la posibilidad de volver al día siguiente.</p>
+        <p>Si alguna vez te ha gustado discutir cosas como “qué personaje era de tal estudio”, “de qué época salió este protagonista” o “cuál franquicia tiene más peso en un catálogo”, entonces la lógica de Otakle probablemente te va a resultar natural.</p>
+        <h2>Cómo está construido el reto diario</h2>
+        <p>Cada día existe un personaje objetivo que todos los jugadores intentan adivinar. Los intentos generan filas de comparación que muestran coincidencias o diferencias entre tu elección y la solución del día. Algunas columnas son exactas; otras, como <strong>año de debut</strong>, entregan una dirección que te permite saber si debes pensar en un personaje más antiguo o más reciente.</p>
+        <p>El diseño del reto busca equilibrar rapidez, claridad y rejugabilidad diaria. Por eso también existen páginas públicas de apoyo como ${anchor('/how-to-play', 'Cómo se juega')}, ${anchor('/strategy', 'Estrategia')}, ${anchor('/faq', 'FAQ')}, ${anchor('/animes', 'Animes')} y ${anchor('/personajes', 'Personajes')}.</p>
+        <h2>Cómo crece el catálogo</h2>
+        <p>La meta es representar franquicias populares, personajes icónicos y perfiles que permitan variedad real en las pistas. No se trata solo de acumular nombres: importa que el conjunto sea jugable, que existan contrastes útiles entre personajes y que las categorías hagan que la deducción sea interesante.</p>
+        <p>También importa que una serie aporte varios ángulos de lectura: protagonistas, rivales, mentores, villanos, apoyos o generaciones distintas. Esa mezcla es la que vuelve el reto más rico.</p>
         <h2>Quién hace Otakle</h2>
-        <p>Otakle es un proyecto creado por <strong>Aknoid</strong>, pensado para construir una experiencia original y consistente para fans del anime con contenido en español, contacto visible y crecimiento continuo del catálogo.</p>
+        <p>Otakle es un proyecto creado por <strong>Aknoid</strong>. La intención es construir una experiencia original y consistente para fans del anime, con un juego diario entretenido, un catálogo público visible y una capa editorial en español que ayude a entender mejor el sistema de pistas y la cobertura del proyecto.</p>
       </div>
       ${footerLinks()}
     </div>
@@ -362,25 +379,33 @@ function howToPlayBody() {
       <header class="page-header">
         <div class="page-title">
           <h1>Cómo se juega</h1>
-          <p>Guía pública para entender reglas, colores, flechas, filtro por anime y hora de cambio del reto diario.</p>
+          <p>Guía completa para entender las pistas, evitar errores comunes y jugar mejor desde el primer día.</p>
         </div>
         <div class="page-actions">${anchor('/play', 'Ir a jugar', 'btn-primary')}</div>
       </header>
       <div class="page-card editorial-intro-card">
         <p>En Otakle el objetivo es adivinar el personaje del día en la menor cantidad de intentos posible. Todas las personas juegan la misma solución diaria, así que el reto se puede comparar, comentar y compartir sin perder el factor sorpresa.</p>
-        <h2>Reglas básicas</h2>
+        <p>La gracia del juego no está en escribir nombres al azar hasta acertar, sino en leer las pistas con atención y usar cada intento para reducir el espacio de posibilidades.</p>
+        <h2>Reglas base</h2>
         <ul>
-          <li>Tienes 8 intentos por día.</li>
-          <li>Cada intento compara tu personaje con la solución usando varias categorías.</li>
-          <li>El reto cambia a las 00:00 UTC para toda la comunidad.</li>
+          <li>Tienes 8 intentos como máximo cada día.</li>
+          <li>Cada intento debe ser un personaje válido dentro del catálogo actual de Otakle.</li>
+          <li>Después de enviar un personaje, verás una fila de pistas comparando tu elección con la solución.</li>
+          <li>Si aciertas, ganas el día y puedes compartir tu resultado.</li>
         </ul>
-        <h2>Cómo leer las pistas</h2>
+        <h2>Qué significan los colores y la flecha del año</h2>
         <ul>
-          <li>Verde: coincide exactamente.</li>
-          <li>Rojo: no coincide, pero sigue siendo un descarte útil.</li>
-          <li>Año debut: ↑ indica que el personaje del día es más nuevo; ↓ indica que es más antiguo.</li>
+          <li><strong>Verde</strong>: ese atributo coincide con el personaje del día.</li>
+          <li><strong>Rojo</strong>: ese atributo no coincide, pero sigue siendo un descarte útil.</li>
+          <li><strong>↑</strong>: el personaje del día debutó después que tu intento.</li>
+          <li><strong>↓</strong>: el personaje del día debutó antes que tu intento.</li>
+          <li><strong>✓</strong>: ambos comparten el mismo año de debut.</li>
         </ul>
-        <p>El filtro por anime sirve para escribir y buscar más rápido dentro del catálogo, pero no cambia la solución del día. Si quieres profundizar en la toma de decisiones, la mejor continuación es la página de estrategia.</p>
+        <h2>Ejemplo de lectura rápida</h2>
+        <p>Si abres con un personaje muy conocido y obtienes anime en rojo, rol en verde y una flecha hacia arriba en año de debut, ya sabes bastante: probablemente no estás en la franquicia correcta, pero sí cerca del tipo de función narrativa, y además debes moverte hacia un personaje más reciente.</p>
+        <p>En ese caso conviene elegir después un personaje que mantenga la idea de rol, pero cambie de universo o de época. Jugar así da mucha más información que insistir con nombres casi idénticos.</p>
+        <h2>Qué hace realmente el filtro por anime</h2>
+        <p>El filtro por anime sirve para escribir y buscar más rápido dentro del catálogo. No cambia la solución del día. Si quieres profundizar en la toma de decisiones, la mejor continuación es la página de estrategia.</p>
       </div>
       ${footerLinks()}
     </div>
@@ -401,11 +426,15 @@ function strategyBody() {
         <p>La mejor forma de mejorar en Otakle es tratar cada intento como una herramienta para recoger información. No conviene jugar por suerte: conviene explorar, acotar y recién después cerrar la hipótesis más fuerte.</p>
         <h2>Consejos clave</h2>
         <ul>
-          <li>Usa el primer intento para clasificar anime, rol y tipo de personaje.</li>
+          <li>Usa el primer intento como sonda, no como apuesta final.</li>
           <li>El año de debut suele ser una de las pistas más útiles para recortar opciones.</li>
           <li>No repitas personajes demasiado parecidos si ya sabes que el anime o el rol no coinciden.</li>
           <li>Con pocos intentos restantes, cambia solo una o dos variables para confirmar tu mejor hipótesis.</li>
         </ul>
+        <h2>Dos aperturas que suelen funcionar</h2>
+        <p>Puedes arrancar con un personaje icónico de una franquicia muy representada para medir serie, época y rol, o con un perfil muy claro en términos narrativos aunque no sea tu favorito. En ambos casos la meta es producir lectura útil, no apostar a la casualidad.</p>
+        <h2>Qué hacer en los intentos del medio</h2>
+        <p>Los intentos 3 a 5 son donde más importa el método. Ahí ya no estás completamente a ciegas, pero tampoco conviene casarte con una sola respuesta. Lo ideal es cambiar una o dos variables importantes sin destruir la información que ya recogiste.</p>
         <p>La meta real no es solo ganar hoy, sino construir criterio para leer mejor las pistas en los días siguientes.</p>
       </div>
       ${footerLinks()}
@@ -565,13 +594,32 @@ function privacyBody() {
               <h1 class="brand-title">Política de privacidad</h1>
               <span class="daily-badge">LEGAL</span>
             </div>
-            <p class="brand-subtitle">Última actualización: 2026-01-06</p>
+            <p class="brand-subtitle">Última actualización: 2026-06-24</p>
           </div>
         </div>
         <div class="topbar-actions">${anchor('/play', 'Ir a jugar', 'btn-secondary')}</div>
       </header>
       <div class="legal-content">
-        <p>Otakle guarda el progreso del juego y estadísticas de forma local en el navegador. Si el sitio usa publicidad, proveedores como Google pueden aplicar sus propias políticas de cookies e identificadores.</p>
+        <p>Esta política explica qué información utiliza Otakle para funcionar, qué parte del progreso se guarda en tu navegador y cómo se relaciona el sitio con terceros como servicios de analítica o publicidad, cuando corresponda.</p>
+        <h2>Qué datos guarda Otakle</h2>
+        <ul>
+          <li><strong>Progreso del reto diario:</strong> intentos del día, estado de la partida y si resolviste o no el personaje.</li>
+          <li><strong>Estadísticas locales:</strong> racha actual, mejor racha y distribución de intentos, cuando aplique.</li>
+          <li><strong>Historial local:</strong> datos de partidas guardados para que puedas revisar tu progreso desde tu mismo navegador.</li>
+        </ul>
+        <h2>Dónde se guarda esa información</h2>
+        <p>El sitio utiliza almacenamiento local del navegador, por ejemplo <strong>LocalStorage</strong>, para mantener tu progreso y tus estadísticas. Esa información suele quedarse en tu dispositivo y puede desaparecer si borras los datos del navegador o cambias de equipo.</p>
+        <h2>Cookies, almacenamiento similar y publicidad</h2>
+        <p>Otakle puede funcionar sin cookies estrictamente necesarias para la lógica principal del juego, pero algunos componentes de terceros pueden usar cookies, almacenamiento local o identificadores similares para tareas como medición, seguridad o publicidad.</p>
+        <p>Si el sitio muestra anuncios mediante Google AdSense u otro proveedor similar, esos servicios pueden recopilar o inferir información técnica del navegador para servir anuncios o medir rendimiento según sus propias políticas.</p>
+        <h2>Enlaces a terceros</h2>
+        <p>El sitio puede enlazar a plataformas externas como X/Twitter. Cuando sales de Otakle, las políticas aplicables pasan a ser las de cada plataforma externa.</p>
+        <h2>Tus opciones como usuario</h2>
+        <ul>
+          <li>Puedes borrar el almacenamiento local del navegador para reiniciar progreso, historial o estadísticas.</li>
+          <li>Puedes usar navegación privada si prefieres no conservar datos locales después de la sesión.</li>
+          <li>Puedes revisar la configuración de cookies y anuncios de tu navegador o de tu cuenta de Google si aplica.</li>
+        </ul>
       </div>
       ${footerLinks()}
     </div>
@@ -589,13 +637,31 @@ function termsBody() {
               <h1 class="brand-title">Términos de uso</h1>
               <span class="daily-badge">LEGAL</span>
             </div>
-            <p class="brand-subtitle">Última actualización: 2026-01-06</p>
+            <p class="brand-subtitle">Última actualización: 2026-06-24</p>
           </div>
         </div>
         <div class="topbar-actions">${anchor('/play', 'Ir a jugar', 'btn-secondary')}</div>
       </header>
       <div class="legal-content">
-        <p>Otakle es un proyecto fan y se ofrece tal cual. Está permitido para uso personal, sin automatizaciones abusivas ni acciones que afecten el servicio.</p>
+        <p>Al usar Otakle aceptas estos términos. Si no estás de acuerdo con ellos, por favor no utilices el sitio ni sus secciones asociadas.</p>
+        <h2>Qué es Otakle</h2>
+        <p>Otakle es un proyecto fan orientado a ofrecer un juego diario de personajes de anime, junto con catálogo público, guías, FAQ y páginas informativas relacionadas con el funcionamiento del sitio.</p>
+        <h2>Uso permitido</h2>
+        <ul>
+          <li>El uso del sitio es personal, no exclusivo y revocable.</li>
+          <li>No intentes interferir con el funcionamiento del servicio mediante spam, abuso, ataques o automatizaciones.</li>
+          <li>No automatices intentos masivos ni scraping que afecte rendimiento, estabilidad o disponibilidad.</li>
+        </ul>
+        <h2>Disponibilidad del servicio</h2>
+        <p>Otakle se ofrece tal cual. El proyecto puede modificarse, pausarse o discontinuarse total o parcialmente en cualquier momento, con o sin aviso previo.</p>
+        <h2>Propiedad intelectual y referencias a franquicias</h2>
+        <p>Los nombres de series, personajes, marcas, estudios y franquicias mencionados en el sitio pertenecen a sus respectivos titulares. Su presencia en Otakle tiene fines informativos, descriptivos y lúdicos dentro del contexto del juego y de las guías públicas.</p>
+        <h2>Conducta no permitida</h2>
+        <ul>
+          <li>Intentar vulnerar el sitio, sus APIs, sus rutas estáticas o sus recursos de terceros.</li>
+          <li>Usar bots o automatizaciones que generen carga abusiva o falseen la interacción normal del juego.</li>
+          <li>Copiar o redistribuir partes del sitio de forma engañosa atribuyéndolas como oficiales.</li>
+        </ul>
       </div>
       ${footerLinks()}
     </div>
@@ -620,7 +686,7 @@ function contactBody() {
       </header>
       <div class="legal-content">
         <p>Si quieres reportar un bug, sugerir personajes, dar feedback sobre el juego o consultar algo sobre privacidad, anuncios y funcionamiento del sitio, estos son los canales oficiales de contacto de Otakle.</p>
-        <p>La idea de esta página es que cualquier visitante pueda identificar con claridad quién recibe los mensajes del proyecto y qué tipo de consultas sí tienen sentido aquí. No es solo una página de cumplimiento: también es una vía real para mejorar el catálogo y detectar problemas del juego.</p>
+        <p>La idea de esta página es que cualquier visitante pueda identificar con claridad quién recibe los mensajes del proyecto, qué tipo de consultas tienen sentido aquí y qué contexto ayuda a revisar un problema más rápido.</p>
         <h2>Email</h2>
         <p><a href="mailto:${escapeHtml(SITE_EMAIL)}">${escapeHtml(SITE_EMAIL)}</a></p>
         <p>El correo es el mejor canal si quieres mandar comentarios largos, adjuntar capturas o dejar una explicación más completa de un error, propuesta o duda de privacidad.</p>
@@ -632,7 +698,7 @@ function contactBody() {
           <li>Sugerencias de personajes o series que te gustaría ver en Otakle.</li>
           <li>Errores visuales, pistas incoherentes o problemas con el personaje del día.</li>
           <li>Dudas sobre privacidad, publicidad, indexación o funcionamiento general del sitio.</li>
-          <li>Comentarios sobre guías públicas, catálogo o utilidad editorial de las páginas informativas.</li>
+          <li>Comentarios sobre guías públicas, catálogo o utilidad de las páginas informativas.</li>
         </ul>
         <h2>Qué incluir en tu mensaje</h2>
         <ul>
@@ -670,6 +736,7 @@ function editorialBody(page) {
           <span class="home-kicker">${escapeHtml(page.kicker)}</span>
           <h1>${escapeHtml(page.title)}</h1>
           <p>${escapeHtml(page.description)}</p>
+          <p><strong>Por ${escapeHtml(page.author)}</strong> · Actualizado el ${escapeHtml(page.updatedAt)}</p>
         </div>
         <div class="page-actions">
           ${anchor('/play', 'Ir a jugar', 'btn-primary')}
@@ -679,12 +746,14 @@ function editorialBody(page) {
       <section class="page-card editorial-intro-card">${page.intro.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}</section>
       <section class="directory-grid directory-grid-wide editorial-grid">${sectionCards}</section>
       <section class="page-card notice-card">
-        <h2>Más recursos públicos de Otakle</h2>
+        <h2>Sigue explorando Otakle</h2>
+        <p>Si esta guía te ayudó, el mejor siguiente paso depende de lo que quieras hacer: entender mejor las reglas, estudiar el catálogo o revisar franquicias concretas antes de volver al reto diario.</p>
         <div class="chip-link-list">
           ${anchor('/how-to-play', 'Cómo se juega', 'home-link-pill')}
           ${anchor('/strategy', 'Estrategia', 'home-link-pill')}
           ${anchor('/animes', 'Animes incluidos', 'home-link-pill')}
           ${anchor('/personajes', 'Catálogo de personajes', 'home-link-pill')}
+          ${anchor('/contact', 'Contacto', 'home-link-pill')}
         </div>
       </section>
       ${footerLinks()}

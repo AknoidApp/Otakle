@@ -9,9 +9,14 @@ export type EditorialPage = {
   kicker: string
   title: string
   description: string
+  author: string
+  updatedAt: string
   intro: string[]
   sections: EditorialSection[]
 }
+
+const DEFAULT_AUTHOR = 'Aknoid'
+const DEFAULT_UPDATED_AT = '2026-06-24'
 
 export const EDITORIAL_PAGES: EditorialPage[] = [
   {
@@ -20,6 +25,8 @@ export const EDITORIAL_PAGES: EditorialPage[] = [
     title: 'Cómo leer las pistas de Otakle sin desperdiciar intentos',
     description:
       'Guía pública para interpretar colores, año de debut, coincidencias parciales y señales que te ayudan a descartar personajes en Otakle.',
+    author: DEFAULT_AUTHOR,
+    updatedAt: DEFAULT_UPDATED_AT,
     intro: [
       'Una de las razones por las que Otakle se vuelve más interesante con el tiempo es que las pistas no solo te dicen “bien” o “mal”. Cada fila funciona como una comparación entre tu intento y el personaje correcto del día. Si aprendes a leer esa comparación con calma, los turnos dejan de sentirse aleatorios y empiezan a servir como herramientas reales de deducción.',
       'Esta guía está hecha para jugadores que ya entienden la idea general del reto, pero quieren convertir la información del tablero en decisiones mejores. No se trata de memorizar una respuesta, sino de aprender a separar ruido de señales útiles.',
@@ -78,11 +85,109 @@ export const EDITORIAL_PAGES: EditorialPage[] = [
     ],
   },
   {
+    path: '/primer-intento-otakle',
+    kicker: 'Guía de apertura',
+    title: 'Cómo elegir un buen primer intento en Otakle',
+    description:
+      'Guía práctica para abrir mejor una partida de Otakle y usar el primer turno como sonda, no como apuesta ciega.',
+    author: DEFAULT_AUTHOR,
+    updatedAt: DEFAULT_UPDATED_AT,
+    intro: [
+      'El primer intento marca mucho más de lo que parece. No porque tenga que acertar, sino porque define qué tipo de información vas a recoger en el tablero. En Otakle, una buena apertura te deja un mapa; una mala apertura te deja solo ruido.',
+      'Esta guía está pensada para ayudarte a elegir personajes de arranque que aporten señales claras sobre franquicia, época y rol narrativo. Si mejoras ese primer turno, el resto de la partida suele ordenarse bastante más rápido.',
+    ],
+    sections: [
+      {
+        heading: 'Qué debe darte un primer intento útil',
+        paragraphs: [
+          'El mejor personaje de apertura no es necesariamente tu favorito ni el más famoso del catálogo. Es uno que te dé atributos fáciles de interpretar y que sirva como referencia comparativa. Cuanto más legible sea ese perfil, más valor tendrá cualquier combinación de verdes, rojos y flechas que aparezca después.',
+          'Piensa en el primer turno como una pregunta bien formulada: “¿Estoy cerca de una franquicia clásica o moderna?”, “¿estoy frente a un protagonista, rival o apoyo?”, “¿qué tan lejos estoy en el eje temporal?” Si el intento no ayuda a responder algo de eso, probablemente no fue un buen arranque.',
+        ],
+      },
+      {
+        heading: 'Cuándo conviene abrir con una franquicia muy conocida',
+        paragraphs: [
+          'Series como Dragon Ball, Naruto o One Piece suelen funcionar bien para empezar porque tienen personajes muy reconocibles y perfiles bastante marcados. Eso permite leer con rapidez si el tablero te está acercando a un tipo de personaje parecido o si debes salir de esa zona de inmediato.',
+          'Eso sí: abrir con una franquicia popular no significa quedarse pegado a ella. Sirve como punto de medición, no como promesa de que la solución está ahí mismo.',
+        ],
+        bullets: [
+          'Prioriza perfiles fáciles de ubicar por época y función narrativa.',
+          'Evita nombres excesivamente raros o de series demasiado de nicho en tu primera prueba.',
+          'Si el primer turno ya sugiere cambio de eje, cambia rápido.',
+        ],
+      },
+      {
+        heading: 'Errores típicos al abrir una partida',
+        paragraphs: [
+          'Un error habitual es jugar un personaje demasiado específico solo porque te gusta mucho. Si ese intento falla, puede dejarte pocas comparaciones claras y obligarte a reconstruir el mapa desde cero en el segundo turno.',
+          'Otro error clásico es abrir con alguien demasiado parecido al personaje que usaste en una partida anterior exitosa. El tablero cambia cada día, así que repetir por costumbre no siempre aporta la información que hoy necesitas.',
+        ],
+      },
+      {
+        heading: 'Cómo decidir el segundo turno después de una buena apertura',
+        paragraphs: [
+          'Si el primer intento fue útil, el segundo debería responder la duda más grande que te dejó. A veces conviene mantener la época y cambiar la franquicia. Otras veces, mantener la franquicia y cambiar por completo el rol del personaje. Lo importante es no desperdiciar esa primera información con un movimiento impulsivo.',
+          'Una apertura sólida no gana la partida por sí sola, pero sí hace que el resto de decisiones sean mucho menos caóticas. Esa es la verdadera ventaja.',
+        ],
+      },
+    ],
+  },
+  {
+    path: '/errores-comunes-otakle',
+    kicker: 'Guía práctica',
+    title: 'Errores comunes al jugar Otakle y cómo evitarlos',
+    description:
+      'Repaso de fallos frecuentes en Otakle: repetir personajes parecidos, ignorar el año de debut y leer mal una coincidencia parcial.',
+    author: DEFAULT_AUTHOR,
+    updatedAt: DEFAULT_UPDATED_AT,
+    intro: [
+      'Gran parte de las derrotas en Otakle no vienen de falta de conocimiento anime, sino de hábitos de lectura poco eficientes. Incluso jugadores que reconocen bien las franquicias pueden caer en errores de método que desperdician información valiosa.',
+      'Esta guía reúne fallos comunes que aparecen una y otra vez: insistir demasiado en una misma serie, sobrevalorar una columna verde o jugar por ansiedad cuando quedan pocos turnos. Si los detectas a tiempo, tu tasa de aciertos suele subir rápido.',
+    ],
+    sections: [
+      {
+        heading: 'Repetir personajes casi idénticos',
+        paragraphs: [
+          'Cuando un intento entrega varias señales negativas, muchas veces conviene buscar contraste, no insistencia. Jugar tres personajes muy parecidos entre sí suele producir filas parecidas entre sí. Eso se siente como avance porque estás “cerca” de algo, pero en realidad puede ser información redundante.',
+          'El tablero mejora cuando haces preguntas diferentes. Si ya mediste bien una franquicia o un arquetipo, usa el siguiente turno para contrastar otra opción plausible en vez de duplicar el experimento.',
+        ],
+      },
+      {
+        heading: 'Ignorar la flecha del año de debut',
+        paragraphs: [
+          'La pista temporal es una de las más útiles y también una de las más subestimadas. Mucha gente mira primero el nombre de la serie y se olvida de que una sola flecha puede sacar de la mesa docenas de personajes de golpe.',
+          'Si el año contradice tu intuición, suele ser mejor creerle a la pista antes que a tu impulso. Esa disciplina evita perder varios turnos en una época incorrecta.',
+        ],
+      },
+      {
+        heading: 'Confundir “una coincidencia” con “ya estoy cerca”',
+        paragraphs: [
+          'Coincidir en una categoría no significa automáticamente que ya estés encima de la solución. Algunas coincidencias son anchas y otras muy específicas. No pesa igual acertar una pista genérica que alinear varias variables al mismo tiempo.',
+          'La pregunta correcta no es “¿acerté algo?”, sino “¿este conjunto de pistas me deja un perfil coherente?” Si la respuesta es no, todavía estás en fase de exploración.',
+        ],
+      },
+      {
+        heading: 'Entrar en pánico con los últimos intentos',
+        paragraphs: [
+          'Cuando quedan dos turnos, la ansiedad empuja a improvisar. Pero justo ahí necesitas lo contrario: reducir variables y confirmar hipótesis. Un cierre nervioso rompe partidas que venían bien encaminadas.',
+          'Antes del penúltimo intento, define qué duda concreta quieres resolver. Si no puedes formularla, probablemente aún no estás eligiendo con método.',
+        ],
+        bullets: [
+          'No cambies todo a la vez en el cierre de la partida.',
+          'Usa el penúltimo intento para validar una hipótesis, no para adivinar por fe.',
+          'Reserva el último turno para la opción que mejor explica el tablero completo.',
+        ],
+      },
+    ],
+  },
+  {
     path: '/guia-naruto-otakle',
     kicker: 'Franquicia destacada',
     title: 'Guía para reconocer personajes de Naruto en Otakle',
     description:
       'Claves públicas para diferenciar personajes de Naruto dentro de Otakle usando rol, época, generación y lógica de pistas comparativas.',
+    author: DEFAULT_AUTHOR,
+    updatedAt: DEFAULT_UPDATED_AT,
     intro: [
       'Naruto es una de las franquicias más fáciles de reconocer para muchos jugadores, pero también una de las que más puede engañar en Otakle. Justamente porque tiene personajes muy conocidos, es tentador quedarse atrapado en nombres obvios y repetir arquetipos demasiado parecidos.',
       'Esta guía sirve para jugar mejor cuando sospechas que el personaje del día pertenece al universo de Naruto. No busca listar todas las respuestas posibles, sino mostrar qué rasgos suelen ayudarte a separar generaciones, roles y perfiles narrativos dentro de la serie.',
@@ -129,6 +234,8 @@ export const EDITORIAL_PAGES: EditorialPage[] = [
     title: 'Cómo distinguir personajes de One Piece en Otakle',
     description:
       'Guía pública para leer mejor las pistas cuando sospechas que el personaje del día pertenece a One Piece dentro de Otakle.',
+    author: DEFAULT_AUTHOR,
+    updatedAt: DEFAULT_UPDATED_AT,
     intro: [
       'One Piece suele aportar personajes muy memorables al catálogo de Otakle, pero también tiene una variedad enorme de perfiles. Eso significa que no basta con reconocer la serie: después necesitas separar capitanes, espadachines, villanos, apoyos, figuras de gobierno y personajes secundarios con peso narrativo real.',
       'Si aprendes a leer One Piece como un conjunto de arquetipos y épocas, las pistas empiezan a rendir mucho más. Esta guía está pensada para ayudarte a hacer justamente eso.',
@@ -170,6 +277,8 @@ export const EDITORIAL_PAGES: EditorialPage[] = [
     title: 'Guía para acertar personajes de Dragon Ball en Otakle',
     description:
       'Consejos públicos para reconocer mejor personajes de Dragon Ball en Otakle sin depender solo de nombres obvios o intuición rápida.',
+    author: DEFAULT_AUTHOR,
+    updatedAt: DEFAULT_UPDATED_AT,
     intro: [
       'Dragon Ball parece una franquicia sencilla para Otakle porque muchos personajes son ultra conocidos. Sin embargo, precisamente esa familiaridad puede jugarte en contra. Cuando todo te suena reconocible, es fácil entrar en un bucle de nombres obvios que comparten demasiados rasgos y apenas generan información nueva.',
       'Esta guía propone una lectura un poco más fría: usar las pistas para separar linajes, funciones y etapas de la franquicia en vez de girar siempre alrededor de los mismos protagonistas.',
@@ -210,6 +319,8 @@ export const EDITORIAL_PAGES: EditorialPage[] = [
     title: 'Qué animes suelen ser más fáciles para empezar a jugar Otakle',
     description:
       'Resumen público de franquicias que suelen ser más accesibles para quienes recién empiezan a jugar Otakle y quieren aprender la lógica del reto.',
+    author: DEFAULT_AUTHOR,
+    updatedAt: DEFAULT_UPDATED_AT,
     intro: [
       'No todas las franquicias se sienten igual de accesibles cuando recién empiezas en Otakle. Algunas series tienen protagonistas y secundarios tan instalados en la cultura anime que ayudan mucho a entender la lógica del tablero, mientras que otras requieren una memoria más fina de roles, épocas o personajes menos obvios.',
       'Si estás entrando al juego por primera vez, una buena estrategia es usar franquicias muy reconocibles como terreno de aprendizaje. No porque te aseguren la respuesta, sino porque te permiten leer mejor qué información aportan las pistas.',
@@ -255,16 +366,18 @@ export const EDITORIAL_PAGES: EditorialPage[] = [
     title: 'Cómo usar el catálogo público de Otakle para descubrir animes y personajes',
     description:
       'Guía pública para entender qué ofrece el catálogo de Otakle, cómo leerlo y por qué sirve incluso fuera del reto diario.',
+    author: DEFAULT_AUTHOR,
+    updatedAt: DEFAULT_UPDATED_AT,
     intro: [
-      'El catálogo público de Otakle no está pensado solo como una lista decorativa. Su función es mostrar de forma visible qué series y personajes ya forman parte del proyecto, ayudar a los jugadores a orientarse mejor y darle valor real al sitio incluso cuando no estás jugando la partida del día.',
+      'El catálogo público de Otakle no está pensado solo como una lista decorativa. Su función es mostrar de forma visible qué series y personajes ya forman parte del proyecto, ayudar a los jugadores a orientarse mejor y servir también como directorio público para quienes llegan por primera vez al sitio.',
       'Si llegaste por curiosidad, por una búsqueda sobre anime o porque quieres entender el alcance del juego, esta guía te explica cómo aprovechar mejor esa parte del sitio y qué tipo de información puedes sacar de ella.',
     ],
     sections: [
       {
         heading: 'Qué puedes ver en el catálogo aunque no juegues todavía',
         paragraphs: [
-          'La sección pública de personajes y animes te deja ver qué franquicias están representadas, cuántas entradas activas tiene cada una y una muestra concreta de nombres ya presentes. Eso ya convierte a Otakle en algo más que una sola pantalla de juego, porque existe una capa navegable para explorar el contenido del proyecto.',
-          'Para alguien nuevo, esa visibilidad también ayuda a calibrar expectativas: puedes entender si el sitio se mueve más en clásicos, shonen conocidos, series modernas o una mezcla amplia de referencias.',
+          'La sección pública de personajes y animes te deja ver qué franquicias están representadas, cuántas entradas activas tiene cada una y una muestra concreta de nombres ya presentes. Eso ayuda a entender el alcance actual de Otakle y a ver si una serie concreta ya forma parte del juego.',
+          'Para alguien nuevo, esa visibilidad también sirve para calibrar expectativas: puedes entender si el sitio se mueve más en clásicos, shonen conocidos, series modernas o una mezcla amplia de referencias.',
         ],
       },
       {
@@ -280,17 +393,108 @@ export const EDITORIAL_PAGES: EditorialPage[] = [
         ],
       },
       {
-        heading: 'Por qué este catálogo aporta valor editorial al sitio',
+        heading: 'Qué tipo de utilidad real tiene esta parte del sitio',
         paragraphs: [
-          'Un catálogo visible demuestra que Otakle mantiene una base pública de contenido real, no solo una mecánica diaria aislada. Para visitantes, esto hace que el proyecto sea más fácil de entender. Para jugadores, crea un punto de apoyo concreto para revisar franquicias, recordar nombres y recorrer el universo disponible.',
-          'Además, al conectarse con FAQ, guías por franquicia, contacto y páginas legales, el catálogo ayuda a que la web se perciba como un sitio completo y no solo como una prueba o una landing mínima.',
+          'Para jugadores habituales, el catálogo sirve para recordar nombres, revisar cobertura y contextualizar las pistas. Para visitantes nuevos, funciona como una forma rápida de entender de qué trata Otakle sin tener que entrar de inmediato a una partida.',
+          'También ayuda a ver que el proyecto no gira solo en torno al personaje de hoy. Hay una base visible de series, personajes y recursos conectados entre sí.',
         ],
       },
       {
         heading: 'La mejor forma de seguir explorando después del catálogo',
         paragraphs: [
-          'Si ya revisaste personajes o animes, el siguiente paso lógico es saltar a una guía de mecánicas o a una franquicia destacada. Esa conexión entre catálogo y contenido editorial es una de las claves de Otakle: no solo mirar nombres, sino aprender a interpretarlos dentro del juego diario.',
-          'Por eso el catálogo funciona mejor cuando se recorre con intención. Puedes usarlo para estudiar, para descubrir series, para revisar cobertura o simplemente para entender qué tipo de reto propone Otakle antes de empezar a jugar.',
+          'Si ya revisaste personajes o animes, el siguiente paso lógico es saltar a una guía de mecánicas o a una franquicia destacada. Esa conexión entre catálogo y contenido editorial hace que el sitio se recorra mejor: primero ves la cobertura, luego aprendes a interpretarla dentro del juego diario.',
+          'Por eso el catálogo funciona mejor cuando se recorre con intención. Puedes usarlo para estudiar, para descubrir series, para revisar presencia por franquicia o simplemente para entender qué tipo de reto propone Otakle antes de empezar a jugar.',
+        ],
+      },
+    ],
+  },
+  {
+    path: '/como-seleccionamos-personajes-otakle',
+    kicker: 'Detrás del catálogo',
+    title: 'Cómo se seleccionan personajes y series para el catálogo de Otakle',
+    description:
+      'Explicación pública de los criterios usados en Otakle para elegir personajes, franquicias y combinaciones que hagan el reto más interesante.',
+    author: DEFAULT_AUTHOR,
+    updatedAt: DEFAULT_UPDATED_AT,
+    intro: [
+      'Una duda razonable cuando ves un juego de este tipo es cómo se arma el catálogo. ¿Se añaden personajes solo por fama? ¿se mete cualquier serie? ¿se busca cubrir gustos distintos? En Otakle, la selección intenta equilibrar popularidad, variedad y utilidad real para el sistema de pistas.',
+      'Esta página explica el criterio general detrás del catálogo actual. No es una lista cerrada de reglas absolutas, pero sí una forma pública de entender por qué unas franquicias entran antes que otras y qué hace que un personaje funcione bien dentro del reto.',
+    ],
+    sections: [
+      {
+        heading: 'No basta con que un personaje sea famoso',
+        paragraphs: [
+          'La popularidad ayuda, pero no alcanza por sí sola. Un personaje entra mejor al juego cuando aporta diferencias claras en atributos, época, rol o perfil narrativo. Si varias opciones son demasiado parecidas entre sí, el tablero pierde contraste y la experiencia se vuelve más plana.',
+          'Por eso interesa combinar nombres obvios con otros que amplíen el rango de comparaciones posibles dentro de la misma franquicia o entre series distintas.',
+        ],
+      },
+      {
+        heading: 'Qué se busca al sumar una nueva franquicia',
+        paragraphs: [
+          'Una serie nueva suma más valor cuando abre un tipo de universo que todavía no está bien representado. Puede ser por época, por estilo de personajes, por demografía o por el tipo de roles que suele aportar. La meta no es llenar por llenar, sino mantener un catálogo que ofrezca partidas variadas y legibles.',
+          'También importa que la franquicia tenga suficiente material para sostener más de un personaje interesante. Una sola entrada aislada rara vez enriquece tanto como un grupo que permita comparaciones útiles.',
+        ],
+      },
+      {
+        heading: 'El equilibrio entre accesibilidad y profundidad',
+        paragraphs: [
+          'Otakle necesita ser accesible para quien reconoce franquicias populares, pero también lo bastante profundo como para que las partidas no se vuelvan previsibles. Ese equilibrio se logra mezclando personajes icónicos con otros menos obvios, siempre que aporten algo al sistema de pistas.',
+          'El objetivo no es convertir el catálogo en una enciclopedia infinita, sino en una base jugable que siga creciendo con criterio.',
+        ],
+        bullets: [
+          'Se valoran personajes con perfiles distinguibles.',
+          'Se buscan franquicias con más de un ángulo de lectura posible.',
+          'La variedad importa tanto como el reconocimiento inmediato.',
+        ],
+      },
+      {
+        heading: 'Cómo ayudan las sugerencias de la comunidad',
+        paragraphs: [
+          'Las sugerencias externas son útiles porque revelan qué series esperan ver los jugadores y qué vacíos se perciben desde fuera. Pero una propuesta funciona mejor cuando viene con contexto: por qué ese personaje aportaría algo, qué rol cubre o qué tipo de comparaciones habilita.',
+          'Eso hace que la página de contacto y el catálogo público no estén desconectados. Sirven también para orientar el crecimiento del proyecto.',
+        ],
+      },
+    ],
+  },
+  {
+    path: '/franquicias-con-mas-presencia-en-otakle',
+    kicker: 'Lectura del catálogo',
+    title: 'Qué franquicias tienen más presencia en Otakle y qué dice eso del juego',
+    description:
+      'Lectura editorial del catálogo actual de Otakle: por qué ciertas franquicias concentran más personajes y cómo eso afecta la experiencia diaria.',
+    author: DEFAULT_AUTHOR,
+    updatedAt: DEFAULT_UPDATED_AT,
+    intro: [
+      'Cuando miras el catálogo público de Otakle, algunas franquicias aparecen con bastante más peso que otras. Eso no es casual: las series con más presencia suelen combinar reconocimiento amplio, variedad de perfiles y suficiente densidad de personajes como para sostener comparaciones interesantes.',
+      'Esta guía ayuda a leer esa distribución como parte del diseño del juego. No se trata solo de contar nombres, sino de entender cómo la cobertura por franquicia moldea la forma en que juegas, aprendes y descartas opciones.',
+    ],
+    sections: [
+      {
+        heading: 'Por qué algunas series ocupan más espacio',
+        paragraphs: [
+          'Franquicias grandes como One Piece, Naruto o Dragon Ball ofrecen muchos personajes memorables con diferencias narrativas claras. Eso permite construir un rango más amplio de soluciones y también mejores guías públicas por serie.',
+          'Cuando una obra tiene variedad real de protagonistas, rivales, mentores, villanos y apoyos, el tablero gana en contraste. Esa es una de las razones por las que algunas franquicias crecen antes dentro del catálogo.',
+        ],
+      },
+      {
+        heading: 'Qué efecto tiene eso en la experiencia del jugador',
+        paragraphs: [
+          'Una mayor presencia por franquicia vuelve más probable que uses esas series como referencia al abrir o al descartar hipótesis. Para jugadores nuevos, eso es útil porque crea puntos de apoyo reconocibles. Para jugadores más avanzados, también obliga a leer con más detalle, porque no basta con detectar la serie: luego hay que separar funciones y épocas dentro de ella.',
+          'En otras palabras, una franquicia numerosa puede hacer el juego más accesible y más exigente al mismo tiempo.',
+        ],
+      },
+      {
+        heading: 'Qué no significa ver muchas entradas de una misma obra',
+        paragraphs: [
+          'Que una serie tenga muchos personajes no significa que el juego dependa solo de ella ni que las demás estén de adorno. Más bien muestra dónde el catálogo ha encontrado hasta ahora más espacio para comparaciones útiles y variedad interna.',
+          'Con el tiempo, otras franquicias pueden crecer y equilibrar mejor esa distribución. El catálogo no es estático.',
+        ],
+      },
+      {
+        heading: 'Cómo usar esta lectura a tu favor',
+        paragraphs: [
+          'Si quieres mejorar, conviene saber qué series tienen más presencia porque eso te ayuda a elegir mejores referencias y a entender qué universos vale la pena estudiar primero. La página de animes, combinada con las guías de franquicia, sirve justo para eso.',
+          'No hace falta memorizar toda la lista. Basta con reconocer qué franquicias son hubs fuertes dentro de Otakle y qué tipo de personajes suelen aportar.',
         ],
       },
     ],

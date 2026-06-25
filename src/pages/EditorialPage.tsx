@@ -11,6 +11,9 @@ export default function EditorialPage({ page }: { page: EditorialPageData }) {
           <span className="home-kicker">{page.kicker}</span>
           <h1>{page.title}</h1>
           <p>{page.description}</p>
+          <p>
+            <strong>Por {page.author}</strong> · Actualizado el {page.updatedAt}
+          </p>
         </div>
 
         <div className="page-actions">
@@ -48,7 +51,11 @@ export default function EditorialPage({ page }: { page: EditorialPageData }) {
       </section>
 
       <section className="page-card notice-card">
-        <h2>Más recursos públicos de Otakle</h2>
+        <h2>Sigue explorando Otakle</h2>
+        <p>
+          Si esta guía te ayudó, el mejor siguiente paso depende de lo que quieras hacer: entender mejor las reglas,
+          estudiar el catálogo o revisar franquicias concretas antes de volver al reto diario.
+        </p>
         <div className="chip-link-list">
           <Link to="/how-to-play" className="home-link-pill">
             Cómo se juega
@@ -61,6 +68,9 @@ export default function EditorialPage({ page }: { page: EditorialPageData }) {
           </Link>
           <Link to="/personajes" className="home-link-pill">
             Catálogo de personajes
+          </Link>
+          <Link to="/contact" className="home-link-pill">
+            Contacto
           </Link>
         </div>
       </section>

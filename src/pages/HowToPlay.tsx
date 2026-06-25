@@ -89,6 +89,18 @@ export default function HowToPlay() {
           especialmente cuando ya tienes una idea aproximada de la franquicia o del tipo de personaje.
         </p>
 
+        <h2>Ejemplo de lectura de una ronda</h2>
+        <p>
+          Imagina que abres con un personaje muy conocido y obtienes anime en rojo, rol en verde y una flecha hacia arriba
+          en año de debut. Esa combinación ya te dice bastante: probablemente no estás en la franquicia correcta, pero sí
+          estás cerca del tipo de función narrativa, y además debes moverte hacia un personaje más reciente.
+        </p>
+        <p>
+          En un caso así, el siguiente intento ideal no repite el mismo universo sin pensar. Conviene buscar otro personaje
+          con rol parecido, pero de una serie más nueva o de otra época que te permita medir mejor el tablero. Jugar así es
+          más útil que insistir con nombres casi gemelos solo porque te dieron una pista verde aislada.
+        </p>
+
         <h2>Qué hace realmente el filtro por anime</h2>
         <p>
           El filtro por anime está pensado para facilitar la escritura y la búsqueda de personajes dentro del catálogo. No

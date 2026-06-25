@@ -33,8 +33,7 @@ export default function Contact() {
         </p>
         <p>
           La idea de esta página es que cualquier visitante pueda identificar con claridad quién recibe los mensajes del
-          proyecto y qué tipo de consultas sí tienen sentido aquí. No es solo una página de cumplimiento: también es una
-          vía real para mejorar el catálogo y detectar problemas del juego.
+          proyecto, qué tipo de consultas tienen sentido aquí y qué contexto ayuda a revisar un problema más rápido.
         </p>
 
         <h2>Email</h2>
@@ -62,7 +61,7 @@ export default function Contact() {
           <li>Sugerencias de personajes o series que te gustaría ver en Otakle.</li>
           <li>Errores visuales, pistas incoherentes o problemas con el personaje del día.</li>
           <li>Dudas sobre privacidad, publicidad, indexación o funcionamiento general del sitio.</li>
-          <li>Comentarios sobre guías públicas, catálogo o utilidad editorial de las páginas informativas.</li>
+          <li>Comentarios sobre guías públicas, catálogo o utilidad de las páginas informativas.</li>
         </ul>
 
         <h2>Qué incluir en tu mensaje</h2>

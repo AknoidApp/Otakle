@@ -137,7 +137,19 @@ export default function Strategy() {
           no desesperado.
         </p>
 
-        <h2>8) Errores que bajan mucho la tasa de aciertos</h2>
+        <h2>8) Dos aperturas que suelen funcionar bien</h2>
+        <p>
+          Si todavía no tienes una rutina propia, puedes pensar en dos estilos de apertura. El primero es arrancar con un
+          personaje icónico de una franquicia muy representada, para obtener una medición rápida de serie, época y rol. El
+          segundo es abrir con un perfil muy claro en términos narrativos, aunque no sea tu personaje favorito, para medir
+          con precisión la función que busca el tablero.
+        </p>
+        <p>
+          Ninguna apertura es universal, pero ambas tienen algo en común: están diseñadas para producir lectura útil, no
+          para apostar a la casualidad. Ese pequeño cambio mental marca una diferencia enorme con el tiempo.
+        </p>
+
+        <h2>9) Errores que bajan mucho la tasa de aciertos</h2>
         <ul>
           <li>Ignorar la flecha del año de debut aunque sea la pista más informativa que tienes.</li>
           <li>Quedarte demasiado tiempo en la misma franquicia cuando las pistas no la sostienen.</li>
@@ -147,7 +159,7 @@ export default function Strategy() {
           <li>Entrar en pánico con 2 intentos restantes y empezar a probar nombres por intuición pura.</li>
         </ul>
 
-        <h2>9) Una rutina simple que suele funcionar</h2>
+        <h2>10) Una rutina simple que suele funcionar</h2>
         <ol>
           <li>Abre con un personaje conocido que te dé una buena lectura general.</li>
           <li>Mira primero el anime, el rol y el año de debut.</li>
@@ -157,7 +169,7 @@ export default function Strategy() {
           <li>Guarda los últimos intentos para confirmar hipótesis, no para improvisar.</li>
         </ol>
 
-        <h2>10) El objetivo real no es solo ganar hoy</h2>
+        <h2>11) El objetivo real no es solo ganar hoy</h2>
         <p>
           Jugar mejor en Otakle también significa construir criterio para los días siguientes. Mientras más aprendas a leer
           patrones, recordar franquicias y entender cómo dialogan las pistas, más consistente será tu rendimiento. La meta

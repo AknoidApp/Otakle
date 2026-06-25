@@ -1,4 +1,4 @@
-import { EDITORIAL_PAGES } from './editorialData.ts'
+import { EDITORIAL_PAGES, EDITORIAL_PAGES_BY_PATH } from './editorialData.ts'
 
 export const SITE_NAME = 'Otakle'
 export const SITE_URL = 'https://www.otakle.app'
@@ -42,8 +42,8 @@ export const SEO_BY_PATH: Record<string, SeoEntry> = {
   '/about': {
     title: 'Qué es Otakle',
     description:
-      'Descubre qué es Otakle, cómo funciona el reto diario y por qué está pensado para fans del anime.',
-    keywords: 'about otakle, juego anime, fan project anime, aknoid',
+      'Descubre qué es Otakle, cómo funciona el reto diario, cómo crece el catálogo y para quién está hecho este proyecto fan de anime.',
+    keywords: 'about otakle, juego anime, fan project anime, aknoid, catálogo anime',
   },
   '/how-to-play': {
     title: 'Cómo jugar Otakle',
@@ -87,8 +87,8 @@ export const SEO_BY_PATH: Record<string, SeoEntry> = {
   },
   '/privacy': {
     title: 'Política de privacidad',
-    description: 'Lee la política de privacidad de Otakle y cómo se gestionan los datos del juego.',
-    keywords: 'privacy policy otakle, privacidad otakle, adsense privacy',
+    description: 'Lee la política de privacidad de Otakle y cómo se gestionan los datos locales del juego y la publicidad.',
+    keywords: 'privacy policy otakle, privacidad otakle, adsense privacy, localstorage',
   },
   '/terms': {
     title: 'Términos de uso',
@@ -206,7 +206,28 @@ export function getStructuredData(pathname: string) {
     ]
   }
 
-  if (EDITORIAL_PAGES.some((page) => page.path === pathname)) {
+  if (pathname === '/about') {
+    return [
+      website,
+      {
+        '@context': 'https://schema.org',
+        '@type': 'AboutPage',
+        name: seo.title,
+        url: pageUrl,
+        description: seo.description,
+        inLanguage: 'es',
+        about: {
+          '@type': 'WebApplication',
+          name: SITE_NAME,
+          applicationCategory: 'GameApplication',
+        },
+      },
+    ]
+  }
+
+  if (EDITORIAL_PAGES_BY_PATH[pathname]) {
+    const page = EDITORIAL_PAGES_BY_PATH[pathname]
+
     return [
       website,
       {
@@ -219,12 +240,14 @@ export function getStructuredData(pathname: string) {
         inLanguage: 'es',
         author: {
           '@type': 'Person',
-          name: 'Aknoid',
+          name: page.author,
         },
         publisher: {
           '@type': 'Person',
-          name: 'Aknoid',
+          name: page.author,
         },
+        dateModified: page.updatedAt,
+        datePublished: page.updatedAt,
         image: SITE_IMAGE,
       },
     ]

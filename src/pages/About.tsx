@@ -14,7 +14,7 @@ export default function About() {
                 <h1 className="brand-title">Sobre Otakle</h1>
                 <span className="daily-badge">Proyecto</span>
               </div>
-              <p className="brand-subtitle">Qué es, para quién está hecho y por qué existe este reto diario de anime</p>
+              <p className="brand-subtitle">Qué es, para quién está hecho y cómo crece este reto diario de anime</p>
             </div>
           </div>
 
@@ -35,10 +35,10 @@ export default function About() {
         </p>
 
         <p>
-          La idea detrás del proyecto es simple: que exista un espacio donde un fan del anime pueda entrar cada día,
-          jugar una partida corta, comparar pistas de manera clara y además explorar un catálogo público de personajes y
-          franquicias. Otakle no busca ser solo “un jueguito diario”, sino también una puerta de entrada a contenido
-          consultable, útil y entretenido para quienes disfrutan reconocer personajes, recordar series y hablar de anime.
+          El objetivo del proyecto es ofrecer una experiencia breve y clara para fans del anime, pero también un espacio
+          público donde el catálogo, las guías y las páginas informativas tengan utilidad por sí mismos. Puedes llegar a
+          Otakle para jugar una ronda, para revisar qué series están presentes o para entender mejor cómo se interpretan las
+          pistas del tablero.
         </p>
 
         <h2>Qué hace distinto a Otakle</h2>
@@ -56,63 +56,68 @@ export default function About() {
             entender si vas cerca, si estás en la franquicia correcta o si necesitas cambiar radicalmente de enfoque.
           </li>
           <li>
-            <strong>Existe una capa pública útil alrededor del juego.</strong> Guías, FAQ, catálogo de personajes y páginas
-            por franquicia hacen que el sitio tenga valor incluso cuando no estás jugando una ronda en ese momento.
+            <strong>El sitio tiene una capa pública visible.</strong> Guías, FAQ, catálogo de personajes, páginas por
+            franquicia y documentación básica del proyecto ayudan a que el juego se entienda mejor incluso antes de abrir el
+            tablero.
           </li>
         </ul>
 
         <h2>Para quién está hecho</h2>
         <p>
           Otakle está pensado para personas que disfrutan el anime como hobby cotidiano: quienes reconocen personajes,
-          recuerdan arcos, relacionan estudios con estilos y disfrutan comparar obras distintas. También funciona para
-          gente que no quiere una experiencia demasiado demandante: una ronda diaria, ocho intentos, una lógica clara y
-          la posibilidad de volver al día siguiente.
+          recuerdan arcos, relacionan estudios con estilos y disfrutan comparar obras distintas. También funciona para gente
+          que no quiere una experiencia demasiado demandante: una ronda diaria, ocho intentos, una lógica clara y la
+          posibilidad de volver al día siguiente.
         </p>
 
         <p>
           Si alguna vez te ha gustado discutir cosas como “qué personaje era de tal estudio”, “de qué época salió este
-          protagonista” o “cuál franquicia tiene más peso en un catálogo”, entonces la lógica de Otakle probablemente te
-          va a resultar natural. El juego está hecho para fans, pero intenta mantenerse comprensible también para alguien
-          que quiera aprender a leer las pistas y mejorar con la práctica.
+          protagonista” o “cuál franquicia tiene más peso en un catálogo”, entonces la lógica de Otakle probablemente te va
+          a resultar natural. El juego está hecho para fans, pero intenta mantenerse comprensible también para alguien que
+          quiera aprender a leer las pistas y mejorar con la práctica.
         </p>
 
         <h2>Cómo está construido el reto diario</h2>
         <p>
           Cada día existe un personaje objetivo que todos los jugadores intentan adivinar. Los intentos generan filas de
-          comparación que muestran coincidencias o diferencias entre tu elección y la solución del día. Algunas columnas
-          son exactas; otras, como <strong>año de debut</strong>, entregan una dirección que te permite saber si debes
-          pensar en un personaje más antiguo o más reciente.
+          comparación que muestran coincidencias o diferencias entre tu elección y la solución del día. Algunas columnas son
+          exactas; otras, como <strong>año de debut</strong>, entregan una dirección que te permite saber si debes pensar en
+          un personaje más antiguo o más reciente.
         </p>
 
         <p>
-          El diseño del reto busca equilibrar tres cosas: rapidez, claridad y rejugabilidad diaria. La idea no es obligar
-          a buscar información externa a cada rato, sino darte suficientes señales para que puedas razonar una respuesta.
-          Por eso también existen páginas públicas de apoyo como <Link to="/how-to-play">Cómo se juega</Link>,{' '}
+          El diseño del reto busca equilibrar tres cosas: rapidez, claridad y rejugabilidad diaria. La idea no es obligar a
+          buscar información externa a cada rato, sino darte suficientes señales para que puedas razonar una respuesta. Por
+          eso también existen páginas públicas de apoyo como <Link to="/how-to-play">Cómo se juega</Link>,{' '}
           <Link to="/strategy">Estrategia</Link>, <Link to="/faq">FAQ</Link>, <Link to="/animes">Animes</Link> y{' '}
           <Link to="/personajes">Personajes</Link>.
+        </p>
+
+        <h2>Cómo crece el catálogo</h2>
+        <p>
+          El catálogo público de Otakle sigue creciendo. La meta es representar franquicias populares, personajes icónicos y
+          perfiles que permitan variedad real en las pistas. No se trata solo de acumular nombres: importa que el conjunto
+          sea jugable, que existan contrastes útiles entre personajes y que las categorías hagan que la deducción sea
+          interesante en vez de arbitraria.
+        </p>
+
+        <p>
+          También importa que una serie aporte varios ángulos de lectura: protagonistas, rivales, mentores, villanos,
+          apoyos o generaciones distintas. Esa mezcla es la que vuelve el reto más rico y hace que el catálogo pueda servir
+          como referencia pública además de alimentar la partida diaria.
         </p>
 
         <h2>Qué tipo de experiencia quiere ofrecer</h2>
         <p>
           Otakle apunta a una experiencia diaria breve, pero no desechable. La gracia no es solo acertar o fallar, sino
-          sentir que cada intento entrega información valiosa. Un buen juego diario necesita una curva clara: entrar
-          rápido, entender por qué una pista importa, tomar una decisión y tener ganas de volver mañana. Por eso el sitio
-          intenta mantener una navegación simple, información pública visible y una presentación que no dependa por
-          completo del gameplay para tener sentido.
-        </p>
-
-        <h2>Catálogo, cobertura y crecimiento</h2>
-        <p>
-          El catálogo público de Otakle sigue creciendo. La meta es representar franquicias populares, personajes icónicos
-          y perfiles que permitan variedad real en las pistas. No se trata solo de acumular nombres: importa que el
-          conjunto sea jugable, que existan contrastes útiles entre personajes y que las categorías hagan que la deducción
-          sea interesante en vez de arbitraria.
+          sentir que cada intento entrega información valiosa. Un buen juego diario necesita una curva clara: entrar rápido,
+          entender por qué una pista importa, tomar una decisión y tener ganas de volver mañana.
         </p>
 
         <p>
-          A medida que el catálogo se expande, también mejora el valor de las páginas públicas: más personajes implican
-          mejores guías, mejores resúmenes por franquicia y más contexto para quienes quieren explorar el universo del
-          juego aunque no estén en medio de una partida.
+          Por eso el sitio intenta mantener una navegación simple, información pública visible y un conjunto de páginas que
+          acompañen bien al tablero: reglas, estrategia, preguntas frecuentes, catálogo, contacto y guías editoriales sobre
+          franquicias o errores comunes.
         </p>
 
         <h2>Reglas base del proyecto</h2>
@@ -134,9 +139,8 @@ export default function About() {
         <h2>Quién hace Otakle</h2>
         <p>
           Otakle es un proyecto creado por <strong>Aknoid</strong>. La intención es construir una experiencia original y
-          consistente para fans del anime, con un juego diario entretenido y una base pública de contenido que siga
-          creciendo con el tiempo. Si el sitio te resulta útil, claro o entretenido, esa ya es una señal de que va en la
-          dirección correcta.
+          consistente para fans del anime, con un juego diario entretenido, un catálogo público visible y una capa editorial
+          en español que ayude a entender mejor el sistema de pistas y la cobertura del proyecto.
         </p>
 
         <h2>Contacto y feedback</h2>
@@ -153,8 +157,8 @@ export default function About() {
         <h2>Disclaimer</h2>
         <p>
           Otakle es un proyecto hecho por fans y no tiene relación oficial con estudios, editoriales, plataformas de
-          streaming ni propietarios de las obras mencionadas. Los nombres, franquicias y marcas pertenecen a sus
-          respectivos dueños y se referencian aquí con fines informativos, descriptivos y lúdicos.
+          streaming ni propietarios de las obras mencionadas. Los nombres, franquicias y marcas pertenecen a sus respectivos
+          dueños y se referencian aquí con fines informativos, descriptivos y lúdicos.
         </p>
       </div>
 
