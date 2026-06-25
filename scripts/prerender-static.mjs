@@ -73,7 +73,7 @@ function footerLinks() {
     <footer class="footer site-footer">
       <div class="site-footer-topline">
         <div>
-          <p class="site-footer-kicker">Otakle · juego diario + guías + catálogo público</p>
+          <p class="site-footer-kicker">Otakle · juego diario, catálogo y guías para fans del anime</p>
           <h2 class="site-footer-title">Un sitio para jugar, consultar y volver con más contexto</h2>
           <p class="site-footer-copy">Además del reto diario, Otakle reúne reglas, estrategia, directorios públicos y guías sobre franquicias, errores comunes y lectura del catálogo.</p>
         </div>
@@ -94,7 +94,7 @@ function footerLinks() {
           )
           .join('')}
       </div>
-      <div class="footer-note">Otakle by <strong>Aknoid</strong> · Proyecto fan en español con juego diario, catálogo visible y guías públicas.</div>
+      <div class="footer-note">Hecho por <strong>Aknoid</strong> para gente que disfruta acordarse de personajes, series y pistas de anime.</div>
     </footer>
   `
 }
@@ -162,7 +162,7 @@ function homeBody() {
               <h1 class="brand-title">Otakle</h1>
               <span class="daily-badge">ANIME DAILY</span>
             </div>
-            <p class="brand-subtitle">Juego diario de personajes de anime + guías + catálogo público</p>
+            <p class="brand-subtitle">Un juego diario para adivinar personajes de anime, con guías y catálogo para no jugar a ciegas</p>
           </div>
         </div>
         <div class="topbar-actions">
@@ -173,12 +173,21 @@ function homeBody() {
 
       <section class="landing-hero">
         <div class="landing-copy">
-          <span class="home-kicker">Qué es Otakle</span>
-          <h2>Un reto diario de anime con reglas claras, catálogo visible y guías públicas para jugar mejor</h2>
-          <p>Otakle es un juego diario donde intentas descubrir el personaje del día usando pistas comparativas como anime, rol narrativo, demografía, año de debut, estudio, género, raza y otros atributos. La gracia está en deducir, no en disparar nombres al azar.</p>
-          <p>Además del reto, el sitio incluye páginas públicas para entender cómo funciona el juego, qué franquicias están representadas, qué personajes forman parte del catálogo actual y qué estrategias suelen dar mejores resultados.</p>
-          <div class="landing-cta-row">
-            ${anchor('/play', 'Ir al reto diario', 'btn-primary')}
+          <span class="home-kicker">Juego del día</span>
+          <h2>Adivina el personaje de anime del día en hasta 8 intentos</h2>
+          <p>Escribes un personaje y Otakle te responde con pistas comparativas: anime, rol, demografía, año de debut, estudio, género, raza y otros datos que te ayudan a acercarte.</p>
+          <div class="hero-quick-rules" aria-label="Cómo funciona el juego">
+            <div class="hero-quick-rule"><strong>1.</strong> Prueba un personaje.</div>
+            <div class="hero-quick-rule"><strong>2.</strong> Lee las pistas y compara.</div>
+            <div class="hero-quick-rule"><strong>3.</strong> Ajusta tus intentos hasta acertar.</div>
+          </div>
+          <div class="landing-cta-row landing-cta-row-main">
+            ${anchor('/play', 'Jugar ahora', 'btn-primary hero-play-button')}
+            ${anchor('/how-to-play', 'Ver reglas', 'btn-secondary')}
+            ${anchor('/strategy', 'Ver estrategia', 'btn-secondary')}
+          </div>
+          <p class="hero-support-copy">Si quieres mirar antes de jugar, también puedes recorrer el catálogo de personajes y las franquicias que ya están dentro de Otakle.</p>
+          <div class="landing-cta-row landing-cta-row-secondary">
             ${anchor('/personajes', 'Ver catálogo de personajes', 'btn-secondary')}
             ${anchor('/animes', 'Explorar animes incluidos', 'btn-secondary')}
           </div>
@@ -497,7 +506,7 @@ function animesBody() {
           <h2>${escapeHtml(group.anime)}</h2>
           <span class="count-pill">${group.count}</span>
         </div>
-        <p>Serie representada con personajes activos en el juego diario y en el catálogo público. Esta muestra ayuda a entender qué nombres ya están cubiertos dentro de Otakle.</p>
+        <p>En Otakle ya aparecen personajes como <strong>${escapeHtml(group.sampleNames.join(', '))}</strong>. Esta muestra te deja ver rápido qué tan presente está cada franquicia dentro del juego.</p>
         <div class="chip-link-list">${group.sampleNames.map((name) => `<span class="name-chip">${escapeHtml(name)}</span>`).join('')}</div>
       </article>
     `,
@@ -508,7 +517,7 @@ function animesBody() {
       <header class="page-header">
         <div class="page-title">
           <h1>Animes incluidos en Otakle</h1>
-          <p>Esta página resume las series y franquicias que actualmente forman parte del catálogo del juego. El listado sirve como referencia pública para ver el rango del contenido cubierto por Otakle y entender mejor qué tan amplio es el universo de personajes disponible.</p>
+          <p>Aquí puedes ver qué series y franquicias ya tienen personajes dentro de Otakle. Si llegaste con la duda de “¿estará mi anime acá?”, esta es la forma más rápida de salir de la duda antes de entrar al reto diario.</p>
         </div>
         <div class="page-actions">
           ${anchor('/personajes', 'Ver personajes', 'btn-secondary')}
@@ -521,16 +530,17 @@ function animesBody() {
           <ul>
             <li><strong>${TOTAL_CHARACTERS}</strong> personajes activos.</li>
             <li><strong>${TOTAL_ANIMES}</strong> series o franquicias representadas.</li>
-            <li>El catálogo se usa en búsquedas, sugerencias y retos diarios.</li>
+            <li>El catálogo alimenta las búsquedas, las sugerencias y la selección del personaje diario.</li>
           </ul>
         </article>
         <article class="page-card">
-          <h2>Cómo leer esta página</h2>
-          <p>Cada tarjeta muestra una serie presente en Otakle, la cantidad de personajes activos asociados y una muestra rápida de nombres ya disponibles dentro del juego. No es una wiki exhaustiva de cada franquicia, pero sí un directorio visible para entender la cobertura actual del proyecto.</p>
+          <h2>Cómo conviene usar esta página</h2>
+          <p>Sirve para tres cosas muy simples: ver si una franquicia ya está dentro del juego, revisar cuántos personajes tiene cada serie y orientarte mejor si te quedaste pegado en una partida. No reemplaza la gracia de adivinar, pero sí te ayuda a entender por dónde se mueve el catálogo.</p>
         </article>
       </div>
       <section class="page-card notice-card">
-        <h2>Franquicias que ya tienen guías públicas</h2>
+        <h2>Franquicias que ya tienen guía</h2>
+        <p>Algunas series ya tienen páginas propias con contexto y consejos más aterrizados. Si juegas mucho con estas franquicias, vale la pena partir por ahí.</p>
         <div class="chip-link-list">
           ${anchor('/guia-naruto-otakle', 'Guía de Naruto', 'home-link-pill')}
           ${anchor('/guia-one-piece-otakle', 'Guía de One Piece', 'home-link-pill')}
@@ -539,10 +549,21 @@ function animesBody() {
         </div>
       </section>
       <div class="directory-grid directory-grid-wide">${cards}</div>
-      <section class="page-card">
-        <h2>Por qué esta página importa para el sitio</h2>
-        <p>Más allá del juego diario, este directorio deja claro que Otakle tiene un catálogo visible y mantenido. Sirve para visitantes nuevos, para jugadores que quieren saber si una franquicia ya está representada y para mostrar que el proyecto tiene una base pública de contenido más amplia que una simple pantalla de juego.</p>
-      </section>
+      <div class="page-grid">
+        <article class="page-card">
+          <h2>Qué pasa si no ves una serie que esperabas</h2>
+          <p>No significa necesariamente que nunca vaya a entrar. El catálogo sigue creciendo y algunas franquicias todavía no tienen suficiente presencia como para armar buenas comparaciones dentro del tablero. Si echas de menos una serie o un personaje, puedes sugerirlo por la página de contacto.</p>
+        </article>
+        <article class="page-card">
+          <h2>Si quieres seguir explorando</h2>
+          <p>Después de esta página, lo más útil suele ser saltar al listado de personajes o leer la guía sobre cómo usar el catálogo sin arruinarte la partida. Ahí ya se vuelve más claro qué tanto conviene estudiar y qué tanto conviene simplemente jugar.</p>
+          <div class="chip-link-list">
+            ${anchor('/personajes', 'Ver personajes', 'home-link-pill')}
+            ${anchor('/como-explorar-catalogo-otakle', 'Cómo usar el catálogo', 'home-link-pill')}
+            ${anchor('/contact', 'Sugerir una serie', 'home-link-pill')}
+          </div>
+        </article>
+      </div>
       ${footerLinks()}
     </div>
   `
@@ -556,6 +577,7 @@ function charactersBody() {
           <h2>${escapeHtml(group.anime)}</h2>
           <span class="count-pill">${group.count} personajes</span>
         </div>
+        <p>Este grupo reúne los personajes de <strong>${escapeHtml(group.anime)}</strong> que ya están presentes en Otakle.</p>
         <div class="chip-link-list">${group.characters.map((character) => `<span class="name-chip">${escapeHtml(character.name)}</span>`).join('')}</div>
       </article>
     `,
@@ -566,18 +588,39 @@ function charactersBody() {
       <header class="page-header">
         <div class="page-title">
           <h1>Catálogo público de personajes</h1>
-          <p>Listado público de personajes activos incluidos en Otakle, agrupados por serie o franquicia.</p>
+          <p>Este listado reúne los personajes que hoy forman parte de Otakle. Puedes usarlo para ubicar nombres, revisar qué series tienen más presencia y entender mejor el tipo de universo con el que juega el reto diario.</p>
         </div>
         <div class="page-actions">
           ${anchor('/animes', 'Ver series', 'btn-secondary')}
           ${anchor('/play', 'Jugar ahora', 'btn-primary')}
         </div>
       </header>
-      <div class="page-card">
-        <h2>Resumen</h2>
-        <p>Actualmente hay <strong>${TOTAL_CHARACTERS}</strong> personajes activos usados en el catálogo, la búsqueda y el reto diario de Otakle.</p>
+      <div class="page-grid">
+        <article class="page-card">
+          <h2>Resumen</h2>
+          <p>Actualmente hay <strong>${TOTAL_CHARACTERS}</strong> personajes activos en Otakle. El listado alimenta el autocompletado, los filtros y la selección diaria del juego, pero también te sirve como referencia si quieres mirar qué nombres ya están dentro antes de jugar.</p>
+        </article>
+        <article class="page-card">
+          <h2>Cómo te puede servir de verdad</h2>
+          <p>Esta página ayuda bastante cuando recuerdas la franquicia pero no el personaje exacto, o cuando quieres hacerte una idea de qué tan cargada está una serie dentro del catálogo. También sirve para cachar rápido si estás pensando en un nombre que todavía no forma parte del juego.</p>
+        </article>
       </div>
       <div class="directory-grid directory-grid-wide">${cards}</div>
+      <div class="page-grid">
+        <article class="page-card">
+          <h2>Si no ves el personaje que buscabas</h2>
+          <p>Puede pasar por dos razones: o todavía no entró al catálogo, o la franquicia sigue creciendo de a poco. Si te importa mucho una serie, lo mejor es mandar la sugerencia con algo de contexto. Eso ayuda más que tirar solo un nombre suelto.</p>
+        </article>
+        <article class="page-card">
+          <h2>Qué mirar después de esta página</h2>
+          <p>Si quieres entender mejor por qué algunas franquicias tienen más peso que otras, conviene seguir con la página de animes o con la guía sobre cómo se seleccionan personajes para el catálogo. Ahí ya aparece más criterio editorial y menos simple inventario.</p>
+          <div class="chip-link-list">
+            ${anchor('/animes', 'Ver animes', 'home-link-pill')}
+            ${anchor('/como-seleccionamos-personajes-otakle', 'Cómo se seleccionan personajes', 'home-link-pill')}
+            ${anchor('/contact', 'Sugerir personaje', 'home-link-pill')}
+          </div>
+        </article>
+      </div>
       ${footerLinks()}
     </div>
   `

@@ -26,7 +26,7 @@ export default function Home() {
               <h1 className="brand-title">Otakle</h1>
               <span className="daily-badge">ANIME DAILY</span>
             </div>
-            <p className="brand-subtitle">Juego diario de personajes de anime + guías + catálogo público</p>
+            <p className="brand-subtitle">Un juego diario para adivinar personajes de anime, con guías y catálogo para no jugar a ciegas</p>
           </div>
         </div>
 
@@ -42,22 +42,43 @@ export default function Home() {
 
       <section className="landing-hero">
         <div className="landing-copy">
-          <span className="home-kicker">Qué es Otakle</span>
-          <h2>Un reto diario de anime con reglas claras, catálogo visible y guías públicas para jugar mejor</h2>
+          <span className="home-kicker">Juego del día</span>
+          <h2>Adivina el personaje de anime del día en hasta 8 intentos</h2>
           <p>
-            Otakle es un juego diario donde intentas descubrir el personaje del día usando pistas comparativas como anime,
-            rol narrativo, demografía, año de debut, estudio, género, raza y otros atributos. La gracia está en deducir,
-            no en disparar nombres al azar.
-          </p>
-          <p>
-            Además del reto, el sitio incluye páginas públicas para entender cómo funciona el juego, qué franquicias están
-            representadas, qué personajes forman parte del catálogo actual y qué estrategias suelen dar mejores resultados.
+            Escribes un personaje y Otakle te responde con pistas comparativas: anime, rol, demografía, año de debut,
+            estudio, género, raza y otros datos que te ayudan a acercarte.
           </p>
 
-          <div className="landing-cta-row">
-            <Link to="/play" className="btn-primary">
-              Ir al reto diario
+          <div className="hero-quick-rules" aria-label="Cómo funciona el juego">
+            <div className="hero-quick-rule">
+              <strong>1.</strong> Prueba un personaje.
+            </div>
+            <div className="hero-quick-rule">
+              <strong>2.</strong> Lee las pistas y compara.
+            </div>
+            <div className="hero-quick-rule">
+              <strong>3.</strong> Ajusta tus intentos hasta acertar.
+            </div>
+          </div>
+
+          <div className="landing-cta-row landing-cta-row-main">
+            <Link to="/play" className="btn-primary hero-play-button">
+              Jugar ahora
             </Link>
+            <Link to="/how-to-play" className="btn-secondary">
+              Ver reglas
+            </Link>
+            <Link to="/strategy" className="btn-secondary">
+              Ver estrategia
+            </Link>
+          </div>
+
+          <p className="hero-support-copy">
+            Si quieres mirar antes de jugar, también puedes recorrer el catálogo de personajes y las franquicias que ya
+            están dentro de Otakle.
+          </p>
+
+          <div className="landing-cta-row landing-cta-row-secondary">
             <Link to="/personajes" className="btn-secondary">
               Ver catálogo de personajes
             </Link>

@@ -47,7 +47,7 @@ export default function SiteFooter() {
     <footer className="footer site-footer">
       <div className="site-footer-topline">
         <div>
-          <p className="site-footer-kicker">Otakle · juego diario + guías + catálogo público</p>
+          <p className="site-footer-kicker">Otakle · juego diario, catálogo y guías para fans del anime</p>
           <h2 className="site-footer-title">Un sitio para jugar, consultar y volver con más contexto</h2>
           <p className="site-footer-copy">
             Además del reto diario, Otakle reúne reglas, estrategia, directorios públicos y guías sobre franquicias,
@@ -80,7 +80,7 @@ export default function SiteFooter() {
       </div>
 
       <div className="footer-note">
-        Otakle by <strong>Aknoid</strong> · Proyecto fan en español con juego diario, catálogo visible y guías públicas.
+        Hecho por <strong>Aknoid</strong> para gente que disfruta acordarse de personajes, series y pistas de anime.
       </div>
     </footer>
   )
